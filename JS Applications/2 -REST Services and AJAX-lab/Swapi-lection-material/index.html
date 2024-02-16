@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Star wars Characters</title>
+</head>
+
+<body>
+    <h1>Star wars Characters</h1>
+    <ul class="characters">
+    </ul>
+    <button id="load">Get characters</button>
+
+    <script>
+        const url = 'https://swapi.dev/api/people/';
+
+        const httpRequest = new XMLHttpRequest();
+
+        // Add listener
+        httpRequest.addEventListener('loadend', function (e) {
+            // e.currentTarget = 'this' in this scenario
+
+            console.log(e.currentTarget.status);
+            console.log(this.status);
+
+            const charactersElement = document.querySelector('.characters');
+
+            if (e.currentTarget.status.toString().slice(0, 1) === "4") {
+                // do something if this.status starts with 4
+                let errorMessageElement = document.createElement('h2').innerText = 'Something is missing bruder :V';
+                charactersElement.innerHTML = errorMessageElement;
+            } else {
+                // do something else if this.status does not start with 4
+                let response = JSON.parse(this.responseText);
+                let characters = response.results;
+
+                // charactersElement.innerHTML = characters.map(x => `<li>${x.name} - <span class='blue'>${x.birth_year}</span> </li>`).join('');
+
+                // set url num as <li> id sequence (posledovatelnost)
+                charactersElement.innerHTML = characters.map(x => {                    
+                    // remove the last slash if any
+                    let url = x.url.replace(/\/$/, "");
+                    // split the url by slash and get the last part
+                    let lastPart = Number(url.split("/").pop());
+                    // parse the last part as a number and use it as the id
+                    return `<li id=${lastPart}>${x.name} - <span class='blue'>${x.birth_year}</span> </li>`;
+                }).join('');
+            }
+
+        });
+
+        httpRequest.open('GET', url);
+
+        document.getElementById('load').addEventListener('click', () => {
+            httpRequest.send();
+
+        });
+
+    </script>
+
+    <style>
+        .blue {
+            color: blueviolet;
+        }
+    </style>
+</body>
+
+</html>

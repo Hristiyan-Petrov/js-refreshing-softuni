@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Star wars Characters</title>
+</head>
+
+<body>
+    <h1>Star wars Characters</h1>
+    <ul class="characters">
+    </ul>
+    <button id="load">Get characters</button>
+
+    <script>
+        const url = 'https://swapi.dev/api/people/';
+        const charactersElement = document.querySelector('.characters');
+
+        document.getElementById('load').addEventListener('click', () => {
+            fetch(url)
+                .then(function (response) {
+                    console.log(response.json);
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data);
+
+                    let characters = data.results;
+                    charactersElement.innerHTML = characters.map(x => `<li>${x.name} - <span class='blue'>${x.birth_year}</span> </li>`).join('');
+                })
+                .catch( error => {
+                    console.log(error);
+                    charactersElement.innerHTML = '<li>Sorry, no chracters Bruder</li>';
+                });
+        });
+
+    </script>
+
+    <style>
+        .blue {
+            color: blueviolet;
+        }
+    </style>
+</body>
+
+</html>
