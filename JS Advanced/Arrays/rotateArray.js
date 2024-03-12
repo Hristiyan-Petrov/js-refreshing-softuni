@@ -1,19 +1,20 @@
-function rotateArray(input) {
-    let n = Number(input.pop());
+function rotateArray(array) {
+    let rotations = Number(array.pop());
 
-    for (let i = 0; i < n; i++) {
-        input.unshift(input.pop());
+    if (isNaN(rotations)) {
+        console.log('Empty');
+        array.length = 0;
+    } 
+
+    for (let i = 0; i < rotations; i++) {
+        
+        let movedElement = array.pop();
+        array.unshift(movedElement);
     }
 
-    console.log(input.join(' '));
+    if (array.length) {
+        console.log( array.join(' '));
+    } 
 }
 
-rotateArray(['1',
-
-'2',
-
-'3',
-
-'4',
-
-'2'])
+let result = rotateArray(['Banana', 'Orange', 'Coconut', 'Apple', 15]);
