@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FromJSONToHTMLTable</title>
+    <style>
+        table,
+        th {
+            border: groove;
+            border-collapse: collapse;
+        }
+
+        td {
+            border: 1px solid black;
+        }
+
+        td,
+        th {
+            padding: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+    </div>
+    <script>
+        function fromJSONToHTMLTable(input) {
+            //Write your code here
+            input = JSON.parse(input);
+            let tableHeadings = Object.keys(input[0]);
+
+            let tableElementHTML = '<table>';
+
+            tableElementHTML += `<tr>${tableHeadings.map(heading => `<th>${heading}</th>`).join('')}</tr>`
+
+            input.forEach(product => {
+
+                tableElementHTML += '<tr>';
+                console.log(Object.values(product));
+
+                tableElementHTML += Object.values(product).map(value => `<td>${value}</td>`).join('');
+                tableElementHTML += '</tr>';
+            });
+            tableElementHTML += '</table>';
+
+
+            // <table>
+            //     <tr><th>Name</th><th>Price</th></tr>
+            //     <tr><td>Tomatoes &amp; Chips</td><td>2.35</td></tr>
+            //     <tr><td>J&amp;B Chocolate</td><td>0.96</td></tr>
+            // </table>
+
+
+            // input.forEach(product => {
+            //     Object.values(product).forEach(value => {
+            //         tableElementHTML += '\n' + '<tr>';
+            //         tableElementHTML += `< td > ${ value }</td >`;
+            //         tableElementHTML += '</tr>';
+            //     });
+            // });
+
+
+            // console.log(tableElementHTML);
+            return tableElementHTML;
+        }
+
+
+
+
+        window.onload = function () {
+            let container = document.getElementById('wrapper');
+            container.innerHTML = fromJSONToHTMLTable(['[{"Name":"Tomatoes & Chips","Price":2.35},{"Name":"J&B Chocolate","Price":0.96}]']);
+            // container.appendChild(fromJSONToHTMLTable(['[{"Name":"Tomatoes & Chips","Price":2.35},{"Name":"J&B Chocolate","Price":0.96}]']));
+        };
+    </script>
+</body>
+
+</html>
