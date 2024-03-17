@@ -1,18 +1,16 @@
 function create(words) {
    let contentDivElement = document.querySelector('#content');
+
    words.forEach(word => {
       let divSectionElement = document.createElement('div');
-
       let pElement = document.createElement('p');
       pElement.textContent = word;
-      // pElement.style.display = 'none';
       pElement.setAttribute('style', 'display: none');
 
       divSectionElement.appendChild(pElement);
+      divSectionElement.addEventListener('click', function (e) {
 
-      divSectionElement.addEventListener('click', function(event) {
-         
-         setDisplayStyle(this);
+         setDisplayStyle(e.target);
 
          // if (pElement.hasAttribute('style')) {
          //    pElement.removeAttribute('style');
@@ -20,7 +18,7 @@ function create(words) {
          //    pElement.setAttribute('style', 'display: none');
          // }
       });
-      
+
       contentDivElement.appendChild(divSectionElement);
    });
 }

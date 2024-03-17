@@ -1,32 +1,25 @@
 function lockedProfile() {
-    let profiles = document.getElementById('main').querySelectorAll('.profile');
+    let profiles = document.querySelectorAll('main .profile');
 
     profiles.forEach((profile, index) => {
-        // profile.lastElementChild.addEventListener('click', function () {
-        //     changeButtonAndShowInfo(this, index + 1);
-        // });
+        profile.lastElementChild.addEventListener('click', e => {
+            let currentButton = e.currentTarget;
+            let hiddenInfo = document.getElementById(`user${index + 1}HiddenFields`);
+            let inputLocked = currentButton.parentElement.querySelector('input'); // select input type radio
+            let isLocked = inputLocked.checked;
 
-        profile.lastElementChild.addEventListener('click', () => changeButtonAndShowInfo(profile.lastElementChild, index +1));
+            if (isLocked) {
+                return;
+            }
+
+            if (currentButton.textContent === 'Show more') {
+                hiddenInfo.style.setProperty('display', 'block');
+                currentButton.textContent = 'Show less';
+            } else {
+                hiddenInfo.style.setProperty('display', 'none');
+                currentButton.textContent = 'Show more';
+            }
+        });
     });
-
-}
-
-function changeButtonAndShowInfo(buttonElement, index) {
-    let hiddenInfo = document.getElementById(`user${index}HiddenFields`);
-
-    let inputLocked = buttonElement.parentElement.querySelector('input');
-    let isLocked = inputLocked.checked;
-
-    if (isLocked) {
-        return;
-    }
-
-    if (buttonElement.textContent === 'Show more') {
-        hiddenInfo.style.setProperty('display', 'block');
-        buttonElement.textContent = 'Show less';
-    } else {
-        hiddenInfo.style.setProperty('display', 'none');
-        buttonElement.textContent = 'Show more';
-    }
 
 }

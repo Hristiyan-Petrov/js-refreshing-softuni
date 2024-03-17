@@ -7,14 +7,32 @@ const ratios = {
     seconds: 86400
 };
 
-function attachEventsListeners() {
-    Object.keys(ratios).forEach(unit => {
-        document.getElementById(unit + 'Btn').addEventListener('click', convertTime);
+function handleReaetButton() {
+    let resetButton = document.getElementById('resetBtn');
+    resetButton.style.cursor = 'pointer';
+    resetButton.addEventListener( 'click', e => {
+        document.querySelectorAll('input[type=text]').forEach(el => el.value = '');
     });
+
 }
 
-function convertTime() {
-    let unit = this.id.replace('Btn', '');
+function attachEventsListeners() {
+    Object.keys(ratios).forEach(unit => {
+        let curentButtonElement = document.getElementById(unit + 'Btn');
+        curentButtonElement.addEventListener('click', convertTime);
+        curentButtonElement.previousElementSibling.addEventListener('keypress', convertTime);
+        curentButtonElement.setAttribute('style', 'cursor: pointer');
+    });
+
+    handleReaetButton();
+}
+
+function convertTime(e) {
+    if (e.key && e.key !== 'Enter') {
+        return;
+    }
+
+    let unit = e.currentTarget.id.replace('Btn', '');
     let inputValue = document.getElementById(unit).value;
 
     if (isNaN(inputValue) || inputValue == '0') {
@@ -30,9 +48,11 @@ function convertTime() {
 
 function showErrorMessage(unit) {
     document.getElementById(unit).value = '';
+
     let errorMessageElement = document.getElementById('errorMessage');
-    errorMessageElement.style.setProperty('display', 'block');
+    errorMessageElement.style.display = 'block';
+
     setTimeout(() => {
-        errorMessageElement.style.setProperty('display', 'none');
-    }, 2000);
+        errorMessageElement.style.display = 'none';
+    }, 3000);
 }

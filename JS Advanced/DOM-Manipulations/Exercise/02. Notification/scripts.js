@@ -1,15 +1,13 @@
 function notify() {
     let notificationContainer = document.getElementById('notification');
-    let message = document.querySelector('#message').value;
-    notificationContainer.textContent = message;
+    let message = document.querySelector('#message');
+    notificationContainer.style.display = 'block';
+    notificationContainer.textContent = message.value;
 
-    let notificationContainerStyle = window.getComputedStyle(notificationContainer);
-    notificationContainer.style.setProperty('display', 'block');
-
-    if (notificationContainerStyle.display == 'block') {
+    if (notificationContainer.style.display === 'block') {
         setTimeout(() => {
-            notificationContainer.style.setProperty('display', 'none');
-        }, '2000');
+            notificationContainer.style.display = 'none';
+        }, 2000);
     }
-
+    message.value = '';
 }
