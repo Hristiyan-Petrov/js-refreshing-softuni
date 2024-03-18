@@ -3,6 +3,7 @@
 
 <head>
 	<link rel="stylesheet" href="template.css">
+
 	<title>SUDOMU</title>
 </head>
 
@@ -19,8 +20,18 @@
 					<tfoot>
 						<tr>
 							<td colspan="9">
+								<label>Select difficulty:
+									<select name="difficulty" id="difficulty">
+										<option value="easy">Easy</option>
+										<option value="medium">Medium</option>
+										<option value="hard">Hard</option>
+									</select>
+								</label>
+
+								<button>Start game</button>
 								<button>Quick Check</button>
 								<button>Clear</button>
+								<button>Show solution</button>
 							</td>
 						</tr>
 					</tfoot>
@@ -134,8 +145,9 @@
 		</main>
 
 	</div>
+	<script src="./solution.js"></script>
 	<script>
-	//TODO...
+		solve();
 	</script>
 </body>
 

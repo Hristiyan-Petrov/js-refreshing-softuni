@@ -1,16 +1,19 @@
 @import url('https://fonts.googleapis.com/css?family=Lato');
 @import url('https://fonts.googleapis.com/css?family=PT+Sans');
-*{
+
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-html{
+
+html {
     font-family: "PT sans", sans-serif;
     font-size: 24px;
     color: #234465;
 }
-body{
+
+body {
     display: flex;
     flex-direction: column;
     margin: 0;
@@ -18,17 +21,19 @@ body{
     flex-wrap: wrap;
 }
 
-#exercise{   
+#exercise {
     width: 70%;
     float: left;
     padding: 1rem 0 1rem 1rem;
 }
-main:after{
+
+main:after {
     display: block;
-    content:'';
+    content: '';
     clear: both;
 }
-button{
+
+button {
     padding: 0.3rem 0.5rem;
     font-size: 0.7em;
     margin: 1rem 0 1rem 0;
@@ -37,28 +42,33 @@ button{
     background: #234465;
     border-radius: 5px;
     outline: none;
+    cursor: pointer;
+
+    &:disabled {
+        cursor: none;
+    }
 }
 
-table{
+table {
     margin: 0 auto;
     text-align: center;
-    border:none;
+    border: none;
     width: 100%;
 }
 
-td{
+td {
     width: 10%;
-    border:2px solid gray;
+    border: 2px solid gray;
     height: 5vh;
     color: #234465;
     font-size: 22px;
-    margin:0;
-    padding:0;
-	background-color: aliceblue;
-	border:1px solid #234465;
+    margin: 0;
+    padding: 0;
+    background-color: aliceblue;
+    border: 1px solid #234465;
 }
 
-input{
+input {
     width: 95%;
     text-align: center;
     background: aliceblue;
@@ -68,7 +78,7 @@ input{
 }
 
 input[type='number'] {
-    -moz-appearance:textfield;
+    -moz-appearance: textfield;
 }
 
 input::-webkit-outer-spin-button,
@@ -76,15 +86,9 @@ input::-webkit-inner-spin-button {
     -webkit-appearance: none;
 }
 
-#check{
-	margin: 0 auto;
+#check {
+    margin: 0 auto;
     text-align: center;
     font-weight: bold;
     font-size: 24px;
 }
-
-
-
-
-
-
