@@ -1,5 +1,36 @@
 @import url('https://fonts.googleapis.com/css?family=Lato');
 
+@keyframes shuffle {
+    0% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes winner {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.1);
+        opacity: 0.5;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -35,6 +66,48 @@ button {
 input,
 button {
     vertical-align: top;
+    cursor: pointer;
+}
+
+.shuffleBtn {
+    background-color: #4CAF50;
+    /* green background */
+    border: none;
+    /* remove border */
+    color: white;
+    /* white text */
+    padding: 15px 32px;
+    /* space around text */
+    text-align: center;
+    /* center text */
+    text-decoration: none;
+    /* remove underline */
+    display: inline-block;
+    font-size: 16px;
+    /* text size */
+    margin: 4px 2px;
+    cursor: pointer;
+    /* change cursor on hover */
+    border-radius: 12px;
+    /* rounded corners */
+    transition-duration: 0.4s;
+    /* adds animation when hovered over */
+    margin: 0 auto;
+    max-width: fit-content;
+}
+
+.shuffleBtn:hover {
+    background-color: #45a049;
+    /* changes the color when hovered over */
+}
+
+.shuffleBtn:disabled {
+    background-color: #ccc;
+    /* gray background */
+    color: #666;
+    /* dark gray text */
+    cursor: not-allowed;
+    /* show 'not-allowed' cursor */
 }
 
 input {
@@ -73,14 +146,31 @@ input {
     width: 60%;
     padding: 3rem 0 3rem 0;
     margin: 0 auto;
+
+    img {
+        cursor: pointer;
+    }
 }
 
 #result {
     text-align: center;
 }
 
-#result:nth-child(2), #history {
+#result:nth-child(2),
+#history {
     font-size: 44px;
     padding: 11px;
     font-weight: bold;
+}
+
+#winner {
+    font-size: 2.5em;
+    text-align: center;
+    color: #4CAF50;
+    text-shadow: 2px 2px #000;
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 15px;
+    animation: winner 1s 2;
 }
