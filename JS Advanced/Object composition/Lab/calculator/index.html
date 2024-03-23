@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- <script src="script.js">solve()</script> -->
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="title">Simple Calculator</h1>
+        <p>Enter two numbers</p><br>
+        <div class="input">
+            <label for="num1">Number-1</label> <br>
+            <input type="text" id="num1"> <br>
+            <label for="num2">Number-2</label> <br>
+            <input type="text" id="num2"> <br>
+            <hr>
+            <label for="result">Result is</label> <br>
+            <input type="text" id="result" readonly /><br>
+        </div>
+        <br>
+        <button id="sumButton">Sum</button>
+        <button id="subtractButton">Subtract</button>
+
+        <script>
+            function calcFactory(input) {
+
+                // can use object, can use just variables for each one
+                // let selectors = null;
+                let num1, num2, resultField;
+
+                return {
+                    init: (selector1, selector2, resultSelector) => {
+                        // selectors = {
+                        // num1: document.querySelector(`${selector1}`),
+                        // num2: document.querySelector(`${selector2}`),
+                        // resultField: document.querySelector(`${resultSelector}`)
+                        // }
+                        num1 = document.querySelector(`${selector1}`);
+                        num2 = document.querySelector(`${selector2}`);
+                        resultField = document.querySelector(`${resultSelector}`);
+                    },
+                    add: () => {
+                        resultField.value = Number(num1.value) + Number(num2.value)
+                        // selectors[resultField].value = Number(selectors[num1].value) + Number(selectors[num2].value)
+                    },
+                    subtract: () => resultField.value = Number(num1.value) - Number(num2.value)
+                    // subtract: () => selectors[resultField].value = Number(selectors[num1].value) - Number(selectors[num2].value)
+
+                };
+            }
+
+            let calc = calcFactory();
+            calc.init('#num1', '#num2', '#result');
+
+            let sumButton = document.getElementById('sumButton');
+            let subtractButton = document.getElementById('subtractButton');
+            let resultField = document.getElementById('result');
+
+            sumButton.addEventListener('click', e => calc.add());
+
+            subtractButton.addEventListener('click', e => {
+                calc.subtract();
+            });
+
+        </script>
+    </div>
+</body>
+
+</html>
