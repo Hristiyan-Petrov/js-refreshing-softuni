@@ -1,11 +1,27 @@
-let myObj = {
-    __proto__: {},
-    extend: function () { null }
+function solve() {
+    return {
+        extend: function (template) {
+            for (let key in template) {
+                (typeof template[key] === 'function' ? Object.getPrototypeOf(this) : this)[key] = template[key];
+    
+                // Analogical conditions
+                // if (typeof template[key] === 'function') {
+                //     Object.getPrototypeOf(myObj)[key] = template[key];
+                // } else {
+                //     this[key] = template[key];
+                // }
+            }
+        }
+    }
 }
 
 
-console.log(Object.getPrototypeOf()); // true
+var template = {
+    extensionMethod: function () {
+        return 5;
+    }
+};
 
-// for (let key in myObj) {
-//     console.log(key);
-// }
+var testObject = solve();
+testObject.extend(template);
+console.log(testObject.extensionMethod());
