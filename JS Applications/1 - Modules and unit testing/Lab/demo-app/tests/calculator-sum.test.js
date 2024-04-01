@@ -1,6 +1,6 @@
 // import chai from "chai";
 const assert = require('chai').assert;
-const calc = require('./calculator');
+const calc = require('../calculator');
 
 describe('Calc sum', function () {
     it('Should return positive number when adding two positive numbers', () => {
