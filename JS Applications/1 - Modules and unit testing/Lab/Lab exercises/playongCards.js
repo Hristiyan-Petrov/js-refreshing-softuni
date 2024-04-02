@@ -40,7 +40,6 @@ function Card(face, suit) {
             }
             face = newFace;
         },
-        suit,
         get suit() {
             return setSuite(suit);
             // return suit;
