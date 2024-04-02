@@ -6,6 +6,18 @@ function Card(face, suit) {
     let faceError = 'Invalid face declaration!';
     let suitError = 'Invalid suit declaration!';
 
+    // Uppercase checks
+
+    if (face === face.toLowerCase) {
+        throw new Error (faceError);
+    }
+
+    if (suit === suit.toLowerCase) {
+        throw new Error (faceError);
+    }
+
+    // Valid values checks, excluding uppercase
+
     if (!faces.includes(face)) {
         throw new Error(faceError);
     }
@@ -51,11 +63,15 @@ function Card(face, suit) {
             suit = newSuit;
         },
         toString: function () {
-            console.log(this.face, this.suit);
+            return this.face + this.suit;
         }
     }
 }
 
-let card1 = Card('A', 'S');
-card1.suit = 'C';
-card1.toString();
+module.exports = Card;
+
+// let card = Card('a', 's');
+// console.log(card.toString());
+// let card1 = Card('A', 'S');
+// card1.suit = 'C';
+// card1.toString();
