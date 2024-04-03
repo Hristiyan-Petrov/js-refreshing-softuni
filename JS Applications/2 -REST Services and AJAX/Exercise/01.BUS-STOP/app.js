@@ -63,7 +63,7 @@ async function getInfo() {
 
     // Async await aproach - when using add 'async' to the main function getInfo() !!!
     
-    //  dynamic list of available stops according to the database (availableStops.json)
+    // Dynamic list of available stops according to the database (availableStops.json)
 
     // let availableStops = await fetchavailableStops(url);
 

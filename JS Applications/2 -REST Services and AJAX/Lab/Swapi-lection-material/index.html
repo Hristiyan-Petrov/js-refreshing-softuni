@@ -27,7 +27,7 @@
 
             const charactersElement = document.querySelector('.characters');
 
-            if (e.currentTarget.status.toString().slice(0, 1) === "4") {
+            if (this.status.toString().slice(0, 1) === "4") {
                 // do something if this.status starts with 4
                 let errorMessageElement = document.createElement('h2').innerText = 'Something is missing bruder :V';
                 charactersElement.innerHTML = errorMessageElement;
