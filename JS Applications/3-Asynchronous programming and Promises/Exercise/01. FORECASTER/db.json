@@ -1,56 +1,110 @@
 {
     "locations": [
-      { 
-        "name": "London",
-        "code": "london"
-      },
-      { 
-        "name": "New York",
-        "code": "new-york"
-      },
-      {
-        "name": "Barcelona",
-        "code": "barcelona"
-      }
+        {
+            "name": "London",
+            "code": "london"
+        },
+        {
+            "name": "New York",
+            "code": "new-york"
+        },
+        {
+            "name": "Barcelona",
+            "code": "barcelona"
+        }
     ],
-    "today": {
-        "london": {
-          "name": "London",
-          "forecast": { "low": "10", "high": "20", "condition": "Sunny" }
+    "today": [
+        {
+            "code": "london",
+            "name": "London",
+            "forecast": {
+                "low": "10",
+                "high": "20",
+                "condition": "Sunny"
+            }
         },
-        "new-york": {
-          "name": "New York",
-          "forecast": { "low": "5", "high": "15", "condition": "Rainy" }
+        {
+            "code": "new-york",
+            "name": "New York",
+            "forecast": {
+                "low": "5",
+                "high": "15",
+                "condition": "Rainy"
+            }
         },
-        "barcelona": {
-          "name": "Barcelona",
-          "forecast": { "low": "15", "high": "25", "condition": "Cloudy" }
+        {
+            "code": "barcelona",
+            "name": "Barcelona",
+            "forecast": {
+                "low": "15",
+                "high": "25",
+                "condition": "Cloudy"
+            }
         }
-      },
-    "upcoming": {
-        "london": {
-          "name": "London",
-          "forecast": [
-            { "low": "11", "high": "21", "condition": "Sunny" },
-            { "low": "12", "high": "22", "condition": "Cloudy" },
-            { "low": "13", "high": "23", "condition": "Rainy" }
-          ]
+    ],
+    "upcoming": [
+        {
+            "code": "london",
+            "name": "London",
+            "forecast": [
+                {
+                    "low": "11",
+                    "high": "21",
+                    "condition": "Sunny"
+                },
+                {
+                    "low": "12",
+                    "high": "22",
+                    "condition": "Cloudy"
+                },
+                {
+                    "low": "13",
+                    "high": "23",
+                    "condition": "Rainy"
+                }
+            ]
         },
-        "new-york": {
-          "name": "New York",
-          "forecast": [
-            { "low": "6", "high": "16", "condition": "Rainy" },
-            { "low": "7", "high": "17", "condition": "Cloudy" },
-            { "low": "8", "high": "18", "condition": "Sunny" }
-          ]
+        {
+            "code": "new-york",
+            "name": "New York",
+            "forecast": [
+                {
+                    "low": "6",
+                    "high": "16",
+                    "condition": "Rainy"
+                },
+                {
+                    "low": "7",
+                    "high": "17",
+                    "condition": "Cloudy"
+                },
+                {
+                    "low": "8",
+                    "high": "18",
+                    "condition": "Sunny"
+                }
+            ]
         },
-        "barcelona": {
-          "name": "Barcelona",
-          "forecast": [
-            { "low": "16", "high": "26", "condition": "Cloudy" },
-            { "low": "17", "high": "27", "condition": "Sunny" },
-            { "low": "18", "high": "28", "condition": "Rainy" }
-          ]
+        {
+            "code": "barcelona",
+            "name": "Barcelona",
+            "forecast": [
+                {
+                    "low": "16",
+                    "high": "26",
+                    "condition": "Cloudy"
+                },
+                {
+                    "low": "17",
+                    "high": "27",
+                    "condition": "Sunny"
+                },
+                {
+                    "low": "18",
+                    "high": "28",
+                    "condition": "Rainy"
+                }
+            ]
         }
-      }
-  }
+    ]
+}
