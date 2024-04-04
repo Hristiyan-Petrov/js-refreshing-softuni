@@ -8,7 +8,7 @@ function attachEvents() {
     const conditions = {
         'Sunny': '☀',  // ☀
         'Cloudy': '☁', // ☁
-        'Rainy': '&#x2614' // ☂
+        'Rainy': '☂' // ☂
     }
 
     let baseUrl = 'http://localhost:3000/';
@@ -30,39 +30,72 @@ function attachEvents() {
                     .then(([todayData, upcomingData]) => {
                         todayData = todayData[0];
                         upcomingData = upcomingData[0];
-                        
+
                         // Clear old forecast
-                        if (document.querySelector('.forecasts')) {
+                        if (document.querySelector('.forecasts') && document.querySelector('.forecast-info')) {
                             currentForecastDiv.removeChild(document.querySelector('.forecasts'));
+                            currentForecastDiv.removeChild(document.querySelector('.forecast-info'));
                         }
 
-                        // Current conditions DOM Manipulations
+                        // Today conditions DOM Manipulations
                         (function todayForecastDOM() {
                             forecastDiv.style.display = 'block';
-    
+
                             let forecasts = createElement('div', 'forecasts');
-    
+
                             let conditionSymbol = createElement('span', 'condition', 'symbol');
                             conditionSymbol.textContent = conditions[todayData.forecast.condition];
                             forecasts.appendChild(conditionSymbol);
-    
+
                             let condition = createElement('span', 'condition');
                             let conditionFirstSpan = createElement('span', 'forecast-data');
                             conditionFirstSpan.textContent = todayData.name;
-    
+
                             let conditionSecondSpan = createElement('span', 'forecast-data');
                             conditionSecondSpan.textContent = `${todayData.forecast.low}°/${todayData.forecast.high}°`;
-    
+
                             let conditionThirdSpan = createElement('span', 'forecast-data');
                             conditionThirdSpan.textContent = todayData.forecast.condition;
-    
+
                             condition.appendChild(conditionFirstSpan);
                             condition.appendChild(conditionSecondSpan);
                             condition.appendChild(conditionThirdSpan);
-    
+
                             forecasts.appendChild(condition);
-    
+
                             currentForecastDiv.appendChild(forecasts);
+                        })();
+
+                        // Upcoming conditions DOM Manipulations
+                        (function upcomingForecastDOM() {
+                            let forecastInfo = createElement('div', 'forecast-info');
+
+                            let spansUpcomming = upcomingData.forecast.map(x => {
+                                return `
+                                <span class="upcoming">
+                                    <span class="symbol">${conditions[x.condition]}</span>
+                                    <span class="forecast-data">${x.low}°/${x.high}°</span>
+                                    <span class="forecast-data">${x.condition}</span>
+                                </span>`
+                            })
+                                .join('');
+
+                            forecastInfo.innerHTML = spansUpcomming;
+
+                            upcomingForecastDiv.appendChild(forecastInfo);
+
+                            // function create3spans(upcomingData) {
+                            //     let upcommingForecats = upcomingData.forecast;
+
+                            //     return upcommingForecats.map(x => {
+                            //         `
+                            //         <span class="upcomming">
+                            //             <span class="symbol">${conditions[x.condition]}</span>
+                            //             <span class="forecast-data">${x.low}°/${x.high}°</span>
+                            //             <span class="forecast-data">${x.condition}</span>
+                            //         </span>
+                            //     `});
+                            // }
                         })();
 
 
