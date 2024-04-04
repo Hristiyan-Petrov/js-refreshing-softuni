@@ -28,41 +28,42 @@ function attachEvents() {
                 ])
                     .then(res => Promise.all((res).map(x => x.json())))
                     .then(([todayData, upcomingData]) => {
+                        todayData = todayData[0];
+                        upcomingData = upcomingData[0];
                         
                         // Clear old forecast
                         if (document.querySelector('.forecasts')) {
                             currentForecastDiv.removeChild(document.querySelector('.forecasts'));
                         }
 
-                        todayData = todayData[0];
-                        upcomingData = upcomingData[0];
-
                         // Current conditions DOM Manipulations
-                        forecastDiv.style.display = 'block';
-
-                        let forecasts = createElement('div', 'forecasts');
-
-                        let conditionSymbol = createElement('span', 'condition', 'symbol');
-                        conditionSymbol.textContent = conditions[todayData.forecast.condition];
-                        forecasts.appendChild(conditionSymbol);
-
-                        let condition = createElement('span', 'condition');
-                        let conditionFirstSpan = createElement('span', 'forecast-data');
-                        conditionFirstSpan.textContent = todayData.name;
-
-                        let conditionSecondSpan = createElement('span', 'forecast-data');
-                        conditionSecondSpan.textContent = `${todayData.forecast.low}°/${todayData.forecast.high}°`;
-
-                        let conditionThirdSpan = createElement('span', 'forecast-data');
-                        conditionThirdSpan.textContent = todayData.forecast.condition;
-
-                        condition.appendChild(conditionFirstSpan);
-                        condition.appendChild(conditionSecondSpan);
-                        condition.appendChild(conditionThirdSpan);
-
-                        forecasts.appendChild(condition);
-
-                        currentForecastDiv.appendChild(forecasts);
+                        (function todayForecastDOM() {
+                            forecastDiv.style.display = 'block';
+    
+                            let forecasts = createElement('div', 'forecasts');
+    
+                            let conditionSymbol = createElement('span', 'condition', 'symbol');
+                            conditionSymbol.textContent = conditions[todayData.forecast.condition];
+                            forecasts.appendChild(conditionSymbol);
+    
+                            let condition = createElement('span', 'condition');
+                            let conditionFirstSpan = createElement('span', 'forecast-data');
+                            conditionFirstSpan.textContent = todayData.name;
+    
+                            let conditionSecondSpan = createElement('span', 'forecast-data');
+                            conditionSecondSpan.textContent = `${todayData.forecast.low}°/${todayData.forecast.high}°`;
+    
+                            let conditionThirdSpan = createElement('span', 'forecast-data');
+                            conditionThirdSpan.textContent = todayData.forecast.condition;
+    
+                            condition.appendChild(conditionFirstSpan);
+                            condition.appendChild(conditionSecondSpan);
+                            condition.appendChild(conditionThirdSpan);
+    
+                            forecasts.appendChild(condition);
+    
+                            currentForecastDiv.appendChild(forecasts);
+                        })();
 
 
                         console.log("Today's weather: ", todayData);
