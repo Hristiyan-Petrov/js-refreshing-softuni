@@ -1,0 +1,17 @@
+{
+    "catches": [
+        {
+            "catches": [
+                {
+                    "id": 1,
+                    "angler": "Paulo Amorim",
+                    "weight": 636,
+                    "species": "Atlantic Blue Marlin",
+                    "location": "Vitória, Brazil",
+                    "bait": "trolled pink",
+                    "captureTime": 80
+                }
+            ]
+        }
+    ]
+}
