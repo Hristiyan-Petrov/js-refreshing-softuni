@@ -4,12 +4,13 @@ function createElement(tagName, ...classes) {
     return el;
 }
 
+// Normal Promises approach
 function fetchWeatherData(cityValue, baseUrl) {
     // Fetch location data
     return fetch(baseUrl + 'locations')
         .then(res => res.json())
-        .then(res => {
-            let currCity = res.find(x => x.name === cityValue);
+        .then(locations => {
+            let currCity = locations.find(x => x.name === cityValue);
             let { code } = currCity;
 
             // Fetch weather data
@@ -18,6 +19,32 @@ function fetchWeatherData(cityValue, baseUrl) {
                 fetch(baseUrl + `upcoming?code=${code}`).then(res => res.json())
             ]);
         });
+}
+
+// Async - await approach
+async function fetchWeatherData(cityValue, baseUrl) {
+    try {
+        // Fetch location data
+        const locationsRes = await fetch(baseUrl + 'locations');
+        let locations = await locationsRes.json();
+
+        let currCity = locations.find(x => x.name === cityValue);
+        let { code } = currCity;
+
+        // Fetch weather data
+        const [todayRes, upcomingRes] = await Promise.all([
+            fetch(baseUrl + `today?code=${code}`),
+            fetch(baseUrl + `upcoming?code=${code}`)
+        ]);
+
+        const todayData = await todayRes.json();
+        const upcomingData = await upcomingRes.json();
+
+        return [todayData, upcomingData];
+    } catch (error) {
+        console.log(error);
+        throw error;  // If an error occurs, throw it such that it can be caught and handled in the calling scope
+    }
 }
 
 function updateDOM([todayData, upcomingData], conditions, currentForecastDiv, upcomingForecastDiv, forecastDiv) {
