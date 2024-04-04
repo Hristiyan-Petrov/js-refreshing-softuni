@@ -16,7 +16,7 @@
     "today": [
         {
             "code": "london",
-            "name": "London",
+            "name": "London, UK",
             "forecast": {
                 "low": "10",
                 "high": "20",
@@ -25,7 +25,7 @@
         },
         {
             "code": "new-york",
-            "name": "New York",
+            "name": "New York, USA",
             "forecast": {
                 "low": "5",
                 "high": "15",
@@ -34,7 +34,7 @@
         },
         {
             "code": "barcelona",
-            "name": "Barcelona",
+            "name": "Barcelona, Spain",
             "forecast": {
                 "low": "15",
                 "high": "25",
