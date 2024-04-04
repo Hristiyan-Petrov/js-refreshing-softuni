@@ -11,6 +11,16 @@ function attachEvents() {
             .then(res => {
                 let currCity = res.find(x => x.name === cityValue);
                 let code = currCity.code;
+
+                Promise.all([
+                    fetch(baseUrl + `forecast/today/${code}`),
+                    fetch(baseUrl + `forecast/upcoming/${code}`)
+                ])
+                .then(res => Promise.all(res).map(x => x.json()))
+                .then(([today, upcomming]) => {
+                    console.log(today);
+                    console.log(upcomming);
+                })
             })
 
     });
