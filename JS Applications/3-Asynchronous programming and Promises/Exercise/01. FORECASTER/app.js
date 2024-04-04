@@ -83,24 +83,7 @@ function attachEvents() {
                             forecastInfo.innerHTML = spansUpcomming;
 
                             upcomingForecastDiv.appendChild(forecastInfo);
-
-                            // function create3spans(upcomingData) {
-                            //     let upcommingForecats = upcomingData.forecast;
-
-                            //     return upcommingForecats.map(x => {
-                            //         `
-                            //         <span class="upcomming">
-                            //             <span class="symbol">${conditions[x.condition]}</span>
-                            //             <span class="forecast-data">${x.low}°/${x.high}°</span>
-                            //             <span class="forecast-data">${x.condition}</span>
-                            //         </span>
-                            //     `});
-                            // }
                         })();
-
-
-                        console.log("Today's weather: ", todayData);
-                        console.log("Upcoming weather: ", upcomingData);
                     })
                     .catch(err => console.error(err));
             })
