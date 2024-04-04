@@ -53,6 +53,22 @@ function attachEvents() {
             })
 
     });
+
+    mainElement.addEventListener('click', function(e) {
+        if (e.target.classList.value !== 'delete') {
+            return;
+        }
+
+        let id = e.target.parentElement.attributes.getNamedItem('data-id').value
+        
+        fetch(baseUrl + `/${id}`, {
+            method: 'DELETE'
+        })
+        .then(res => res.json())
+        .catch(err => {
+            console.log(err);
+        })
+    });
 }
 
 function renderCatches(catchObject, mainElement) {
