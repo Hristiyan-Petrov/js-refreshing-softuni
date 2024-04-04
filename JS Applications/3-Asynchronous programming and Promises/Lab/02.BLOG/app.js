@@ -7,12 +7,14 @@ function attachEvents() {
 
 
 
-    let url = 'https://blog-apps-c12bf.firebaseio.com/posts/';
+    let baseUrl = 'https://blog-apps-c12bf.firebaseio.com/posts/';
 
     buttonLoad.addEventListener('click', function () {
 
+        // Async - await approach
+
         async function loadPosts() {
-            let res = await fetch(url + '.json');
+            let res = await fetch(baseUrl + '.json');
             let posts = await res.json();
             return posts;
         }
@@ -30,7 +32,9 @@ function attachEvents() {
                 console.log(err);
             })
 
-        // fetch(url + '.json')
+        // Normal promise approach 
+
+        // fetch(baseUrl + '.json')
         //     .then(res => res.json())
         //     .then(posts => {
         //         // console.log(posts);
@@ -49,14 +53,16 @@ function attachEvents() {
 
 
     buttonView.addEventListener('click', function (e) {
-        let postUrl = url + postsSelectElement.value + '/';
+        let postUrl = baseUrl + postsSelectElement.value + '/';
         let postCommentsUrl = postUrl + 'comments/';
+
+        // Async - await approach
 
         async function viewPost() {
             let postRes = await fetch(postUrl + '.json');
-            let post = await postRes.json();
-
             let postCommentsRes = await fetch(postCommentsUrl + '.json');
+
+            let post = await postRes.json();
             let comments = await postCommentsRes.json();
 
             return [post, comments];
@@ -76,9 +82,10 @@ function attachEvents() {
             })
             .catch(err => {
                 console.log(err);
-            })
+            });
 
 
+        // Normal promise approach 
 
         // Promise.all([
         //     fetch(postUrl + '.json'),
