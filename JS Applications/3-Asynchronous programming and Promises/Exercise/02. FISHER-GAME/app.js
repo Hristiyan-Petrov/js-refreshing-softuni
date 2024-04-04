@@ -54,21 +54,39 @@ function attachEvents() {
 
     });
 
-    mainElement.addEventListener('click', function(e) {
-        if (e.target.classList.value !== 'delete') {
+    mainElement.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        if (e.target.classList.value === 'delete') {
+            let id = e.target.parentElement.attributes.getNamedItem('data-id').value
+            let deleteUrl = baseUrl + `/${id}`;
+            deleteCatchObject(deleteUrl, id);
+        }
+
+        if (e.target.classList.value !== 'update') {
             return;
         }
 
-        let id = e.target.parentElement.attributes.getNamedItem('data-id').value
-        
-        fetch(baseUrl + `/${id}`, {
-            method: 'DELETE'
-        })
-        .then(res => res.json())
-        .catch(err => {
-            console.log(err);
-        })
+
     });
+}
+
+function deleteCatchObject(deleteUrl, id) {
+
+    fetch(deleteUrl, {
+        method: 'DELETE'
+    })
+        .then(res => {
+
+            if (res.ok) {
+                console.log(`Deleted item with id: ${id}`);
+            } else {
+                throw new Error(`Delete request failed with status ${res.status}`);
+            }
+        })
+        .catch(error => {
+            console.error('An error occurred:', error);
+        });
 }
 
 function renderCatches(catchObject, mainElement) {

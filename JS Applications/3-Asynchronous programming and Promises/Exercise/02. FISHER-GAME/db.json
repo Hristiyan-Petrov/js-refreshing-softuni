@@ -17,6 +17,15 @@
       "location": "montana",
       "bait": "blesna",
       "captureTime": "10"
+    },
+    {
+      "id": "8f86",
+      "angler": "kris",
+      "weight": "25",
+      "species": "kosturche",
+      "location": "qnobl",
+      "bait": "malko",
+      "captureTime": "50"
     }
   ]
 }
