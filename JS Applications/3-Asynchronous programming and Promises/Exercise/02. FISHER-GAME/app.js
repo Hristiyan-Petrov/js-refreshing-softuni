@@ -1,7 +1,8 @@
 function attachEvents() {
     let baseUrl = 'http://localhost:3000/catches';
 
-    let loadButton = document.querySelector('.load');
+    const loadButton = document.querySelector('.load');
+    const addButton = document.querySelector('.add');
 
     const mainElement = document.querySelector('#catches');
 
@@ -13,6 +14,44 @@ function attachEvents() {
                     renderCatches(catchObj, mainElement);
                 });
             })
+    });
+
+    addButton.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        let form = document.querySelector('#addForm');
+
+        let anglerInput = form.querySelector('.angler');
+        let weightInput = form.querySelector('.weight');
+        let speciesInput = form.querySelector('.species');
+        let locationInput = form.querySelector('.location');
+        let baitInput = form.querySelector('.bait');
+        let captureTimeInput = form.querySelector('.captureTime');
+
+        let bodyData = (JSON.stringify({
+            "angler": anglerInput.value,
+            "weight": weightInput.value,
+            "species": speciesInput.value,
+            "location": locationInput.value,
+            "bait": baitInput.value,
+            "captureTime": captureTimeInput.value
+        }));
+
+        console.log(bodyData);
+
+        fetch(baseUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: bodyData
+        })
+            .then(res => res.json())
+            .then(newData => console.log(newData))
+            .catch(err => {
+                console.log(err);
+            })
+
     });
 }
 
