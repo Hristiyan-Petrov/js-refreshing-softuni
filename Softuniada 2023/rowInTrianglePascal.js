@@ -3,12 +3,12 @@ function getPascalRow(n) {
 
     for(let i = 0; i < n; i++) {
         row.unshift(0);
-        
+
         for(let j = 0; j < i + 1; j++) {
             row[j] = row[j] + row[j + 1];
         }
     }
-    return row;
+    return row.join(' ');
 }
 
 let res = getPascalRow(5);
