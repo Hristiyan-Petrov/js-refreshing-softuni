@@ -1,31 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My movies</title>
 </head>
+
 <body>
-    
+    <h2 id="header">Please log in!</h2>
+
+    <div id="login-form">
+        <label for="username">Username: </label>
+        <input type="text" id="username" />
+        <label for="password">Password: </label>
+        <input type="password" id="password">
+        <button id="login-button">Login</button>
+    </div>
+
+    <script type="module" src="config.js"></script>
+
     <script type="module">
-        // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
-        // TODO: Add SDKs for Firebase products that you want to use
-        // https://firebase.google.com/docs/web/setup#available-libraries
-      
-        // Your web app's Firebase configuration
-        const firebaseConfig = {
-          apiKey: "AIzaSyCHfiPZtTircxxH6O6uGllF7vQxYd7u-mM",
-          authDomain: "movies-2024-ad36f.firebaseapp.com",
-          projectId: "movies-2024-ad36f",
-          storageBucket: "movies-2024-ad36f.appspot.com",
-          messagingSenderId: "353898698528",
-          appId: "1:353898698528:web:68f65fda59eb17d7e42945"
-        };
-      
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-      </script>
-      
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
+
+        const auth = getAuth();
+
+        let buttonEl = document.getElementById('login-button');
+        buttonEl.addEventListener('click', onUserLogin)
+
+        function onUserLogin(e) {
+            let usernameEl = document.getElementById('username');
+            let passwordEl = document.getElementById('password');
+            let headerEl = document.getElementById('header');
+            let loginFormEl = document.getElementById('login-form');
+
+
+            signInWithEmailAndPassword(auth, usernameEl.value, passwordEl.value)
+                .then(res => {
+                    console.log('logged in');
+                    console.log(res);
+                    headerEl.innerText = `Hello, ${res.user.email}`;
+                    loginFormEl.style.display = 'none';
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+        }
+    </script>
+
 </body>
+
 </html>
