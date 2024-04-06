@@ -2,3 +2,9 @@
     background-color: cadetblue;
     cursor: pointer;
 }
+
+.add-movie {
+    margin-top: 20px;
+    border: olivedrab 3px solid;
+    padding: 10px;
+}
