@@ -21,7 +21,7 @@
     <script type="module" src="config.js"></script>
 
     <script type="module">
-        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
+        import { getAuth } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
 
         const auth = getAuth();
 
@@ -35,7 +35,7 @@
             let loginFormEl = document.getElementById('login-form');
 
 
-            signInWithEmailAndPassword(auth, usernameEl.value, passwordEl.value)
+            auth.signInWithEmailAndPassword(auth, usernameEl.value, passwordEl.value)
                 .then(res => {
                     console.log('logged in');
                     console.log(res);
