@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My movies</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -16,7 +17,6 @@
         <label for="password">Password: </label>
         <input type="password" id="password">
         <button id="login-button">Login</button>
-        <link rel="stylesheet" href="style.css">
     </div>
 
     <ul id="movies"></ul>
@@ -35,7 +35,7 @@
             .then(data => {
                 let movieTitles = Object
                     .keys(data)
-                    .map(x => `<li class=="movie-item">${data[x].title}</li>`)
+                    .map(x => `<li class="movie-item">${data[x].title}</li>`)
                     .join('');
 
                 moviesEl.innerHTML = movieTitles;
