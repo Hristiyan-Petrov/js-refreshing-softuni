@@ -21,7 +21,8 @@
 
     <ul id="movies"></ul>
 
-    <div class="movie-details">Please select movie!</div>
+    <h2>Movie details</h2>
+    <div id="movie-details">Please select movie!</div>
 
     <script type="module" src="auth.js"></script>
 
@@ -35,11 +36,24 @@
             .then(data => {
                 let movieTitles = Object
                     .keys(data)
-                    .map(x => `<li class="movie-item">${data[x].title}</li>`)
+                    .map(key => `<li class="movie-item" data-key=${key}>${data[key].title}</li>`)
                     .join('');
 
                 moviesEl.innerHTML = movieTitles;
             });
+
+        moviesEl.addEventListener('click', function (e) {
+            // e.target.getAttribute('data-key')); // Or
+            let movieId = e.target.dataset.key;
+
+            // console.log(`${baseUrl}/movies/${movieId}.json`);
+
+            fetch(`${baseUrl}/movies/${movieId}.json`)
+                .then(res => res.json())
+                .then(movie => {
+                    movieDetailsEl.innerHTML = `Selected movie: ${movie.title}`;
+                });
+        });
     </script>
 
 </body>
