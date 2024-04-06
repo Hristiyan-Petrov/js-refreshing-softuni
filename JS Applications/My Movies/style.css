@@ -1,0 +1,4 @@
+.movie-item:hover {
+    background-color: cadetblue;
+    cursor: pointer;
+}

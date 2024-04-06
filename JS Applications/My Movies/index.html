@@ -16,22 +16,26 @@
         <label for="password">Password: </label>
         <input type="password" id="password">
         <button id="login-button">Login</button>
+        <link rel="stylesheet" href="style.css">
     </div>
 
     <ul id="movies"></ul>
+
+    <div class="movie-details">Please select movie!</div>
 
     <script type="module" src="auth.js"></script>
 
     <script type="module">
         const baseUrl = 'https://movies-2024-ad36f-default-rtdb.europe-west1.firebasedatabase.app';
         let moviesEl = document.getElementById('movies');
+        let movieDetailsEl = document.getElementById('movie-details');
 
         fetch(`${baseUrl}/movies.json`)
             .then(res => res.json())
             .then(data => {
                 let movieTitles = Object
                     .keys(data)
-                    .map(x => `<li>${data[x].title}</li>`)
+                    .map(x => `<li class=="movie-item">${data[x].title}</li>`)
                     .join('');
 
                 moviesEl.innerHTML = movieTitles;
