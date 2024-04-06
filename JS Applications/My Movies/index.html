@@ -18,34 +18,24 @@
         <button id="login-button">Login</button>
     </div>
 
-    <script type="module" src="config.js"></script>
+    <ul id="movies"></ul>
+
+    <script type="module" src="auth.js"></script>
 
     <script type="module">
-        import { getAuth } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
+        const baseUrl = 'https://movies-2024-ad36f-default-rtdb.europe-west1.firebasedatabase.app';
+        let moviesEl = document.getElementById('movies');
 
-        const auth = getAuth();
+        fetch(`${baseUrl}/movies.json`)
+            .then(res => res.json())
+            .then(data => {
+                let movieTitles = Object
+                    .keys(data)
+                    .map(x => `<li>${data[x].title}</li>`)
+                    .join('');
 
-        let buttonEl = document.getElementById('login-button');
-        buttonEl.addEventListener('click', onUserLogin)
-
-        function onUserLogin(e) {
-            let usernameEl = document.getElementById('username');
-            let passwordEl = document.getElementById('password');
-            let headerEl = document.getElementById('header');
-            let loginFormEl = document.getElementById('login-form');
-
-
-            auth.signInWithEmailAndPassword(auth, usernameEl.value, passwordEl.value)
-                .then(res => {
-                    console.log('logged in');
-                    console.log(res);
-                    headerEl.innerText = `Hello, ${res.user.email}`;
-                    loginFormEl.style.display = 'none';
-                })
-                .catch(err => {
-                    console.log(err);
-                })
-        }
+                moviesEl.innerHTML = movieTitles;
+            });
     </script>
 
 </body>
