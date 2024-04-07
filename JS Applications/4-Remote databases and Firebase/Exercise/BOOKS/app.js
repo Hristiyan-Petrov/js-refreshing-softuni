@@ -77,9 +77,9 @@ tableWrapper.addEventListener('click', function (e) {
             method: 'DELETE'
         })
             .then(res => {
-                if (!res.ok) {
-                    throw new Error('HTTP error ' + res.status);
-                }
+                // Dynamically remove the table row with deleted book element
+                tr.remove();
+
                 console.log('Succesfully deleted');
                 return res.json();
             }).then(res => {
