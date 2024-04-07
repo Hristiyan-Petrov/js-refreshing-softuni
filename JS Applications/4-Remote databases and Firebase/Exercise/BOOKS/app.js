@@ -51,6 +51,8 @@ loginButton.addEventListener('click', function (e) {
 
         })
         .catch((error) => {
+            let errorField = e.target.parentElement.querySelector('.error-message');
+            errorField.textContent = error.message;
             console.log(error.message);
         });
 });

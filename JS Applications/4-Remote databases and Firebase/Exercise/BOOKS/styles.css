@@ -12,6 +12,10 @@
     color: coral;
 }
 
+.error-message {
+    color: red;
+}
+
 table {
     border: 1px solid #234465;
     padding: 1%;
