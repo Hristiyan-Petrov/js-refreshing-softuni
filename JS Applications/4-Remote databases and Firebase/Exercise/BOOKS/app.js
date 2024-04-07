@@ -23,14 +23,13 @@ registerButton.addEventListener('click', function (e) {
     createUserWithEmailAndPassword(auth, registerUsername, registerPassword)
         .then(userCredential => {
             // Signed in 
-            console.log(userCredential);
             const user = userCredential.user;
-            console.log(user);
+            console.log(user.email);
 
             authenticationSection.style.display = 'none';
             mainWrapper.style.display = 'block';
             let headerGreetEl = document.getElementById('header-greet');
-            headerGreetEl.textContent += user.email;
+            headerGreetEl.textContent = user.email;
         })
         .catch((error) => {
             console.log(error.message);
@@ -45,14 +44,13 @@ loginButton.addEventListener('click', function (e) {
     signInWithEmailAndPassword(auth, loginUsername, loginPassword)
         .then(userCredential => {
             // Logged in 
-            console.log(userCredential);
             const user = userCredential.user;
-            console.log(user);
+            console.log(user.email);
 
             authenticationSection.style.display = 'none';
             mainWrapper.style.display = 'block';
             let headerGreetEl = document.getElementById('header-greet');
-            headerGreetEl.textContent += user.email + '!';
+            headerGreetEl.textContent = user.email + '!';
         })
         .catch((error) => {
             let errorField = e.target.parentElement.querySelector('.error-message');
