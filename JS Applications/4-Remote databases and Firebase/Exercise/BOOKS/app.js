@@ -1,7 +1,10 @@
 const getAllBooksButton = document.getElementById('loadBooks');
 const tableWrapper = document.getElementById('table-wrapper');
-const addBookForm = document.getElementById('add-book');
-const addButton = addBookForm.querySelector('#add-button');
+const addBookForm = document.getElementById('add-book-form');
+const editBookForm = document.getElementById('edit-book-form');
+
+const addButton = document.getElementById('add-button');
+const editButton = document.getElementById('edit-button');
 
 const baseUrl = 'https://js-app-ex-rem-dbs-blogs-2024-default-rtdb.firebaseio.com/books';
 
@@ -67,10 +70,11 @@ tableWrapper.addEventListener('click', function (e) {
         return;
     }
 
-    // Delete functionality
+    let tr = e.target.closest('tr');
+    let bookId = tr.getAttribute('data-book-id');
+
+    // Delete functionality - DELETE request
     if (e.target.textContent === 'Delete') {
-        let tr = e.target.closest('tr');
-        let bookId = tr.getAttribute('data-book-id');
 
         // DELETE request to the server (Firebase in this case)
         fetch(`${baseUrl}/${bookId}.json`, {
@@ -89,11 +93,70 @@ tableWrapper.addEventListener('click', function (e) {
 
     }
 
-
-    // Update functionality
+    // Update functionality - PUT request
     if (e.target.textContent === 'Edit') {
 
+        // Hide Add book form and create new form for editing
+        addBookForm.style.display = 'none';
+        editBookForm.style.display = 'block';
+        // Add dynamically book id to the form as there is no other way of getting the bookId in the "Edit" button event handler  
+        editBookForm.setAttribute('data-edit-book-id', bookId);
+
+        // Set the current values to the edit form
+        let tds = tr.querySelectorAll('td');
+
+        let title = tds[0].textContent;
+        let author = tds[1].textContent;
+        let isbn = tds[2].textContent;
+
+        let editTitleEl = editBookForm.querySelector('#edit-title');
+        editTitleEl.value = title;
+        let editAuthorEl = editBookForm.querySelector('#edit-author');
+        editAuthorEl.value = author;
+        let editIsbnEl = editBookForm.querySelector('#edit-isbn');
+        editIsbnEl.value = isbn;
+
+        //Set the body data for the PUT request
+
     }
+});
+
+editButton.addEventListener('click', function (e) {
+    e.preventDefault();
+
+    let form = e.target.parentElement;
+    let bookId = form.getAttribute('data-edit-book-id');
+
+    let inputs = form.querySelectorAll(`input`);  // replace this with your actual selector
+
+    let title = inputs[0].value;
+    let author = inputs[1].value;
+    let isbn = inputs[2].value;
+
+    let bodyData = {
+        title,
+        author,
+        isbn
+    };
+
+    // PUT request to the server (Firebase in this case)
+    fetch(`${baseUrl}/${bookId}.json`, {
+        method: 'PUT',
+        body: JSON.stringify(bodyData)
+    })
+        .then(res => res.json())
+        .then(bookData => {
+            // Update dynamically DOM
+            let tr = document.querySelector(`tr[data-book-id="${bookId}"]`); 
+            let tds = tr.children;
+            tds[0].textContent = bookData.title;
+            tds[1].textContent = bookData.author;
+            tds[2].textContent = bookData.isbn;
+
+        })
+        .catch(err => {
+            console.log(err.message);
+        })
 });
 
 function createTableDOM(bookData) {

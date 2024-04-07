@@ -30,6 +30,10 @@
     margin: 10px auto;
 }
 
+#edit-book-form {
+    display: none;
+}
+
 table {
     border: 1px solid #234465;
     padding: 1%;
