@@ -158,6 +158,7 @@ function createTr(bodyData) {
     tr.appendChild(tdButtons);
 
     // Append tr to tbody
+    let tbody = tableWrapper.querySelector('tbody');
     tbody.appendChild(tr);
 }
 
@@ -189,6 +190,9 @@ tableWrapper.addEventListener('click', function (e) {
             });
 
     }
+
+
+    // Update functionality
     // if () {
 
     // }
