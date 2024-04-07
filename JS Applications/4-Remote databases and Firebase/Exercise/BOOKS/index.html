@@ -11,23 +11,24 @@
 
 <body>
 
-    <section class="authentication">
-        <form class="login">
+    <section id="authentication">
+        <form id="login">
             <h2 class="login-header">Login</h2>
-            <input type="email" id="Email" placeholder="Email...">
-            <input type="password" id="password" placeholder="Password...">
-            <button class="login-button" type="button">Login</button>
+            <input type="email" id="login-email" placeholder="Email...">
+            <input type="password" id="login-password" placeholder="Password...">
+            <button id="login-button" type="button">Login</button>
         </form>
-        <form class="register">
+        <form id="register">
             <h2 class="register-header">Or if you don't have and account, Register</h2>
-            <input type="email" id="Email" placeholder="Email...">
-            <input type="password" id="password" placeholder="Password...">
-            <button class="register-button" type="button">Register</button>
+            <input type="email" id="register-email" placeholder="Email...">
+            <input type="password" id="register-password" placeholder="Password...">
+            <button id="register-button" type="button">Register</button>
         </form>
         <div class="logout"></div>
     </section>
 
-    <main class="main-wrapper">
+    <main id="main-wrapper">
+        <h1 id="header-greet">Hello, </h1>
         <button id="loadBooks">LOAD ALL BOOKS</button>
         <table>
             <thead>
@@ -75,7 +76,7 @@
 
 
     <script type="module" src="./init-firebase.js"></script>
-    <script src="./app.js"></script>
+    <script type="module" src="./app.js"></script>
 </body>
 
 </html>
