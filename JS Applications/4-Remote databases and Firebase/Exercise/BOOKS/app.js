@@ -9,10 +9,16 @@ const mainWrapper = document.getElementById('main-wrapper');
 const authenticationSection = document.getElementById('authentication');
 const loginButton = document.getElementById('login-button');
 const registerButton = document.getElementById('register-button');
+const logoutButton = document.getElementById('logout-button');
+
+let registerUsernameEl = document.getElementById('register-email');
+let registerPasswordEl = document.getElementById('register-password');
+let loginUsernameEl = document.getElementById('login-email');
+let loginPasswordEl = document.getElementById('login-password');
 
 registerButton.addEventListener('click', function (e) {
-    let registerUsername = document.getElementById('register-email').value;
-    let registerPassword = document.getElementById('register-password').value;
+    let registerUsername = registerUsernameEl.value;
+    let registerPassword = registerPasswordEl.value;
 
     createUserWithEmailAndPassword(auth, registerUsername, registerPassword)
         .then(userCredential => {
@@ -25,7 +31,6 @@ registerButton.addEventListener('click', function (e) {
             mainWrapper.style.display = 'block';
             let headerGreetEl = document.getElementById('header-greet');
             headerGreetEl.textContent += user.email;
-
         })
         .catch((error) => {
             console.log(error.message);
@@ -34,8 +39,8 @@ registerButton.addEventListener('click', function (e) {
 
 loginButton.addEventListener('click', function (e) {
 
-    let loginUsername = document.getElementById('login-email').value;
-    let loginPassword = document.getElementById('login-password').value;
+    let loginUsername = loginUsernameEl.value;
+    let loginPassword = loginPasswordEl.value;
 
     signInWithEmailAndPassword(auth, loginUsername, loginPassword)
         .then(userCredential => {
@@ -48,11 +53,24 @@ loginButton.addEventListener('click', function (e) {
             mainWrapper.style.display = 'block';
             let headerGreetEl = document.getElementById('header-greet');
             headerGreetEl.textContent += user.email + '!';
-
         })
         .catch((error) => {
             let errorField = e.target.parentElement.querySelector('.error-message');
             errorField.textContent = error.message;
             console.log(error.message);
         });
+});
+
+logoutButton.addEventListener('click', function (e) {
+    signOut(auth)
+        .then(() => {
+            // Clear input login and rigister fields, not sure if need to be done here but here is the only variant (known for now)
+            registerUsernameEl.value = '';
+            registerPasswordEl.value = '';
+            loginUsernameEl.value = '';
+            loginPasswordEl.value = '';
+
+            authenticationSection.style.display = 'block';
+            mainWrapper.style.display = 'none';
+        })
 });

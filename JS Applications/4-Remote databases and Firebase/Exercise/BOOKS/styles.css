@@ -16,6 +16,11 @@
     color: red;
 }
 
+#logout-button {
+    display: block;
+    margin: 10px auto;
+}
+
 table {
     border: 1px solid #234465;
     padding: 1%;
