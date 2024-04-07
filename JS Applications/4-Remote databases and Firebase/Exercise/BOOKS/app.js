@@ -76,13 +76,12 @@ tableWrapper.addEventListener('click', function (e) {
         fetch(`${baseUrl}/${bookId}.json`, {
             method: 'DELETE'
         })
+            .then(res => res.json())
             .then(res => {
                 // Dynamically remove the table row with deleted book element
                 tr.remove();
-
                 console.log('Succesfully deleted');
-                return res.json();
-            }).then(res => {
+
                 console.log(res);
             }).catch(() => {
                 console.log("An error occurred while trying to delete the item.");
@@ -92,9 +91,9 @@ tableWrapper.addEventListener('click', function (e) {
 
 
     // Update functionality
-    // if () {
+    if (e.target.textContent === 'Edit') {
 
-    // }
+    }
 });
 
 function createTableDOM(bookData) {
