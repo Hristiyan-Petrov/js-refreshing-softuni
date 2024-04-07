@@ -25,8 +25,9 @@
         <input type="text" id="title" />
         <label for="actor">Actor: </label>
         <input type="text" id="actor">
-        <input type="file">
-        <button id="add-button">Add</button>
+        <label for="actor">Image url: </label>
+        <input type="text" id="image-url">
+        <button id="add-movie-button">Add</button>
     </div>
 
     <ul id="movies"></ul>
@@ -40,6 +41,7 @@
         const baseUrl = 'https://movies-2024-ad36f-default-rtdb.europe-west1.firebasedatabase.app';
         let moviesEl = document.getElementById('movies');
         let movieDetailsEl = document.getElementById('movie-details');
+        let addMovieBut = document.getElementById('add-movie-button');
 
         fetch(`${baseUrl}/movies.json`)
             .then(res => res.json())
@@ -63,6 +65,36 @@
                 .then(movie => {
                     movieDetailsEl.innerHTML = `Selected movie: ${movie.title}`;
                 });
+        });
+
+        addMovieBut.addEventListener('click', function (e) {
+            let titleEl = document.getElementById('title');
+            let actorEl = document.getElementById('actor');
+            let imgUrlEl = document.getElementById('image-url');
+
+            let newMovie = {
+                title: titleEl.value,
+                actor: actor.value,
+                imageUrl: imgUrlEl.value,
+            }
+
+            fetch(`${baseUrl}/movies.json`, {
+                method: 'POST',
+                body: JSON.stringify(newMovie)
+            })
+                .then(res => res.json())
+                .then(res => {
+                    console.log(res.name);
+
+                    let newMovieEl = document.createElement('li');
+                    newMovieEl.textContent = newMovie.title;
+
+                    newMovieEl.dataset['key'] = res.name;
+                    newMovieEl.classList.add('movie-item');
+
+                    moviesEl.appendChild(newMovieEl);
+                })
+                .catch(err => console.log(err))
         });
     </script>
 
