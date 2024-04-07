@@ -1,74 +1,93 @@
-import {
-    auth,
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword,
-    signOut
-} from "./init-firebase.js";
+const getAllBooksButton = document.getElementById('loadBooks');
+const tableWrapper = document.getElementById('table-wrapper');
 
-const mainWrapper = document.getElementById('main-wrapper');
-const authenticationSection = document.getElementById('authentication');
-const loginButton = document.getElementById('login-button');
-const registerButton = document.getElementById('register-button');
-const logoutButton = document.getElementById('logout-button');
+const baseUrl = 'https://js-app-ex-rem-dbs-blogs-2024-default-rtdb.firebaseio.com/books';
 
-let registerUsernameEl = document.getElementById('register-email');
-let registerPasswordEl = document.getElementById('register-password');
-let loginUsernameEl = document.getElementById('login-email');
-let loginPasswordEl = document.getElementById('login-password');
+getAllBooksButton.addEventListener('click', function (e) {
+    fetch(baseUrl + '.json')
+        .then(res => res.json())
+        .then(bookData => {
 
-registerButton.addEventListener('click', function (e) {
-    let registerUsername = registerUsernameEl.value;
-    let registerPassword = registerPasswordEl.value;
+            createTableDOM(bookData);
 
-    createUserWithEmailAndPassword(auth, registerUsername, registerPassword)
-        .then(userCredential => {
-            // Signed in 
-            const user = userCredential.user;
-            console.log(user.email);
 
-            authenticationSection.style.display = 'none';
-            mainWrapper.style.display = 'block';
-            let headerGreetEl = document.getElementById('header-greet');
-            headerGreetEl.textContent = user.email;
-        })
-        .catch((error) => {
-            console.log(error.message);
         });
 });
 
-loginButton.addEventListener('click', function (e) {
 
-    let loginUsername = loginUsernameEl.value;
-    let loginPassword = loginPasswordEl.value;
+function createTableDOM(bookData) {
+    // <!-- Create table body -->
 
-    signInWithEmailAndPassword(auth, loginUsername, loginPassword)
-        .then(userCredential => {
-            // Logged in 
-            const user = userCredential.user;
-            console.log(user.email);
+    // Create table
+    const table = document.createElement('table');
+    table.id = 'table-books';
 
-            authenticationSection.style.display = 'none';
-            mainWrapper.style.display = 'block';
-            let headerGreetEl = document.getElementById('header-greet');
-            headerGreetEl.textContent = user.email + '!';
-        })
-        .catch((error) => {
-            let errorField = e.target.parentElement.querySelector('.error-message');
-            errorField.textContent = error.message;
-            console.log(error.message);
-        });
-});
+    // Create thead
+    const thead = document.createElement('thead');
 
-logoutButton.addEventListener('click', function (e) {
-    signOut(auth)
-        .then(() => {
-            // Clear input login and rigister fields, not sure if need to be done here but here is the only variant (known for now)
-            registerUsernameEl.value = '';
-            registerPasswordEl.value = '';
-            loginUsernameEl.value = '';
-            loginPasswordEl.value = '';
+    // Create tr
+    const tr = document.createElement('tr');
 
-            authenticationSection.style.display = 'block';
-            mainWrapper.style.display = 'none';
-        })
-});
+    // Create th elements for Title, Author, Isbn, and Action
+    const thTitle = document.createElement('th');
+    thTitle.textContent = 'Title';
+    const thAuthor = document.createElement('th');
+    thAuthor.textContent = 'Author';
+    const thIsbn = document.createElement('th');
+    thIsbn.textContent = 'Isbn';
+    const thAction = document.createElement('th');
+    thAction.textContent = 'Action';
+
+    // Append th elements to tr
+    tr.appendChild(thTitle);
+    tr.appendChild(thAuthor);
+    tr.appendChild(thIsbn);
+    tr.appendChild(thAction);
+
+    // Append tr to thead
+    thead.appendChild(tr);
+
+    // Append thead to table
+    table.appendChild(thead);
+
+    // Append table to body or other parent element
+    tableWrapper.appendChild(table);
+
+    // <!-- Create table body -->
+    let tbody = document.createElement('tbody');
+
+    // Iterate through the books
+    Object.keys(bookData).forEach(key => {
+        let tr = document.createElement('tr');
+
+        // Create td elements for Title, Author, Isbn, and Buttons
+        let tdTitle = document.createElement('td');
+        tdTitle.textContent = bookData[key].title;
+
+        let tdAuthor = document.createElement('td');
+        tdAuthor.textContent = bookData[key].author;
+
+        let tdIsbn = document.createElement('td');
+        tdIsbn.textContent = bookData[key].isbn;
+
+        let tdButtons = document.createElement('td');
+        let editButton = document.createElement('button');
+        editButton.textContent = 'Edit';
+        let deleteButton = document.createElement('delete');
+        deleteButton.textContent = 'Delete';
+        tdButtons.appendChild(editButton);
+        tdButtons.appendChild(deleteButton);
+
+        // Append td elements to tr
+        tr.appendChild(tdTitle);
+        tr.appendChild(tdAuthor);
+        tr.appendChild(tdIsbn);
+        tr.appendChild(tdButtons);
+
+        // Append tr to tbody
+        tbody.appendChild(tr);
+    });
+
+    // Append table body to the table element
+    table.appendChild(tbody);
+}

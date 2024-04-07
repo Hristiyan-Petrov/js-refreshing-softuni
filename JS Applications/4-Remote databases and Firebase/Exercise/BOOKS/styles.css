@@ -3,8 +3,12 @@
     font-size: 20px;
 }
 
-#main-wrapper {
+#authentication {
     display: none;
+}
+
+#main-wrapper {
+    /* display: none; */
 }
 
 #header-greet {
@@ -17,6 +21,11 @@
 }
 
 #logout-button {
+    display: block;
+    margin: 10px auto;
+}
+
+#message {
     display: block;
     margin: 10px auto;
 }
@@ -76,9 +85,8 @@ table button:hover {
 }
 
 button#loadBooks {
-    display: none;
     margin: 0 auto;
-    /* display:block; */
+    display: block;
     padding: 1%;
     margin-top: 1%;
     margin-bottom: 1%;

@@ -32,36 +32,40 @@
         <h1 id="header-greet">Hello, </h1>
         <button id="logout-button">Logout</button>
         <button id="loadBooks">LOAD ALL BOOKS</button>
-        <table>
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Author</th>
-                    <th>Isbn</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Harry Poter</td>
-                    <td>J. K. Rowling</td>
-                    <td>0-7475-3269-9</td>
-                    <td>
-                        <button>Edit</button>
-                        <button>Delete</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Game of Thrones</td>
-                    <td>George R. R. Martin</td>
-                    <td>9780553386790</td>
-                    <td>
-                        <button>Edit</button>
-                        <button>Delete</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+
+        <section id="table-wrapper">
+            <p id="message">Books will load here</p>
+            <!-- <table>
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Isbn</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Harry Poter</td>
+                        <td>J. K. Rowling</td>
+                        <td>0-7475-3269-9</td>
+                        <td>
+                            <button>Edit</button>
+                            <button>Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Game of Thrones</td>
+                        <td>George R. R. Martin</td>
+                        <td>9780553386790</td>
+                        <td>
+                            <button>Edit</button>
+                            <button>Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table> -->
+        </section>
 
         <form>
             <h3>FORM</h3>
@@ -78,7 +82,8 @@
 
 
     <script type="module" src="./init-firebase.js"></script>
-    <script type="module" src="./app.js"></script>
+    <script type="module" src="./auth.js"></script>
+    <script src="app.js"></script>
 </body>
 
 </html>
