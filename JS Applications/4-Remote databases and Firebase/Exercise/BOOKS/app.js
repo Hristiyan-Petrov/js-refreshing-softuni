@@ -64,30 +64,7 @@ function createTableDOM(bookData) {
         let tr = document.createElement('tr');
         tr.setAttribute('data-book-id', key);
 
-        // Create td elements for Title, Author, Isbn, and Buttons
-        let tdTitle = document.createElement('td');
-        tdTitle.textContent = bookData[key].title;
-
-        let tdAuthor = document.createElement('td');
-        tdAuthor.textContent = bookData[key].author;
-
-        let tdIsbn = document.createElement('td');
-        tdIsbn.textContent = bookData[key].isbn;
-
-        let tdButtons = document.createElement('td');
-        let editButton = document.createElement('button');
-        editButton.textContent = 'Edit';
-        let deleteButton = document.createElement('button');
-        deleteButton.textContent = 'Delete';
-        tdButtons.appendChild(editButton);
-        tdButtons.appendChild(deleteButton);
-
-        // Append td elements to tr
-        tr.appendChild(tdTitle);
-        tr.appendChild(tdAuthor);
-        tr.appendChild(tdIsbn);
-        tr.appendChild(tdButtons);
-
+        fillUpTr(bookData[key], tr);
         // Append tr to tbody
         tbody.appendChild(tr);
     });
@@ -119,10 +96,16 @@ addButton.addEventListener('click', function (e) {
             console.log(bookId);
 
             let tableBodyEl = tableWrapper.querySelector('tbody');
+
             // If table is opened (GET all books)
             if (tableBodyEl) {
                 // Add dynamically new row to the table after POST request
-                createTr(bodyData);
+                let tr = document.createElement('tr');
+                fillUpTr(bodyData, tr);
+                
+                // Append tr to tbody
+                let tbody = tableWrapper.querySelector('tbody');
+                tbody.appendChild(tr);
             }
         })
         .catch(err => {
@@ -130,9 +113,7 @@ addButton.addEventListener('click', function (e) {
         })
 });
 
-function createTr(bodyData) {
-    let tr = document.createElement('tr');
-
+function fillUpTr(bodyData, tr) {
     // Create td elements for Title, Author, Isbn, and Buttons
     let tdTitle = document.createElement('td');
     tdTitle.textContent = bodyData.title;
@@ -146,7 +127,7 @@ function createTr(bodyData) {
     let tdButtons = document.createElement('td');
     let editButton = document.createElement('button');
     editButton.textContent = 'Edit';
-    let deleteButton = document.createElement('delete');
+    let deleteButton = document.createElement('button');
     deleteButton.textContent = 'Delete';
     tdButtons.appendChild(editButton);
     tdButtons.appendChild(deleteButton);
@@ -156,10 +137,6 @@ function createTr(bodyData) {
     tr.appendChild(tdAuthor);
     tr.appendChild(tdIsbn);
     tr.appendChild(tdButtons);
-
-    // Append tr to tbody
-    let tbody = tableWrapper.querySelector('tbody');
-    tbody.appendChild(tr);
 }
 
 tableWrapper.addEventListener('click', function (e) {
