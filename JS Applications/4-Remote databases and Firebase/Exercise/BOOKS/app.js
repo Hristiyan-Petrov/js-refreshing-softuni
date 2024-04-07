@@ -1,5 +1,7 @@
 const getAllBooksButton = document.getElementById('loadBooks');
 const tableWrapper = document.getElementById('table-wrapper');
+const addBookForm = document.getElementById('add-book');
+const addButton = addBookForm.querySelector('#add-button');
 
 const baseUrl = 'https://js-app-ex-rem-dbs-blogs-2024-default-rtdb.firebaseio.com/books';
 
@@ -7,13 +9,14 @@ getAllBooksButton.addEventListener('click', function (e) {
     fetch(baseUrl + '.json')
         .then(res => res.json())
         .then(bookData => {
-
+            let messageEl = document.getElementById('message');
+            messageEl.style.display = 'none';
             createTableDOM(bookData);
-
-
+        })
+        .catch(err => {
+            console.log(err.message);
         });
 });
-
 
 function createTableDOM(bookData) {
     // <!-- Create table body -->
@@ -59,6 +62,7 @@ function createTableDOM(bookData) {
     // Iterate through the books
     Object.keys(bookData).forEach(key => {
         let tr = document.createElement('tr');
+        tr.setAttribute('data-book-id', key);
 
         // Create td elements for Title, Author, Isbn, and Buttons
         let tdTitle = document.createElement('td');
@@ -73,7 +77,7 @@ function createTableDOM(bookData) {
         let tdButtons = document.createElement('td');
         let editButton = document.createElement('button');
         editButton.textContent = 'Edit';
-        let deleteButton = document.createElement('delete');
+        let deleteButton = document.createElement('button');
         deleteButton.textContent = 'Delete';
         tdButtons.appendChild(editButton);
         tdButtons.appendChild(deleteButton);
@@ -91,3 +95,101 @@ function createTableDOM(bookData) {
     // Append table body to the table element
     table.appendChild(tbody);
 }
+
+addButton.addEventListener('click', function (e) {
+    e.preventDefault();
+
+    let title = document.getElementById('title').value;
+    let author = document.getElementById('author').value;
+    let isbn = document.getElementById('isbn').value;
+
+
+    let bodyData = {
+        title,
+        author,
+        isbn
+    }
+
+    fetch(`${baseUrl}.json`, {
+        method: 'POST',
+        body: JSON.stringify(bodyData)
+    })
+        .then(res => res.json())
+        .then(bookId => {
+            console.log(bookId);
+
+            let tableBodyEl = tableWrapper.querySelector('tbody');
+            // If table is opened (GET all books)
+            if (tableBodyEl) {
+                // Add dynamically new row to the table after POST request
+                createTr(bodyData);
+            }
+        })
+        .catch(err => {
+            console.log(err.message);
+        })
+});
+
+function createTr(bodyData) {
+    let tr = document.createElement('tr');
+
+    // Create td elements for Title, Author, Isbn, and Buttons
+    let tdTitle = document.createElement('td');
+    tdTitle.textContent = bodyData.title;
+
+    let tdAuthor = document.createElement('td');
+    tdAuthor.textContent = bodyData.author;
+
+    let tdIsbn = document.createElement('td');
+    tdIsbn.textContent = bodyData.isbn;
+
+    let tdButtons = document.createElement('td');
+    let editButton = document.createElement('button');
+    editButton.textContent = 'Edit';
+    let deleteButton = document.createElement('delete');
+    deleteButton.textContent = 'Delete';
+    tdButtons.appendChild(editButton);
+    tdButtons.appendChild(deleteButton);
+
+    // Append td elements to tr
+    tr.appendChild(tdTitle);
+    tr.appendChild(tdAuthor);
+    tr.appendChild(tdIsbn);
+    tr.appendChild(tdButtons);
+
+    // Append tr to tbody
+    tbody.appendChild(tr);
+}
+
+tableWrapper.addEventListener('click', function (e) {
+
+    if (e.target.tagName !== 'BUTTON') {
+        return;
+    }
+
+    // Delete functionality
+    if (e.target.textContent === 'Delete') {
+        let tr = e.target.closest('tr');
+        let bookId = tr.getAttribute('data-book-id');
+
+        // DELETE request to the server (Firebase in this case)
+        fetch(`${baseUrl}/${bookId}.json`, {
+            method: 'DELETE'
+        })
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error('HTTP error ' + res.status);
+                }
+                console.log('Succesfully deleted');
+                return res.json();
+            }).then(res => {
+                console.log(res);
+            }).catch(() => {
+                console.log("An error occurred while trying to delete the item.");
+            });
+
+    }
+    // if () {
+
+    // }
+})
