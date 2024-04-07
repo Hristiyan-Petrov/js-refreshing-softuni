@@ -3,6 +3,10 @@
     font-size: 20px;
 }
 
+.main-wrapper {
+    display: none;
+}
+
 table{
     border:1px solid #234465;
     padding: 1%;
@@ -56,8 +60,9 @@ table button:hover{
 }
 
 button#loadBooks{
+    display: none;
     margin: 0 auto;
-    display:block;
+    /* display:block; */
     padding:1%;
     margin-top: 1%;
     margin-bottom: 1%;
