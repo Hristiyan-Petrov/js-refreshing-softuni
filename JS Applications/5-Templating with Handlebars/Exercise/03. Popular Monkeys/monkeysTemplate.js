@@ -1,30 +1,53 @@
-(() => {
-    console.log('yeeeey');
+// Jquery approach
 
-    const divWrapper = document.querySelector('.monkeys');
+$(() => {
+    const divWrapper = $('.monkeys');
 
-    const monkeyPartialSource = document.getElementById('monkey-partial-template').innerHTML;
+    const monkeyPartialSource = $('#monkey-partial-template').html();
     Handlebars.registerPartial('monkeyPartial', monkeyPartialSource);
 
-    const allMonkeysParialSource = document.querySelector('#monkeys-template').innerHTML;
+    const allMonkeysParialSource = $('#monkeys-template').html();
     const createMokeysTemplate = Handlebars.compile(allMonkeysParialSource);
 
     let monkeysHtml = createMokeysTemplate({ monkeys });
-    console.log(monkeys);
-    divWrapper.innerHTML = monkeysHtml;
 
-    divWrapper.addEventListener('click', function (e) {
-        if (e.target.textContent !== 'Info') {
-            return;
-        }
+    divWrapper.html(monkeysHtml);
 
-        console.log(infoElement.style.value);
+    divWrapper.on('click', 'button', function () {
+        $(this).next().fadeToggle();
+        // this refers to e.target
+        // .next() is used to select the next element sibling and toggle is out of the box 
+    });
+});
 
-        if (infoElement.attributes.style.value === 'display: none' || infoElement.style.display === 'none') {
-            infoElement.style.display = 'block';
-        } else {
-            infoElement.style.display = 'none';
-        }
-    })
-})();
+// Vanilla JS
 
+// (() => {
+//     const divWrapper = document.querySelector('.monkeys');
+
+//     const monkeyPartialSource = document.getElementById('monkey-partial-template').innerHTML;
+//     Handlebars.registerPartial('monkeyPartial', monkeyPartialSource);
+
+//     const allMonkeysParialSource = document.querySelector('#monkeys-template').innerHTML;
+//     const createMokeysTemplate = Handlebars.compile(allMonkeysParialSource);
+
+//     let monkeysHtml = createMokeysTemplate({ monkeys });
+
+//     divWrapper.innerHTML = monkeysHtml;
+
+//     divWrapper.addEventListener('click', function (e) {
+//         if (e.target.textContent !== 'Info') {
+//             return;
+//         }
+
+//         let infoElement = e.target.nextElementSibling;
+
+//         console.log(infoElement.style.display);
+
+//         if (infoElement.style.display === 'none') {
+//             infoElement.style.display = 'block';
+//         } else {
+//             infoElement.style.display = 'none';
+//         }
+//     });
+// })();
