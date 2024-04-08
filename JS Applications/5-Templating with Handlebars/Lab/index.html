@@ -34,11 +34,13 @@
   <script src="./contacts.js"></script>
 
   <script>
+    const contactsWrapper = document.getElementById('contacts');
     let contactCardView = document.getElementById('contact-card-template').innerHTML;
     let createTemplate = Handlebars.compile(contactCardView);
     
     let contactCardsHtml = contacts.map(x => createTemplate(x)).join('');
-    console.log(createTemplate(contactCardsHtml));
+    // console.log(createTemplate(contactCardsHtml));
+    contactsWrapper.innerHTML = contactCardsHtml;
   </script>
 </body>
 
