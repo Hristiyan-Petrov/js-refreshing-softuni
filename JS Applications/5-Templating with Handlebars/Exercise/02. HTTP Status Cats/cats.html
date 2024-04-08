@@ -128,6 +128,7 @@
         </ul> -->
     </section>
 
+    <!-- Cat li partial -->
     <script type="text/x-handlebars" id="cat-li-partial">
         <li>
             <img src="images/{{imageLocation}}.jpg" width="250" height="250" alt="Card image cap">
@@ -141,14 +142,27 @@
         </li>
     </script>
 
+    <!-- Cats ul template with presentation logic -->
     <script type="text/x-handlebars" id="cats-ul">
         <ul>
-            {{#each}}
+            {{#each cats}}
                 {{> catPartial}}
             {{/each}}
         </ul>
     </script>
 
+    <script>
+        const ulWrapper = document.getElementById('allCats');
+
+        let catPartialView = document.getElementById('cat-li-partial').innerHTML;
+        Handlebars.registerPartial('catPartial', catPartialView);
+
+        let ulCatsView = document.getElementById('cats-ul').innerHTML;
+        let createCatsHtml = Handlebars.compile(ulCatsView);
+
+        let catsHtml = createCatsHtml({ cats });
+        ulWrapper.innerHTML = catsHtml;
+    </script>   
 
     <script src="template.js"></script>
 </body>
