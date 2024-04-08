@@ -4,14 +4,23 @@
     function renderCatTemplate() {
         const ulWrapper = document.getElementById('allCats');
 
-        let catPartialView = document.getElementById('cat-li-partial').innerHTML;
-        Handlebars.registerPartial('catPartial', catPartialView);
+        fetch('./template.hbs')
+            .then(res => res.text())
+            .then(template => {
+                // Create a temporary HTML element to host the fetched templates
+                let tempElement = document.createElement('div');
+                tempElement.innerHTML = template;
 
-        let ulCatsView = document.getElementById('cats-ul').innerHTML;
-        let createCatsHtml = Handlebars.compile(ulCatsView);
+                let catPartialView = tempElement.querySelector('#cat-li-partial').innerHTML;
+                Handlebars.registerPartial('catPartial', catPartialView);
 
-        let catsHtml = createCatsHtml({ cats });
-        ulWrapper.innerHTML = catsHtml;
+                let ulCatsView = tempElement.querySelector('#cats-ul').innerHTML;
+                let createCatsHtml = Handlebars.compile(ulCatsView);
+
+                let catsHtml = createCatsHtml({ cats });
+                ulWrapper.innerHTML = catsHtml;
+            })
+
     }
 })();
 
