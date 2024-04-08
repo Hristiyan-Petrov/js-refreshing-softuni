@@ -9,20 +9,58 @@
 </head>
 
 <body>
+    <script type="text/x-handlebars" id="towns-view">
+        {{#each towns}}
+        <ul>
+            {{> townPartial}}
+        </ul>
+        {{/each}}
+    </script>
+
+    <script type="text/x-handlebars" id="town-parial">
+        <li>{{name}}</li>
+    </script>
+
     <form action="#" class="content">
         <label for="towns">Towns</label>
         <input id="towns" type="text" />
-        <button id="btnLoadTowns">Load</button>
+        <button id="btnLoadTowns" onclick="loadTowns(event)">Load</button>
     </form>
     <div id="root">
-        <ul>
+        <!-- <ul>
             <li>Sofiq</li>
             <li>Plovdiv</li>
             <li>Varna</li>
             <li>Burgas</li>
-        </ul>
+        </ul> -->
     </div>
+
+    <script>
+        function loadTowns(e) {
+            e.preventDefault();
+
+            // Create array of objects, each with property 'name' = {the name}
+            let inputEl = document.getElementById('towns');
+            let towns = inputEl.value
+                .split(', ')
+                .map(x => ({ name: x }));
+
+            // Register partial template
+            let townView = document.getElementById('town-parial').innerHTML;
+            Handlebars.registerPartial('townPartial', townView);
+
+            // Set up the parent template
+            let townsView = document.getElementById('towns-view').innerHTML;
+            let createTownsHtml = Handlebars.compile(townsView); // Create function createTownsHtml()
+
+            // Create and append the html 
+            let townsFullHtml = createTownsHtml({ towns }); // Returns string
+            let rootElement = document.getElementById('root');
+            rootElement.innerHTML = townsFullHtml;
+        }
+    </script>
+
 </body>
-<script src="./app.js"></script>
+<!-- <script src="./app.js"></script> -->
 
 </html>
