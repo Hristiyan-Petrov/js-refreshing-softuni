@@ -13,5 +13,17 @@
         let catsHtml = createCatsHtml({ cats });
         ulWrapper.innerHTML = catsHtml;
     }
-
 })();
+
+function showDetails(e) {
+    e.preventDefault();
+    let infoElement = e.target.nextElementSibling;
+
+    if (e.target.textContent === 'Show status code') {
+        infoElement.style.display = 'block';
+        e.target.textContent = 'Hide status code'
+    } else {
+        e.target.textContent = 'Show status code';
+        infoElement.style.display = 'none';
+    }
+}

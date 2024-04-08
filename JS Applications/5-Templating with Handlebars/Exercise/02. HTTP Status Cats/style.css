@@ -30,6 +30,7 @@ ul li {
 }
 
 .status {
+    display: none;
     position: relative;
     top: 1rem;
     text-align: center;
