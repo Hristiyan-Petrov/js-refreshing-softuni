@@ -1,3 +1,4 @@
 $(() => {
     // TODO
-})
+    console.log('yeeeey');
+});
