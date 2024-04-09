@@ -8,6 +8,41 @@
     <title>Document</title>
 </head>
 <body>
+
+    <h1>Hello World</h1>
+
+    <div id="root"></div>
     
+    <a href="#home">home</a>
+    <a href="#about">about</a>
+    <a href="#contact">contact</a>
+
+    <button id="change-hash">Change</button>
+
+    <script>
+        const rootElement = document.getElementById('root');
+
+        const router = {
+            '#home': '<h2>Home page</h2>',
+            '#about': '<h2>About us</h2>',
+            '#contact': '<h2>Our contacts</h2>',
+            '#changed': renderChanged(),
+        }
+    
+        
+        window.addEventListener('hashchange', function() {
+            rootElement.innerHTML = router[location.hash] || '<h2>Not found!</h2>';
+            console.log(location.href);
+            console.log(location.hash);
+        });
+
+        document.getElementById('change-hash').addEventListener('click', () => {
+            location.hash = 'changed';
+        });
+
+        function renderChanged() {
+            return '<h2>Changed content</h2>'
+        }
+    </script>
 </body>
 </html>
