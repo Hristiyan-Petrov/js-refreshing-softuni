@@ -35,7 +35,9 @@
             let path = location.pathname.substring(location.pathname.lastIndexOf('/'));
             console.log(path);
 
-            rootElement.innerHTML = router[path] || '<h2>Not found!</h2>'
+            console.log(location.pathname);
+
+            rootElement.innerHTML = router[location.pathname] || '<h2>Not found!</h2>'
         }
     </script>
 </body>
