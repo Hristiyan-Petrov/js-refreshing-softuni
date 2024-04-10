@@ -29,3 +29,7 @@
 #errorBox>span {
     background: #F50;
 }
+
+.image {
+    max-width: 90%;
+}

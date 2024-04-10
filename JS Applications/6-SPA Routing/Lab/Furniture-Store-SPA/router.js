@@ -11,7 +11,7 @@ async function router() {
     const app = document.getElementById('container');
 
     const routes = {
-        '/furniture/all': await getTemplate('allFurniture'),
+        '/furniture/all': await getTemplate('allFurniture', true),
         '/furniture/create': await getTemplate('createFurnitue'),
     }
 
@@ -21,12 +21,43 @@ async function router() {
     app.innerHTML = routes[route] || '<h1>Page not found</h1>';
 }
 
-function getTemplate(templateLocation) {
-    return fetch(`${templateLocation}.hbs`)
-        .then(res => res.text())
-        .catch(err => {
-            console.log(err.message);
-        });
+function getTemplate(templateLocation, getAll) {
+
+    if (!getAll) {
+
+        return fetch(`${templateLocation}.hbs`)
+            .then(res => res.text())
+            .catch(err => {
+                console.log(err.message);
+            });
+
+    } else {
+        // Handle get all furniture and display them
+        let dbUrl = 'https://js-apps-routing-lab-furniture-default-rtdb.firebaseio.com/furniture.json';
+        let container = document.getElementById('container');
+
+        return Promise.all([
+            fetch(`${templateLocation}.hbs`),
+            fetch(dbUrl)
+        ])
+            .then(([templateRes, furnitureRes]) => {
+                return Promise.all([templateRes.text(), furnitureRes.json()]);
+            })
+            .then(([template, furnitureData]) => {
+                console.log(template);
+                console.log(furnitureData);
+
+                let createHtml = Handlebars.compile(template);
+
+                return createHtml({ furniture: furnitureData })
+                // let furnitureHtml = createHtml({ furnitureData });
+                // container.innerHTML = furnitureHtml;
+            })
+            .catch(err => {
+                console.log(err.message);
+            })
+
+    }
 }
 
 window.addEventListener('popstate', router);
@@ -39,19 +70,3 @@ document.body.addEventListener('click', function (e) {
         router();
     }
 });
-
-// router();
-
-// switch (route) {
-//     // case '/furniture/all':
-//     // app.innerHTML = '<h1>All furniture</h1>';
-//     // break;
-//     case '/about':
-//         app.innerHTML = '<h1>About Page</h1>';
-//         break;
-//     case '/contact':
-//         app.innerHTML = '<h1>Contact Page</h1>';
-//         break;
-//     default:
-//         app.innerHTML = '<h1>Home Page</h1>';
-// }

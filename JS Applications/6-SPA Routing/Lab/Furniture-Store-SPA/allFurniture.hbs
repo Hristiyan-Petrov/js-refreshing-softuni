@@ -8,12 +8,13 @@
 
     <!-- Furniture item template (maybe will be included as Partial in 'All furniture template' ) -->
     <div class="row space-top">
+    {{#each furniture}}
         <div class="col-md-4">
             <div class="card text-white bg-primary">
                 <div class="card-body">
                     <blockquote class="card-blockquote">
-                        <img src="{{imageUrl}}" />
-                        <p>{{Description here}}</p>
+                        <img class="image" style="max-width: 100%;" src="{{imageUrl}}" />
+                        <p>{{description}}</p>
                         <footer>Someone famous in
                             <cite title="Source Title">Source Title</cite>
                         </footer>
@@ -24,6 +25,6 @@
                 </div>
             </div>
         </div>
+    {{/each }}
     </div>
-
 </div>

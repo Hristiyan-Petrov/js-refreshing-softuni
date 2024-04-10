@@ -35,7 +35,7 @@ function handleForm(e) {
     }
 
     function addFurnitureToDataBase() {
-        let url = 'https://js-apps-routing-lab-furniture-default-rtdb.firebaseio.com/furniture.json';
+        let dbUrl = 'https://js-apps-routing-lab-furniture-default-rtdb.firebaseio.com/furniture.json';
 
         let bodyData = JSON.stringify({
             'make': inputs[0].value,
@@ -43,18 +43,18 @@ function handleForm(e) {
             'year': inputs[2].value,
             'description': inputs[3].value,
             'price': inputs[4].value,
-            'image': inputs[5].value,
+            'imageUrl': inputs[5].value,
             'material': inputs[6].value,
         });
 
-        fetch(url, {
+        fetch(dbUrl, {
             method: 'POST',
             body: bodyData
         })
             .then(res => res.json())
             .then(furniture => {
                 console.log('successfully added to DB');
-                
+
                 history.pushState({}, '', '/furniture/all');
                 // location.replace('/furniture/all');
                 router();
