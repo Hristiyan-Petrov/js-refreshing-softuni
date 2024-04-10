@@ -1,3 +1,11 @@
+window.onload = function () {
+    if (location.pathname === '/index.html') {
+        // location.replace('/furniture/all');
+    }
+}
+
+console.log(Handlebars);
+
 function router() {
     const app = document.getElementById('container');
 
