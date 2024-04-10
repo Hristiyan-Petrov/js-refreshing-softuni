@@ -1,4 +1,5 @@
 function router() {
+    const app = document.getElementById('container');
 
     const routes = {
         '/furniture/create': null,
@@ -6,10 +7,10 @@ function router() {
     }
 
     let route = window.location.pathname;
-
     console.log(route);
 
-    let app = document.getElementById('app');
+    app.innerHTML = routes[route] || '<h1>Page not found</h1>';
+
     switch (route) {
         case '/about':
             app.innerHTML = '<h1>About Page</h1>';
@@ -25,6 +26,7 @@ function router() {
 window.addEventListener('popstate', router);
 
 document.body.addEventListener('click', function (e) {
+    // If anchor is clicked
     if (e.target.tagName === 'A') {
         e.preventDefault();
         history.pushState(null, '', e.target.href);
@@ -32,4 +34,4 @@ document.body.addEventListener('click', function (e) {
     }
 });
 
-router();
+// router();
