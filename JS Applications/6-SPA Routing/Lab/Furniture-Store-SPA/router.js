@@ -1,8 +1,9 @@
 // Set up the route on the inital app load to be '/furniture/all'
 window.onload = function () {
     if (location.pathname === '/index.html') {
+        history.pushState({}, '', '/furniture/all');
         // location.replace('/furniture/all');
-        // router()
+        router();
     }
 }
 
@@ -17,11 +18,7 @@ async function router() {
     let route = window.location.pathname;
     console.log(route);
 
-    console.log(routes[route]);
-
     app.innerHTML = routes[route] || '<h1>Page not found</h1>';
-
-
 }
 
 function getTemplate(templateLocation) {
