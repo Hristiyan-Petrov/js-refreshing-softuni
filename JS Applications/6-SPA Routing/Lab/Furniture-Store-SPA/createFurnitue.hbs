@@ -11,31 +11,31 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label class="form-control-label" for="new-make">Make</label>
-                    <input class="form-control" id="new-make" type="text">
+                    <input class="form-control" id="new-make" type="text"  required minlength="4">
                 </div>
                 <div class="form-group has-success">
                     <label class="form-control-label" for="new-model">Model</label>
-                    <input class="form-control is-valid" id="new-model" type="text">
+                    <input class="form-control is-valid" id="new-model" type="text" required minlength="4">
                     <div class="form-control-feedback">This input value is valid</div>
                 </div>
                 <div class="form-group has-danger">
                     <label class="form-control-label" for="new-year">Year</label>
-                    <input class="form-control is-invalid" id="new-year" type="number">
+                    <input class="form-control is-invalid" id="new-year" type="number" min="1950" max="2050">
                     <div class="form-control-feedback">This input value is invalid</div>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" for="new-description">Description</label>
-                    <input class="form-control" id="new-description" type="text">
+                    <input class="form-control" id="new-description" type="text" required minlength="10">
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
                     <label class="form-control-label" for="new-price">Price</label>
-                    <input class="form-control" id="new-price" type="number">
+                    <input class="form-control" id="new-price" type="number" min="1">
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" for="new-image">Image</label>
-                    <input class="form-control" id="new-image" type="text">
+                    <input class="form-control" id="new-image" type="url" required>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" for="new-material">Material (optional)</label>
