@@ -11,7 +11,7 @@ async function router() {
 
     const routes = {
         '/furniture/all': await getTemplate('allFurniture'),
-        '/furniture/create': null,
+        '/furniture/create': await getTemplate('createFurnitue'),
     }
 
     let route = window.location.pathname;
