@@ -10,18 +10,20 @@
             <div class="card text-white bg-primary">
                 <div class="card-body">
                     <blockquote class="card-blockquote">
-                        <img src="imageUrl" />
+                        <img style="max-width: 100%;" src="{{imageUrl}}" />
                     </blockquote>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
-            <p>Make: make</p>
-            <p>Model: model</p>
-            <p>Year: year</p>
-            <p>Description: description</p>
-            <p>Price: price</p>
-            <p>Material: material</p>
+            <p>Make: {{make}}</p>
+            <p>Model: {{model}}</p>
+            <p>Year: {{year}}</p>
+            <p>Description: {{description}}</p>
+            <p>Price: {{price}}</p>
+            {{#if material}}
+            <p>Material: {{material}}</p>
+            {{/if}}
         </div>
     </div>
 </div>

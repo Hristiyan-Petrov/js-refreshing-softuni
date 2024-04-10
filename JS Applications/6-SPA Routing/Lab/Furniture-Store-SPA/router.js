@@ -8,57 +8,86 @@ window.onload = function () {
 }
 
 async function router() {
+    let route = window.location.pathname;
+    const dbUrl = 'https://js-apps-routing-lab-furniture-default-rtdb.firebaseio.com/furniture/';
     const app = document.getElementById('container');
 
     const routes = {
-        '/furniture/all': await getTemplate('allFurniture', true),
-        '/furniture/create': await getTemplate('createFurnitue'),
+        '/furniture/all': await getTemplateAll('allFurniture', dbUrl),
+        '/furniture/create': await getTemplateCreate('createFurniture'),
     }
 
-    let route = window.location.pathname;
     console.log(route);
 
+    let containerHtml = null;
+
+    if (route.startsWith('/furniture/details')) {
+        let furnitureId = route.split('/').pop(); // get the last part of the path as id
+        let html = await getTemplateDetail('furnitureItemDetails', dbUrl, furnitureId);
+        containerHtml = html;
+    } else {
+        containerHtml = routes[route];
+    }
+    
     app.innerHTML = routes[route] || '<h1>Page not found</h1>';
 }
 
-function getTemplate(templateLocation, getAll) {
+function getTemplateCreate(templateLocation) {
+    return fetch(`${templateLocation}.hbs`)
+        .then(res => res.text())
+        .catch(err => {
+            console.log(err.message);
+        });
+}
 
-    if (!getAll) {
+function getTemplateDetail(templateLocation, dbUrl, id) {
+    // Handle furniture item details route
 
-        return fetch(`${templateLocation}.hbs`)
-            .then(res => res.text())
-            .catch(err => {
-                console.log(err.message);
-            });
+    return Promise.all([
+        fetch(`${templateLocation}.hbs`),
+        fetch(dbUrl + id + '.json')
+    ])
+        .then(([templateRes, furnitureRes]) => {
+            return Promise.all([templateRes.text(), furnitureRes.json()]);
+        })
+        .then(([template, furnitureItemData]) => {
+            console.log(template);
+            console.log(furnitureItemData);
 
-    } else {
-        // Handle get all route
-        let dbUrl = 'https://js-apps-routing-lab-furniture-default-rtdb.firebaseio.com/furniture.json';
+            let createHtml = Handlebars.compile(template);
+            // Return the html to render 
+            return createHtml(furnitureItemData);
+        })
+        .catch(err => {
+            console.log(err.message);
+        })
+}
 
-        return Promise.all([
-            fetch(`${templateLocation}.hbs`),
-            fetch(dbUrl)
-        ])
-            .then(([templateRes, furnitureRes]) => {
-                return Promise.all([templateRes.text(), furnitureRes.json()]);
-            })
-            .then(([template, furnitureData]) => {
-                // Iterating over furnitureData object keys to generate a new array with id properties to be used in the template 
-                let dataWithId = Object.keys(furnitureData).map(key => ({
-                    id: key,
-                    ...furnitureData[key]
-                }));
+function getTemplateAll(templateLocation, dbUrl) {
+    // Handle get all route
 
-                // Pass the new array to Handlebars
-                let createHtml = Handlebars.compile(template);
-                // Return the html to render 
-                return createHtml({ furniture: dataWithId });
-            })
-            .catch(err => {
-                console.log(err.message);
-            })
+    return Promise.all([
+        fetch(`${templateLocation}.hbs`),
+        fetch(dbUrl + '.json')
+    ])
+        .then(([templateRes, furnitureRes]) => {
+            return Promise.all([templateRes.text(), furnitureRes.json()]);
+        })
+        .then(([template, furnitureData]) => {
+            // Iterating over furnitureData object keys to generate a new array with id properties to be used in the template 
+            let dataWithId = Object.keys(furnitureData).map(key => ({
+                id: key,
+                ...furnitureData[key]
+            }));
 
-    }
+            // Pass the new array to Handlebars
+            let createHtml = Handlebars.compile(template);
+            // Return the html to render 
+            return createHtml({ furniture: dataWithId });
+        })
+        .catch(err => {
+            console.log(err.message);
+        })
 }
 
 window.addEventListener('popstate', router);
