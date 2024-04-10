@@ -32,9 +32,8 @@ function getTemplate(templateLocation, getAll) {
             });
 
     } else {
-        // Handle get all furniture and display them
+        // Handle get all route
         let dbUrl = 'https://js-apps-routing-lab-furniture-default-rtdb.firebaseio.com/furniture.json';
-        let container = document.getElementById('container');
 
         return Promise.all([
             fetch(`${templateLocation}.hbs`),
@@ -44,14 +43,16 @@ function getTemplate(templateLocation, getAll) {
                 return Promise.all([templateRes.text(), furnitureRes.json()]);
             })
             .then(([template, furnitureData]) => {
-                console.log(template);
-                console.log(furnitureData);
+                // Iterating over furnitureData object keys to generate a new array with id properties to be used in the template 
+                let dataWithId = Object.keys(furnitureData).map(key => ({
+                    id: key,
+                    ...furnitureData[key]
+                }));
 
+                // Pass the new array to Handlebars
                 let createHtml = Handlebars.compile(template);
-
-                return createHtml({ furniture: furnitureData })
-                // let furnitureHtml = createHtml({ furnitureData });
-                // container.innerHTML = furnitureHtml;
+                // Return the html to render 
+                return createHtml({ furniture: dataWithId });
             })
             .catch(err => {
                 console.log(err.message);
