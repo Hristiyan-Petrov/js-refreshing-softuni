@@ -20,7 +20,6 @@ function handleForm(e) {
     function validate() {
 
         inputs.forEach((input, i) => {
-            console.log(i);
             // Skip if the input does not have the 'required' attribute 
             if (!input.hasAttribute('required')) return;
 

@@ -13,8 +13,8 @@ async function router() {
     const app = document.getElementById('container');
 
     const routes = {
-        '/furniture/all': await getTemplate('allFurniture', dbUrl),
-        '/furniture/create': await getTemplate('createFurniture'),
+        '/furniture/all': await getTemplate('./templates/allFurniture', dbUrl, "", true),
+        '/furniture/create': await getTemplate('./templates/createFurniture')
     }
 
     console.log(route);
@@ -23,26 +23,32 @@ async function router() {
 
     if (route.startsWith('/furniture/details')) {
         let furnitureId = route.split('/').pop(); // get the last part of the path as id
-        containerHtml = await getTemplate('furnitureItemDetails', dbUrl, furnitureId);
+        containerHtml = await getTemplate('./templates/furnitureItemDetails', dbUrl, furnitureId, true);
     } else {
         containerHtml = routes[route];
     }
-    
+
     app.innerHTML = containerHtml || '<h1>Page not found</h1>';
 }
 
+function getTemplate(templateLocation, dbUrl = "", id = "", fetchItem = false) {
+    let fetches = [
+        fetch(`${templateLocation}.hbs`)
+    ];
+    if (fetchItem) fetches.push(fetch(dbUrl + id + ".json"));
 
-function getTemplate(templateLocation, dbUrl, id = "") {
-    return Promise.all([
-        fetch(`${templateLocation}.hbs`),
-        fetch(dbUrl + id + ".json")
-    ])
-        .then(([templateRes, dataRes]) => Promise.all([templateRes.text(), dataRes.json()]))
+    return Promise.all(fetches)
+        .then(responses => {
+            let [templateRes, dataRes] = responses;
+            return Promise.all([templateRes.text(), dataRes ? dataRes.json() : null]);
+        })
         .then(([template, data]) => {
             let templateData = data;
+            
+            console.log(template);
 
-            if (templateLocation === 'allFurniture') {
-                templateData = { 
+            if (templateLocation === './templates/allFurniture') {
+                templateData = {
                     furniture: Object.keys(data).map(key => ({ id: key, ...data[key] }))
                 };
             }
