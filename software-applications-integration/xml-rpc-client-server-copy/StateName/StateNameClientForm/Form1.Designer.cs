@@ -28,201 +28,214 @@
         /// </summary>
         private void InitializeComponent()
         {
-            getStateName = new GroupBox();
-            txtStateNumber = new TextBox();
-            labStateName = new Label();
-            label1 = new Label();
-            label2 = new Label();
-            getStateStruct = new GroupBox();
-            txtStateNumber1 = new TextBox();
-            txtStateNumber2 = new TextBox();
-            txtStateNumber3 = new TextBox();
-            labStateNames1 = new Label();
-            labStateNames2 = new Label();
-            labStateNames3 = new Label();
-            label3 = new Label();
-            label4 = new Label();
-            label5 = new Label();
-            butGetStateName = new Button();
-            butGetStateNames = new Button();
-            getStateName.SuspendLayout();
-            getStateStruct.SuspendLayout();
-            SuspendLayout();
+            this.getStateName = new System.Windows.Forms.GroupBox();
+            this.butGetStateName = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.labStateName = new System.Windows.Forms.Label();
+            this.txtStateNumber = new System.Windows.Forms.TextBox();
+            this.getStateStruct = new System.Windows.Forms.GroupBox();
+            this.butGetStateNames = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.labStateNames3 = new System.Windows.Forms.Label();
+            this.labStateNames2 = new System.Windows.Forms.Label();
+            this.labStateNames1 = new System.Windows.Forms.Label();
+            this.txtStateNumber3 = new System.Windows.Forms.TextBox();
+            this.txtStateNumber2 = new System.Windows.Forms.TextBox();
+            this.txtStateNumber1 = new System.Windows.Forms.TextBox();
+            this.getStateName.SuspendLayout();
+            this.getStateStruct.SuspendLayout();
+            this.SuspendLayout();
             // 
             // getStateName
             // 
-            getStateName.Controls.Add(butGetStateName);
-            getStateName.Controls.Add(label2);
-            getStateName.Controls.Add(label1);
-            getStateName.Controls.Add(labStateName);
-            getStateName.Controls.Add(txtStateNumber);
-            getStateName.Location = new Point(12, 12);
-            getStateName.Name = "getStateName";
-            getStateName.Size = new Size(300, 134);
-            getStateName.TabIndex = 0;
-            getStateName.TabStop = false;
-            getStateName.Text = "getStateName";
-            // 
-            // txtStateNumber
-            // 
-            txtStateNumber.Location = new Point(114, 41);
-            txtStateNumber.Name = "txtStateNumber";
-            txtStateNumber.Size = new Size(60, 27);
-            txtStateNumber.TabIndex = 0;
-            // 
-            // labStateName
-            // 
-            labStateName.AutoSize = true;
-            labStateName.Location = new Point(114, 18);
-            labStateName.Name = "labStateName";
-            labStateName.Size = new Size(50, 20);
-            labStateName.TabIndex = 1;
-            labStateName.Text = "label1";
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(0, 48);
-            label1.Name = "label1";
-            label1.Size = new Size(104, 20);
-            label1.TabIndex = 2;
-            label1.Text = "State Number:";
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new Point(8, 91);
-            label2.Name = "label2";
-            label2.Size = new Size(90, 20);
-            label2.TabIndex = 3;
-            label2.Text = "State Name:";
-            // 
-            // getStateStruct
-            // 
-            getStateStruct.Controls.Add(butGetStateNames);
-            getStateStruct.Controls.Add(label5);
-            getStateStruct.Controls.Add(label4);
-            getStateStruct.Controls.Add(label3);
-            getStateStruct.Controls.Add(labStateNames3);
-            getStateStruct.Controls.Add(labStateNames2);
-            getStateStruct.Controls.Add(labStateNames1);
-            getStateStruct.Controls.Add(txtStateNumber3);
-            getStateStruct.Controls.Add(txtStateNumber2);
-            getStateStruct.Controls.Add(txtStateNumber1);
-            getStateStruct.Location = new Point(12, 169);
-            getStateStruct.Name = "getStateStruct";
-            getStateStruct.Size = new Size(300, 272);
-            getStateStruct.TabIndex = 1;
-            getStateStruct.TabStop = false;
-            getStateStruct.Text = "getStateStruct";
-            // 
-            // txtStateNumber1
-            // 
-            txtStateNumber1.Location = new Point(114, 47);
-            txtStateNumber1.Name = "txtStateNumber1";
-            txtStateNumber1.Size = new Size(60, 27);
-            txtStateNumber1.TabIndex = 0;
-            // 
-            // txtStateNumber2
-            // 
-            txtStateNumber2.Location = new Point(114, 94);
-            txtStateNumber2.Name = "txtStateNumber2";
-            txtStateNumber2.Size = new Size(60, 27);
-            txtStateNumber2.TabIndex = 1;
-            // 
-            // txtStateNumber3
-            // 
-            txtStateNumber3.Location = new Point(114, 143);
-            txtStateNumber3.Name = "txtStateNumber3";
-            txtStateNumber3.Size = new Size(60, 27);
-            txtStateNumber3.TabIndex = 2;
-            // 
-            // labStateNames1
-            // 
-            labStateNames1.AutoSize = true;
-            labStateNames1.Location = new Point(121, 29);
-            labStateNames1.Name = "labStateNames1";
-            labStateNames1.Size = new Size(50, 20);
-            labStateNames1.TabIndex = 3;
-            labStateNames1.Text = "label3";
-            // 
-            // labStateNames2
-            // 
-            labStateNames2.AutoSize = true;
-            labStateNames2.Location = new Point(133, 77);
-            labStateNames2.Name = "labStateNames2";
-            labStateNames2.Size = new Size(50, 20);
-            labStateNames2.TabIndex = 4;
-            labStateNames2.Text = "label3";
-            // 
-            // labStateNames3
-            // 
-            labStateNames3.AutoSize = true;
-            labStateNames3.Location = new Point(117, 122);
-            labStateNames3.Name = "labStateNames3";
-            labStateNames3.Size = new Size(50, 20);
-            labStateNames3.TabIndex = 5;
-            labStateNames3.Text = "label3";
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Location = new Point(0, 47);
-            label3.Name = "label3";
-            label3.Size = new Size(116, 20);
-            label3.TabIndex = 6;
-            label3.Text = "State Number 1:";
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Location = new Point(2, 98);
-            label4.Name = "label4";
-            label4.Size = new Size(116, 20);
-            label4.TabIndex = 7;
-            label4.Text = "State Number 2:";
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Location = new Point(0, 150);
-            label5.Name = "label5";
-            label5.Size = new Size(116, 20);
-            label5.TabIndex = 8;
-            label5.Text = "State Number 3:";
+            this.getStateName.Controls.Add(this.butGetStateName);
+            this.getStateName.Controls.Add(this.label2);
+            this.getStateName.Controls.Add(this.label1);
+            this.getStateName.Controls.Add(this.labStateName);
+            this.getStateName.Controls.Add(this.txtStateNumber);
+            this.getStateName.Location = new System.Drawing.Point(12, 10);
+            this.getStateName.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.getStateName.Name = "getStateName";
+            this.getStateName.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.getStateName.Size = new System.Drawing.Size(300, 107);
+            this.getStateName.TabIndex = 0;
+            this.getStateName.TabStop = false;
+            this.getStateName.Text = "getStateName";
             // 
             // butGetStateName
             // 
-            butGetStateName.Location = new Point(200, 41);
-            butGetStateName.Name = "butGetStateName";
-            butGetStateName.Size = new Size(94, 29);
-            butGetStateName.TabIndex = 4;
-            butGetStateName.Text = "Get Name";
-            butGetStateName.UseVisualStyleBackColor = true;
+            this.butGetStateName.Location = new System.Drawing.Point(200, 33);
+            this.butGetStateName.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.butGetStateName.Name = "butGetStateName";
+            this.butGetStateName.Size = new System.Drawing.Size(94, 23);
+            this.butGetStateName.TabIndex = 4;
+            this.butGetStateName.Text = "Get Name";
+            this.butGetStateName.UseVisualStyleBackColor = true;
+            this.butGetStateName.Click += new System.EventHandler(this.butGetStateName_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(8, 73);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(81, 16);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "State Name:";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(0, 38);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(92, 16);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "State Number:";
+            // 
+            // labStateName
+            // 
+            this.labStateName.AutoSize = true;
+            this.labStateName.Location = new System.Drawing.Point(114, 14);
+            this.labStateName.Name = "labStateName";
+            this.labStateName.Size = new System.Drawing.Size(44, 16);
+            this.labStateName.TabIndex = 1;
+            this.labStateName.Text = "label1";
+            // 
+            // txtStateNumber
+            // 
+            this.txtStateNumber.Location = new System.Drawing.Point(114, 33);
+            this.txtStateNumber.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtStateNumber.Name = "txtStateNumber";
+            this.txtStateNumber.Size = new System.Drawing.Size(60, 22);
+            this.txtStateNumber.TabIndex = 0;
+            // 
+            // getStateStruct
+            // 
+            this.getStateStruct.Controls.Add(this.butGetStateNames);
+            this.getStateStruct.Controls.Add(this.label5);
+            this.getStateStruct.Controls.Add(this.label4);
+            this.getStateStruct.Controls.Add(this.label3);
+            this.getStateStruct.Controls.Add(this.labStateNames3);
+            this.getStateStruct.Controls.Add(this.labStateNames2);
+            this.getStateStruct.Controls.Add(this.labStateNames1);
+            this.getStateStruct.Controls.Add(this.txtStateNumber3);
+            this.getStateStruct.Controls.Add(this.txtStateNumber2);
+            this.getStateStruct.Controls.Add(this.txtStateNumber1);
+            this.getStateStruct.Location = new System.Drawing.Point(12, 135);
+            this.getStateStruct.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.getStateStruct.Name = "getStateStruct";
+            this.getStateStruct.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.getStateStruct.Size = new System.Drawing.Size(300, 218);
+            this.getStateStruct.TabIndex = 1;
+            this.getStateStruct.TabStop = false;
+            this.getStateStruct.Text = "getStateStruct";
             // 
             // butGetStateNames
             // 
-            butGetStateNames.Location = new Point(200, 47);
-            butGetStateNames.Name = "butGetStateNames";
-            butGetStateNames.Size = new Size(94, 29);
-            butGetStateNames.TabIndex = 9;
-            butGetStateNames.Text = "Get Names";
-            butGetStateNames.UseVisualStyleBackColor = true;
+            this.butGetStateNames.Location = new System.Drawing.Point(200, 38);
+            this.butGetStateNames.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.butGetStateNames.Name = "butGetStateNames";
+            this.butGetStateNames.Size = new System.Drawing.Size(94, 23);
+            this.butGetStateNames.TabIndex = 9;
+            this.butGetStateNames.Text = "Get Names";
+            this.butGetStateNames.UseVisualStyleBackColor = true;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(0, 120);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(102, 16);
+            this.label5.TabIndex = 8;
+            this.label5.Text = "State Number 3:";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(2, 78);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(102, 16);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "State Number 2:";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(0, 38);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(102, 16);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "State Number 1:";
+            // 
+            // labStateNames3
+            // 
+            this.labStateNames3.AutoSize = true;
+            this.labStateNames3.Location = new System.Drawing.Point(117, 98);
+            this.labStateNames3.Name = "labStateNames3";
+            this.labStateNames3.Size = new System.Drawing.Size(44, 16);
+            this.labStateNames3.TabIndex = 5;
+            this.labStateNames3.Text = "label3";
+            // 
+            // labStateNames2
+            // 
+            this.labStateNames2.AutoSize = true;
+            this.labStateNames2.Location = new System.Drawing.Point(133, 62);
+            this.labStateNames2.Name = "labStateNames2";
+            this.labStateNames2.Size = new System.Drawing.Size(44, 16);
+            this.labStateNames2.TabIndex = 4;
+            this.labStateNames2.Text = "label3";
+            // 
+            // labStateNames1
+            // 
+            this.labStateNames1.AutoSize = true;
+            this.labStateNames1.Location = new System.Drawing.Point(121, 23);
+            this.labStateNames1.Name = "labStateNames1";
+            this.labStateNames1.Size = new System.Drawing.Size(44, 16);
+            this.labStateNames1.TabIndex = 3;
+            this.labStateNames1.Text = "label3";
+            // 
+            // txtStateNumber3
+            // 
+            this.txtStateNumber3.Location = new System.Drawing.Point(114, 114);
+            this.txtStateNumber3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtStateNumber3.Name = "txtStateNumber3";
+            this.txtStateNumber3.Size = new System.Drawing.Size(60, 22);
+            this.txtStateNumber3.TabIndex = 2;
+            // 
+            // txtStateNumber2
+            // 
+            this.txtStateNumber2.Location = new System.Drawing.Point(114, 75);
+            this.txtStateNumber2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtStateNumber2.Name = "txtStateNumber2";
+            this.txtStateNumber2.Size = new System.Drawing.Size(60, 22);
+            this.txtStateNumber2.TabIndex = 1;
+            // 
+            // txtStateNumber1
+            // 
+            this.txtStateNumber1.Location = new System.Drawing.Point(114, 38);
+            this.txtStateNumber1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtStateNumber1.Name = "txtStateNumber1";
+            this.txtStateNumber1.Size = new System.Drawing.Size(60, 22);
+            this.txtStateNumber1.TabIndex = 0;
             // 
             // wrapper
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(330, 453);
-            Controls.Add(getStateStruct);
-            Controls.Add(getStateName);
-            Name = "wrapper";
-            Text = "State Names";
-            getStateName.ResumeLayout(false);
-            getStateName.PerformLayout();
-            getStateStruct.ResumeLayout(false);
-            getStateStruct.PerformLayout();
-            ResumeLayout(false);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(330, 362);
+            this.Controls.Add(this.getStateStruct);
+            this.Controls.Add(this.getStateName);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Name = "wrapper";
+            this.Text = "State Names";
+            this.getStateName.ResumeLayout(false);
+            this.getStateName.PerformLayout();
+            this.getStateStruct.ResumeLayout(false);
+            this.getStateStruct.PerformLayout();
+            this.ResumeLayout(false);
+
         }
 
         #endregion

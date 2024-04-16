@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "QTSIpqWgo5Z9i8PCkbiIuBTgxUzq66eE4Y6Kxf42ZHM9V6R6z/sJsjFB6iKQJBWgX+saUQvMRAbfnzEl8HDkHg==",
+  "dgSpecHash": "9AEa0SXvmCqxvx907V3BGnMyCst01K03smawKeHqDZvLE9Ylen7E3vfGitvDwmp7T7NLuItFO3uabj18BHZIRw==",
   "success": true,
   "projectFilePath": "C:\\Users\\kshop\\Desktop\\Software University\\js-refreshing-softuni\\software-applications-integration\\xml-rpc-client-server-copy\\StateName\\StateNameClientForm\\StateNameClientForm.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\kshop\\.nuget\\packages\\xmlrpcnet\\3.0.0.266\\xmlrpcnet.3.0.0.266.nupkg.sha512"
+  ],
   "logs": []
 }

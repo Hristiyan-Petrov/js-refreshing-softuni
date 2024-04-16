@@ -1,12 +1,49 @@
 {
   "version": 3,
   "targets": {
-    ".NETFramework,Version=v4.8": {},
-    ".NETFramework,Version=v4.8/win7-x86": {}
+    ".NETFramework,Version=v4.8": {
+      "xmlrpcnet/3.0.0.266": {
+        "type": "package",
+        "compile": {
+          "lib/net20/CookComputing.XmlRpcV2.dll": {}
+        },
+        "runtime": {
+          "lib/net20/CookComputing.XmlRpcV2.dll": {}
+        }
+      }
+    },
+    ".NETFramework,Version=v4.8/win7-x86": {
+      "xmlrpcnet/3.0.0.266": {
+        "type": "package",
+        "compile": {
+          "lib/net20/CookComputing.XmlRpcV2.dll": {}
+        },
+        "runtime": {
+          "lib/net20/CookComputing.XmlRpcV2.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "xmlrpcnet/3.0.0.266": {
+      "sha512": "Tlsc1k2M7+47zjlxFH0eJvBw7vOD0DPAs+aEYw4VHU51AAnDypAQlBQdYs5EbOLTzMOTQXW/kCHe6fR5QQrpBg==",
+      "type": "package",
+      "path": "xmlrpcnet/3.0.0.266",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net20/CookComputing.XmlRpcV2.dll",
+        "lib/sl3-wp/CookComputing.XmlRpcPhone.dll",
+        "lib/sl4/CookComputing.XmlRpcSilverlight.dll",
+        "xmlrpcnet.3.0.0.266.nupkg.sha512",
+        "xmlrpcnet.nuspec"
+      ]
+    }
+  },
   "projectFileDependencyGroups": {
-    ".NETFramework,Version=v4.8": []
+    ".NETFramework,Version=v4.8": [
+      "xmlrpcnet >= 3.0.0.266"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\kshop\\.nuget\\packages\\": {}
@@ -51,6 +88,12 @@
     "frameworks": {
       "net48": {
         "targetAlias": "net48",
+        "dependencies": {
+          "xmlrpcnet": {
+            "target": "Package",
+            "version": "[3.0.0.266, )"
+          }
+        },
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204\\RuntimeIdentifierGraph.json"
       }
     },
