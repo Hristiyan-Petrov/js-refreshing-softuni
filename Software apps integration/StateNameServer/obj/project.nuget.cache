@@ -1,8 +1,21 @@
 {
   "version": 2,
-  "dgSpecHash": "nlhR4whdJIkJBwRL6voILjxrLylkrjS29FoPy6DzaqoWP8/O/ejMsWWYThDPFCE2zCVdJr+OkncosLOzUVa/Vw==",
+  "dgSpecHash": "820V37tbhfbByV5FEpfL2Tu7uA+HSNgavdU+Ocm1bll8GLQSMLyDOFzLQ+FeGtRYf9mGt0KQ8gJdIbz2qhlIKA==",
   "success": true,
   "projectFilePath": "C:\\Users\\kshop\\Desktop\\Software University\\js-refreshing-softuni\\Software apps integration\\StateNameServer\\StateNameServer.csproj",
-  "expectedPackageFiles": [],
-  "logs": []
+  "expectedPackageFiles": [
+    "C:\\Users\\kshop\\.nuget\\packages\\xmlrpcnet\\3.0.0.266\\xmlrpcnet.3.0.0.266.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'xmlrpcnet 3.0.0.266' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0'. This package may not be fully compatible with your project.",
+      "libraryId": "xmlrpcnet",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    }
+  ]
 }
