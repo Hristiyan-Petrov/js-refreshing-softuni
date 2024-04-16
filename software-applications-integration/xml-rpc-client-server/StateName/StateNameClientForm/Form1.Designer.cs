@@ -1,6 +1,6 @@
 ﻿namespace StateNameClientForm
 {
-    partial class wrapper
+    partial class Form1
     {
         /// <summary>
         ///  Required designer variable.
