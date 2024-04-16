@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "SP4zJjChKap1aFb5eUkhaBQGhcjsJY1Wf1dAresEYvXwLzdBl+5PBOeVjMyQwIr9LIiX8vDJrWYZggkQn4nMyw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\kshop\\Desktop\\Software University\\js-refreshing-softuni\\software-applications-integration\\xml-rpc-client-server\\StateName\\StateNameServer\\StateNameServer.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\kshop\\.nuget\\packages\\xmlrpcnet\\3.0.0.266\\xmlrpcnet.3.0.0.266.nupkg.sha512"
+  ],
+  "logs": []
+}
