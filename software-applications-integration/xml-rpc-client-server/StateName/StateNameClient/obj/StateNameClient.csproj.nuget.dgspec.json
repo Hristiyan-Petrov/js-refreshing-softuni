@@ -27,6 +27,65 @@
         "frameworks": {
           "net48": {
             "targetAlias": "net48",
+            "projectReferences": {
+              "C:\\Users\\kshop\\Desktop\\Software University\\js-refreshing-softuni\\software-applications-integration\\xml-rpc-client-server\\StateName\\StateNameInterface\\StateNameInterface.csproj": {
+                "projectPath": "C:\\Users\\kshop\\Desktop\\Software University\\js-refreshing-softuni\\software-applications-integration\\xml-rpc-client-server\\StateName\\StateNameInterface\\StateNameInterface.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net48": {
+          "targetAlias": "net48",
+          "dependencies": {
+            "xmlrpcnet": {
+              "target": "Package",
+              "version": "[3.0.0.266, )"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204\\RuntimeIdentifierGraph.json"
+        }
+      },
+      "runtimes": {
+        "win7-x86": {
+          "#import": []
+        }
+      }
+    },
+    "C:\\Users\\kshop\\Desktop\\Software University\\js-refreshing-softuni\\software-applications-integration\\xml-rpc-client-server\\StateName\\StateNameInterface\\StateNameInterface.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\kshop\\Desktop\\Software University\\js-refreshing-softuni\\software-applications-integration\\xml-rpc-client-server\\StateName\\StateNameInterface\\StateNameInterface.csproj",
+        "projectName": "StateNameInterface",
+        "projectPath": "C:\\Users\\kshop\\Desktop\\Software University\\js-refreshing-softuni\\software-applications-integration\\xml-rpc-client-server\\StateName\\StateNameInterface\\StateNameInterface.csproj",
+        "packagesPath": "C:\\Users\\kshop\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\kshop\\Desktop\\Software University\\js-refreshing-softuni\\software-applications-integration\\xml-rpc-client-server\\StateName\\StateNameInterface\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\kshop\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net48"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net48": {
+            "targetAlias": "net48",
             "projectReferences": {}
           }
         },
@@ -44,12 +103,13 @@
       "frameworks": {
         "net48": {
           "targetAlias": "net48",
+          "dependencies": {
+            "xmlrpcnet": {
+              "target": "Package",
+              "version": "[3.0.0.266, )"
+            }
+          },
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204\\RuntimeIdentifierGraph.json"
-        }
-      },
-      "runtimes": {
-        "win7-x86": {
-          "#import": []
         }
       }
     }

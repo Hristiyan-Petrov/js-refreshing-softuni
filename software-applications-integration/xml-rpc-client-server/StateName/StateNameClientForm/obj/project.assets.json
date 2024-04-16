@@ -10,19 +10,6 @@
         "runtime": {
           "lib/net20/CookComputing.XmlRpcV2.dll": {}
         }
-      },
-      "StateNameInterface/1.0.0": {
-        "type": "project",
-        "framework": ".NETFramework,Version=v4.8",
-        "dependencies": {
-          "xmlrpcnet": "3.0.0.266"
-        },
-        "compile": {
-          "bin/placeholder/StateNameInterface.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/StateNameInterface.dll": {}
-        }
       }
     },
     ".NETFramework,Version=v4.8/win7-x86": {
@@ -33,19 +20,6 @@
         },
         "runtime": {
           "lib/net20/CookComputing.XmlRpcV2.dll": {}
-        }
-      },
-      "StateNameInterface/1.0.0": {
-        "type": "project",
-        "framework": ".NETFramework,Version=v4.8",
-        "dependencies": {
-          "xmlrpcnet": "3.0.0.266"
-        },
-        "compile": {
-          "bin/placeholder/StateNameInterface.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/StateNameInterface.dll": {}
         }
       }
     }
@@ -64,16 +38,10 @@
         "xmlrpcnet.3.0.0.266.nupkg.sha512",
         "xmlrpcnet.nuspec"
       ]
-    },
-    "StateNameInterface/1.0.0": {
-      "type": "project",
-      "path": "../StateNameInterface/StateNameInterface.csproj",
-      "msbuildProject": "../StateNameInterface/StateNameInterface.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETFramework,Version=v4.8": [
-      "StateNameInterface >= 1.0.0",
       "xmlrpcnet >= 3.0.0.266"
     ]
   },
@@ -83,11 +51,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\kshop\\Desktop\\Software University\\js-refreshing-softuni\\software-applications-integration\\xml-rpc-client-server\\StateName\\StateNameClient\\StateNameClient.csproj",
-      "projectName": "StateNameClient",
-      "projectPath": "C:\\Users\\kshop\\Desktop\\Software University\\js-refreshing-softuni\\software-applications-integration\\xml-rpc-client-server\\StateName\\StateNameClient\\StateNameClient.csproj",
+      "projectUniqueName": "C:\\Users\\kshop\\Desktop\\Software University\\js-refreshing-softuni\\software-applications-integration\\xml-rpc-client-server\\StateName\\StateNameClientForm\\StateNameClientForm.csproj",
+      "projectName": "StateNameClientForm",
+      "projectPath": "C:\\Users\\kshop\\Desktop\\Software University\\js-refreshing-softuni\\software-applications-integration\\xml-rpc-client-server\\StateName\\StateNameClientForm\\StateNameClientForm.csproj",
       "packagesPath": "C:\\Users\\kshop\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\kshop\\Desktop\\Software University\\js-refreshing-softuni\\software-applications-integration\\xml-rpc-client-server\\StateName\\StateNameClient\\obj\\",
+      "outputPath": "C:\\Users\\kshop\\Desktop\\Software University\\js-refreshing-softuni\\software-applications-integration\\xml-rpc-client-server\\StateName\\StateNameClientForm\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\kshop\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -103,11 +71,7 @@
       "frameworks": {
         "net48": {
           "targetAlias": "net48",
-          "projectReferences": {
-            "C:\\Users\\kshop\\Desktop\\Software University\\js-refreshing-softuni\\software-applications-integration\\xml-rpc-client-server\\StateName\\StateNameInterface\\StateNameInterface.csproj": {
-              "projectPath": "C:\\Users\\kshop\\Desktop\\Software University\\js-refreshing-softuni\\software-applications-integration\\xml-rpc-client-server\\StateName\\StateNameInterface\\StateNameInterface.csproj"
-            }
-          }
+          "projectReferences": {}
         }
       },
       "warningProperties": {
