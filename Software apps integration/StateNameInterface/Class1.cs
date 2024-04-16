@@ -1,6 +1,9 @@
-﻿namespace StateNameInterface;
+﻿using CookComputing.XmlRpc;
 
-public interface IStateName
+namespace StateNameInterface
 {
+    public interface IStateName
+    {
 
+    }
 }
