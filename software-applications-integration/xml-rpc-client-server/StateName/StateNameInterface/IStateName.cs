@@ -14,7 +14,7 @@ namespace StateNameInterface
         public int state3;
     }
 
-    internal interface IStateName
+    public interface IStateName
     {
         [XmlRpcMethod("getStateName")]
         string GetStateName(int stateNumber);
