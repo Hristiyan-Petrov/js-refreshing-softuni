@@ -42,3 +42,27 @@ public class StateNameServer : MarshalByRefObject, IStateName
         return ret;
     }
 }
+
+public class Program
+{
+    static void Main(string[] args)
+    {
+        // Create and initialize channel properties
+        IDictionary props = new Hashtable();
+        props["name"] = "MyHttpChannel";
+        props["port"] = 5678;
+
+        // Create a new HTTP channel for remote calls
+        HttpChannel channel = new HttpChannel(props, null, new XmlRpcServerFormatterSinkProvider());
+
+        // Register the HTTP channel
+        ChannelServices.RegisterChannel(channel, false);
+
+        // Register the server object type so clients can get a proxy to it
+        RemotingConfiguration.RegisterWellKnownServiceType(typeof(StateNameServer), "statename.rem", WellKnownObjectMode.Singleton);
+
+        // Wait for the user to hit <Enter>
+        Console.WriteLine("Press <ENTER> to shutdown");
+        Console.ReadLine();
+    }
+}
