@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("StateNameInterface")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8c214956b954a8197f661b4dc2770053cab56293")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+50f38438f5a5bb2c84dd67585f85cf11842ff161")]
 [assembly: System.Reflection.AssemblyProductAttribute("StateNameInterface")]
 [assembly: System.Reflection.AssemblyTitleAttribute("StateNameInterface")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

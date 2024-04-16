@@ -55,6 +55,11 @@ namespace StateNameServer
             HttpChannel channel = new HttpChannel(props, null, new XmlRpcServerFormatterSinkProvider());
 
             ChannServices.RegisterChannel(channel, false);
+
+            RemotingConfiguration.RegisterWellKnownServiceType(typeof(StateNameServer), "statename.rem", WellKnownObjectMode.Singleton);
+
+            Console.WriteLine("Press <ENTER> to shutdown");
+            Console.ReadLine();
         }
     }
 
