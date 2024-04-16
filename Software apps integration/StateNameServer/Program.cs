@@ -39,8 +39,8 @@ namespace StateNameServer
             if (request.state3 < 1 || request.state3 > m_stateNames.Length)
                 throw new XmlRpcFaultException(1, "State number 3 invalid");
             string ret = m_stateNames[request.state1 - 1] + " "
-            + m_stateNames[request.state2 - 1] + " "
-            + m_stateNames[request.state3 - 1];
+                        + m_stateNames[request.state2 - 1] + " "
+                        + m_stateNames[request.state3 - 1];
             return ret;
         }
     }
@@ -48,7 +48,13 @@ namespace StateNameServer
     {
         static void Main(string[] args)
         {
-            Console.WriteLine('Hello World');
+            IDictionary props = new Hashtable();
+            props["name"] = "MyHttpChannel";
+            props["port"] = 5678;
+
+            HttpChannel channel = new HttpChannel(props, null, new XmlRpcServerFormatterSinkProvider());
+
+            ChannServices.RegisterChannel(channel, false);
         }
     }
 
