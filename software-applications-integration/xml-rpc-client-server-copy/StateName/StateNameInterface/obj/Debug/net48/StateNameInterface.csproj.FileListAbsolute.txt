@@ -1,0 +1,6 @@
+C:\Users\kshop\Desktop\Software University\js-refreshing-softuni\software-applications-integration\xml-rpc-client-server-copy\StateName\StateNameInterface\obj\Debug\net48\StateNameInterface.csproj.AssemblyReference.cache
+C:\Users\kshop\Desktop\Software University\js-refreshing-softuni\software-applications-integration\xml-rpc-client-server-copy\StateName\StateNameInterface\obj\Debug\net48\StateNameInterface.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\kshop\Desktop\Software University\js-refreshing-softuni\software-applications-integration\xml-rpc-client-server-copy\StateName\StateNameInterface\obj\Debug\net48\StateNameInterface.AssemblyInfoInputs.cache
+C:\Users\kshop\Desktop\Software University\js-refreshing-softuni\software-applications-integration\xml-rpc-client-server-copy\StateName\StateNameInterface\obj\Debug\net48\StateNameInterface.AssemblyInfo.cs
+C:\Users\kshop\Desktop\Software University\js-refreshing-softuni\software-applications-integration\xml-rpc-client-server-copy\StateName\StateNameInterface\obj\Debug\net48\StateNameInterface.csproj.CoreCompileInputs.cache
+C:\Users\kshop\Desktop\Software University\js-refreshing-softuni\software-applications-integration\xml-rpc-client-server-copy\StateName\StateNameInterface\obj\Debug\net48\StateNameInterface.sourcelink.json

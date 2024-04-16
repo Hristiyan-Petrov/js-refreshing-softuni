@@ -1,0 +1,8 @@
+C:\Users\kshop\Desktop\Software University\js-refreshing-softuni\software-applications-integration\xml-rpc-client-server-copy\StateName\StateNameClientForm\obj\Debug\net48\StateNameClientForm.csproj.AssemblyReference.cache
+C:\Users\kshop\Desktop\Software University\js-refreshing-softuni\software-applications-integration\xml-rpc-client-server-copy\StateName\StateNameClientForm\obj\Debug\net48\StateNameClientForm.Form1.resources
+C:\Users\kshop\Desktop\Software University\js-refreshing-softuni\software-applications-integration\xml-rpc-client-server-copy\StateName\StateNameClientForm\obj\Debug\net48\StateNameClientForm.csproj.GenerateResource.cache
+C:\Users\kshop\Desktop\Software University\js-refreshing-softuni\software-applications-integration\xml-rpc-client-server-copy\StateName\StateNameClientForm\obj\Debug\net48\StateNameClientForm.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\kshop\Desktop\Software University\js-refreshing-softuni\software-applications-integration\xml-rpc-client-server-copy\StateName\StateNameClientForm\obj\Debug\net48\StateNameClientForm.AssemblyInfoInputs.cache
+C:\Users\kshop\Desktop\Software University\js-refreshing-softuni\software-applications-integration\xml-rpc-client-server-copy\StateName\StateNameClientForm\obj\Debug\net48\StateNameClientForm.AssemblyInfo.cs
+C:\Users\kshop\Desktop\Software University\js-refreshing-softuni\software-applications-integration\xml-rpc-client-server-copy\StateName\StateNameClientForm\obj\Debug\net48\StateNameClientForm.csproj.CoreCompileInputs.cache
+C:\Users\kshop\Desktop\Software University\js-refreshing-softuni\software-applications-integration\xml-rpc-client-server-copy\StateName\StateNameClientForm\obj\Debug\net48\StateNameClientForm.sourcelink.json
