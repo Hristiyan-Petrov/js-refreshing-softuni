@@ -29,6 +29,20 @@ namespace StateNameServer
                 throw new XmlRpcFaultException(1, 'Invalid state number');
             return m_stateNames[stateNumber - 1];
         }
+
+        public string GetStateNames(StateStructRequest request)
+        {
+            if (request.state1 < 1 || request.state1 > m_stateNames.Length)
+                throw new XmlRpcFaultException(1, "State number 1 invalid");
+            if (request.state2 < 1 || request.state2 > m_stateNames.Length)
+                throw new XmlRpcFaultException(1, "State number 2 invalid");
+            if (request.state3 < 1 || request.state3 > m_stateNames.Length)
+                throw new XmlRpcFaultException(1, "State number 3 invalid");
+            string ret = m_stateNames[request.state1 - 1] + " "
+            + m_stateNames[request.state2 - 1] + " "
+            + m_stateNames[request.state3 - 1];
+            return ret;
+        }
     }
     class Program
     {
