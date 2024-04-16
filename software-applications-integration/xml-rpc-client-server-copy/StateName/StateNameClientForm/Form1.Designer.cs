@@ -141,6 +141,7 @@
             this.butGetStateNames.TabIndex = 9;
             this.butGetStateNames.Text = "Get Names";
             this.butGetStateNames.UseVisualStyleBackColor = true;
+            this.butGetStateNames.Click += new System.EventHandler(this.butGetStateNames_Click);
             // 
             // label5
             // 

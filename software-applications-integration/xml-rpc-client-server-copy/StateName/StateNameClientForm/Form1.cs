@@ -48,5 +48,33 @@ namespace StateNameClientForm
             }
             Cursor = Cursors.Default;
         }
+
+        private void butGetStateNames_Click(object sender, EventArgs e)
+        {
+            labStateNames1.Text = labStateNames2.Text = labStateNames3.Text = "";
+            ProxyInterface svr = XmlRpcProxyGen.Create<ProxyInterface>();
+            StateStructRequest request;
+            string retstr = "";
+            Cursor = Cursors.WaitCursor;
+            try
+            {
+                request.state1 = Convert.ToInt32(txtStateNumber1.Text);
+                request.state2 = Convert.ToInt32(txtStateNumber2.Text);
+                request.state3 = Convert.ToInt32(txtStateNumber3.Text);
+                retstr = svr.GetStateNames(request);
+                String[] names = retstr.Split(',');
+                if (names.Length > 2)
+                    labStateNames3.Text = names[2];
+                if (names.Length > 1)
+                    labStateNames2.Text = names[1];
+                if (names.Length > 0)
+                    labStateNames1.Text = names[0];
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex);
+            }
+            Cursor = Cursors.Default;
+        }
     }
 }
