@@ -78,5 +78,35 @@ namespace Server
                 MessageBox.Show(se.Message);
             }
         }
+
+        public void WaitForData(System.Net.Sockets.Socket soc)
+        {
+            try
+            {
+                if (pfnWorkerCallBack == null)
+                {
+                    pfnWorkerCallBack = new AsyncCallback(OnDataReceived);
+                }
+                SocketPacket theSocPkt = new SocketPacket();
+                theSocPkt.m_currentSocket = soc;
+                soc.BeginReceive(theSocPkt.dataBuffer, 0,
+                theSocPkt.dataBuffer.Length,
+               SocketFlags.None,
+               pfnWorkerCallBack,
+                theSocPkt);
+            }
+            catch (SocketException se)
+            {
+                MessageBox.Show(se.Message);
+            }
+        }
+
     }
+
+    public class SocketPocket
+    {
+        public System.Net.Sockets.Socket m_currentSocket;
+        public byte[] m_dataBuffer = new byte[1];
+    }
+
 }
