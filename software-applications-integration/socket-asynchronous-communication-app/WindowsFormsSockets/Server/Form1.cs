@@ -177,6 +177,25 @@ namespace Server
             }
             return IPStr;
         }
+    void CloseSockets()
+    {
+        if (m_mainSocket != null)
+        {
+                m_mainSocket.Close();
+        }
+        for (int i = 0; i < m_clientCount; i++) 
+        { 
+                if (m_workerSocket[i] != null)
+                {
+                    m_workerSocket.Shutdown(SocketShutdown.Both);
+                    m_workerSocket[i].Close();
+                    m_workerSocket[i] = null;
+                }
+        }
     }
 
+
+
+
+    }
 }
