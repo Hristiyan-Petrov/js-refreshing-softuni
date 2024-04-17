@@ -157,6 +157,12 @@ namespace Server
                 MessageBox.Show(se.Message);
             }
         }
+
+        private void buttonStopListen_Click(object sender, EventArgs e)
+        {
+            CloseSockets();
+            UpdateControls(false);
+        }
     }
 
 }
