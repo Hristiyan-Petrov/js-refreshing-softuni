@@ -155,6 +155,7 @@
             this.buttonSendMsg.TabIndex = 12;
             this.buttonSendMsg.Text = "Send Message";
             this.buttonSendMsg.UseVisualStyleBackColor = true;
+            this.buttonSendMsg.Click += new System.EventHandler(this.buttonSendMsg_Click);
             // 
             // buttonClose
             // 

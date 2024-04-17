@@ -101,12 +101,62 @@ namespace Server
             }
         }
 
-    }
 
-    public class SocketPocket
-    {
-        public System.Net.Sockets.Socket m_currentSocket;
-        public byte[] m_dataBuffer = new byte[1];
+        public class SocketPacket
+        {
+            public System.Net.Sockets.Socket m_currentSocket;
+            public byte[] dataBuffer = new byte[1];
+        }
+
+
+        public void OnDataReceived(IAsyncResult asyn)
+        {
+            try
+            {
+                SocketPacket socketData = (SocketPacket)asyn.AsyncState;
+                int iRx = 0;
+                iRx = socketData.m_currentSocket.EndReceive(asyn);
+                char[] chars = new char[iRx + 1];
+                System.Text.Decoder d = System.Text.Encoding.UTF8.GetDecoder();
+                int charLen = d.GetChars(socketData.dataBuffer,
+                0, iRx, chars, 0);
+                System.String szData = new System.String(chars);
+                richTextBoxReceivedMsg.AppendText(szData);
+                WaitForData(socketData.m_currentSocket);
+            }
+            catch (ObjectDisposedException)
+            {
+                System.Diagnostics.Debugger.Log(0, "1",
+                "\nOnDataReceived: Socket has been closed\n");
+            }
+            catch (SocketException se)
+            {
+                MessageBox.Show(se.Message);
+            }
+        }
+
+        private void buttonSendMsg_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Object objData = richTextBoxReceivedMsg.Text;
+                byte[] byData = System.Text.Encoding.ASCII.GetBytes(objData.ToString());
+                for (int i = 0; i < m_clientCount; i++) 
+                {
+                    if (m_workerSocket[i] != null)
+                    {
+                        if (m_workerSocket[i].Connected)
+                        {
+                            m_workerSocket[i].Send(byData);
+                        }
+                    }
+                }
+            }
+            catch (SocketException se)
+            {
+                MessageBox.Show(se.Message);
+            }
+        }
     }
 
 }
