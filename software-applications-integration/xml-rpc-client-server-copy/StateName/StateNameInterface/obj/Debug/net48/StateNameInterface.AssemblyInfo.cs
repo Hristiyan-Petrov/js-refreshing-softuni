@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("StateNameInterface")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2f83675bd0f9995d266a9b9f534a6a32433648ab")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9d17ddb873eeaeac669e388cda47dff75150f18b")]
 [assembly: System.Reflection.AssemblyProductAttribute("StateNameInterface")]
 [assembly: System.Reflection.AssemblyTitleAttribute("StateNameInterface")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

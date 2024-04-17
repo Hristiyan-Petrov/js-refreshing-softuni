@@ -6,4 +6,16 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="xmlrpcnet" Version="3.0.0.266" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\StateNameInterface\StateNameInterface.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Runtime.Remoting" />
+  </ItemGroup>
+
 </Project>

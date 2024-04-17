@@ -15,4 +15,8 @@
     <ProjectReference Include="..\StateNameInterface\StateNameInterface.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="System.Runtime.Remoting" />
+  </ItemGroup>
+
 </Project>
