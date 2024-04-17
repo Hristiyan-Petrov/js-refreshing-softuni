@@ -51,5 +51,11 @@ namespace Server
                 MessageBox.Show(se.Message);
             }
         }
+
+        private void UpdateControls(bool listening)
+        {
+            buttonStartListen.Enabled = !listening;
+            buttonStopListen.Enabled = listening;
+        }
     }
 }
