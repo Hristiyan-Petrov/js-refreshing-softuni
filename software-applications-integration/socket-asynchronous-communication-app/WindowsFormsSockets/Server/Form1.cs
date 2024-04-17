@@ -194,8 +194,10 @@ namespace Server
         }
     }
 
-
-
-
+        private void buttonClose_Click(object sender, EventArgs e)
+        {
+            CloseSockets();
+            Close();
+        }
     }
 }
