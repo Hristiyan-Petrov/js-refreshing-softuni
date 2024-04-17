@@ -187,7 +187,7 @@ namespace Server
         { 
                 if (m_workerSocket[i] != null)
                 {
-                    m_workerSocket.Shutdown(SocketShutdown.Both);
+                    m_workerSocket[i].Shutdown(SocketShutdown.Both);
                     m_workerSocket[i].Close();
                     m_workerSocket[i] = null;
                 }
