@@ -163,6 +163,20 @@ namespace Server
             CloseSockets();
             UpdateControls(false);
         }
+
+        String GetIP()
+        {
+            String strHostName = Dns.GetHostName();
+            IPHostEntry iphostentry = Dns.GetHostByName(strHostName);
+
+            String IPStr = "";
+            foreach (IPAddress ipaddress in iphostentry.AddressList)
+            {
+                IPStr = ipaddress.ToString();
+                return IPStr;
+            }
+            return IPStr;
+        }
     }
 
 }
