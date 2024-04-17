@@ -108,5 +108,12 @@ namespace Client
                 MessageBox.Show(se.Message);
             }
         }
+
+        public class SocketPacket
+        {
+            public System.Net.Sockets.Socket thisSocket;
+            public byte[] dataBuffer = new byte[1];
+        }
+
     }
 }
