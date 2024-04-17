@@ -30,9 +30,8 @@ namespace Client
         {
             if (textBoxIP.Text == "" || textBoxPort.Text == "")
             {
-                MessageBox.Show("IP Address and Port Number are required to connect
-               to the Server\n");
- return;
+                MessageBox.Show("IP Address and Port Number are required to connect to the Server\n");
+                return;
             }
             try
             {
@@ -147,5 +146,28 @@ namespace Client
             textBoxConnectStatus.Text = connectStatus;
         }
 
+        private void buttonDisconnect_Click(object sender, EventArgs e)
+        {
+            if (m_clientSocket != null)
+            {
+                m_clientSocket.Shutdown(SocketShutdown.Both);
+                m_clientSocket.Close();
+                m_clientSocket = null;
+                UpdateControls(false);
+            }
+        }
+
+        String GetIP()
+        {
+            String strHostName = Dns.GetHostName();
+            IPHostEntry iphostentry = Dns.GetHostByName(strHostName);
+            String IPStr = "";
+            foreach (IPAddress ipaddress in iphostentry.AddressList)
+            {
+                IPStr = ipaddress.ToString();
+                return IPStr;
+            }
+            return IPStr;
+        }
     }
 }

@@ -146,6 +146,7 @@
             this.buttonDisconnect.TabIndex = 11;
             this.buttonDisconnect.Text = "Disconnect From Server";
             this.buttonDisconnect.UseVisualStyleBackColor = true;
+            this.buttonDisconnect.Click += new System.EventHandler(this.buttonDisconnect_Click);
             // 
             // buttonSendMessage
             // 
