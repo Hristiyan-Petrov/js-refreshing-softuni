@@ -129,8 +129,7 @@ namespace Client
             }
             catch (ObjectDisposedException)
             {
-                System.Diagnostics.Debugger.Log(0, "1",
-                "\nOnDataReceived: Socket has been closed\n");
+                System.Diagnostics.Debugger.Log(0, "1", "\nOnDataReceived: Socket has been closed\n");
             }
             catch (SocketException se)
             {

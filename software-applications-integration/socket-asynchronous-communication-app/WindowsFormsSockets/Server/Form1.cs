@@ -139,7 +139,7 @@ namespace Server
         {
             try
             {
-                Object objData = richTextBoxReceivedMsg.Text;
+                Object objData = richTextBoxSendMsg.Text;
                 byte[] byData = System.Text.Encoding.ASCII.GetBytes(objData.ToString());
                 for (int i = 0; i < m_clientCount; i++) 
                 {
