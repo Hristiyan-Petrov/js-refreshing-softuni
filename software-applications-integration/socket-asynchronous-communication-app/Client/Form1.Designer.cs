@@ -136,6 +136,7 @@
             this.buttonConnect.TabIndex = 10;
             this.buttonConnect.Text = "Connect To Server";
             this.buttonConnect.UseVisualStyleBackColor = true;
+            this.buttonConnect.Click += new System.EventHandler(this.buttonConnect_Click);
             // 
             // buttonDisconnect
             // 
