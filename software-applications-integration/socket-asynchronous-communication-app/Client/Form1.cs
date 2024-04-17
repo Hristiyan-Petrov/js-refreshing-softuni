@@ -57,5 +57,56 @@ namespace Client
                 UpdateControls(false);
             }
         }
+
+        private void buttonClose_Click(object sender, EventArgs e)
+        {
+            if (m_clientSocket != null)
+            {
+                m_clientSocket.Shutdown(SocketShutdown.Both);
+                m_clientSocket.Close();
+                m_clientSocket = null;
+            }
+            Close();
+        }
+
+        private void buttonSendMessage_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Object objData = richTextTxMessage.Text;
+                byte[] byData =
+                System.Text.Encoding.ASCII.GetBytes(objData.ToString());
+                if (m_clientSocket != null)
+                {
+                    m_clientSocket.Send(byData);
+                }
+            }
+            catch (SocketException se)
+            {
+                MessageBox.Show(se.Message);
+            }
+        }
+
+        public void WaitForData()
+        {
+            try
+            {
+                if (m_pfnCallBack == null)
+                {
+                    m_pfnCallBack = new AsyncCallback(OnDataReceived);
+                }
+                SocketPacket theSocPkt = new SocketPacket();
+                theSocPkt.thisSocket = m_clientSocket;
+                m_result = m_clientSocket.BeginReceive(theSocPkt.dataBuffer,
+                0, theSocPkt.dataBuffer.Length,
+               SocketFlags.None,
+               m_pfnCallBack,
+               theSocPkt);
+            }
+            catch (SocketException se)
+            {
+                MessageBox.Show(se.Message);
+            }
+        }
     }
 }
