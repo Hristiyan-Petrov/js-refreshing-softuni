@@ -27,5 +27,29 @@ namespace Server
             // Set the text of the textBoxIP control to your local IP.
             textBoxIP.Text = GetIP();
         }
+
+        private void buttonStartListen_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (textBoxPort.Text == "")
+                {
+                    MessageBox.Show("Please enter a Port Number");
+                    return;
+                }
+                string portStr = textBoxPort.Text;
+                int port = System.Convert.ToInt32(portStr);
+                m_mainSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                IPEndPoint ipLocal = new IPEndPoint(IPAddress.Any, port);
+                m_mainSocket.Bind(ipLocal);
+                m_mainSocket.Listen(4);
+                m_mainSocket.BeginAccept(new AsyncCallback(OnClientConnect), null);
+                UpdateControls(true);
+            }
+            catch (SocketException se)
+            {
+                MessageBox.Show(se.Message);
+            }
+        }
     }
 }

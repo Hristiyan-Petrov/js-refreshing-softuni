@@ -136,6 +136,7 @@
             this.buttonStartListen.TabIndex = 10;
             this.buttonStartListen.Text = "Start Listening";
             this.buttonStartListen.UseVisualStyleBackColor = true;
+            this.buttonStartListen.Click += new System.EventHandler(this.buttonStartListen_Click);
             // 
             // buttonStopListen
             // 
