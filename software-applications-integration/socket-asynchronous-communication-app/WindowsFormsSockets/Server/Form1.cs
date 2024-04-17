@@ -57,5 +57,26 @@ namespace Server
             buttonStartListen.Enabled = !listening;
             buttonStopListen.Enabled = listening;
         }
+
+        public void OnClientConnect(IAsyncResult asyn)
+        {
+            try
+            {
+                m_workerSocket[m_clientCount] = m_mainSocket.EndAccept(asyn);
+                WaitForData(m_workerSocket[m_clientCount]);
+                ++m_clientCount;
+                String str = String.Format("Client # {0} connected", m_clientCount);
+                textBoxMsg.Text = str;
+                m_mainSocket.BeginAccept(new AsyncCallback(OnClientConnect), null);
+            }
+            catch (ObjectDisposedException)
+            {
+                System.Diagnostics.Debugger.Log(0, "1", "\n OnClientConnection: Socket has been closed\n");
+            }
+            catch (SocketException se)
+            {
+                MessageBox.Show(se.Message);
+            }
+        }
     }
 }
