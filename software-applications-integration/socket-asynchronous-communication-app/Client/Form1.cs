@@ -115,5 +115,37 @@ namespace Client
             public byte[] dataBuffer = new byte[1];
         }
 
+        public void OnDataReceived(IAsyncResult asyn)
+        {
+            try
+            {
+                SocketPacket theSockId = (SocketPacket)asyn.AsyncState;
+                int iRx = theSockId.thisSocket.EndReceive(asyn);
+                char[] chars = new char[iRx + 1];
+                System.Text.Decoder d = System.Text.Encoding.UTF8.GetDecoder();
+                int charLen = d.GetChars(theSockId.dataBuffer, 0, iRx, chars, 0);
+                System.String szData = new System.String(chars);
+                richTextRxMessage.Text = richTextRxMessage.Text + szData;
+                WaitForData();
+            }
+            catch (ObjectDisposedException)
+            {
+                System.Diagnostics.Debugger.Log(0, "1",
+                "\nOnDataReceived: Socket has been closed\n");
+            }
+            catch (SocketException se)
+            {
+                MessageBox.Show(se.Message);
+            }
+        }
+
+        private void UpdateControls(bool connected)
+        {
+            buttonConnect.Enabled = !connected;
+            buttonDisconnect.Enabled = connected;
+            string connectStatus = connected ? "Connected" : "Not Connected";
+            textBoxConnectStatus.Text = connectStatus;
+        }
+
     }
 }
