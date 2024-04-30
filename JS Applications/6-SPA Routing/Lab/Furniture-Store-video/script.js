@@ -1,6 +1,8 @@
 const router = {
     '/home': document.getElementById('home-section'),
     '/create': document.getElementById('create-section'),
+    '/details': document.getElementById('details-section'),
+    '/profile': document.getElementById('profile-section'),
 }
 
 function onRouteChange(e) {
