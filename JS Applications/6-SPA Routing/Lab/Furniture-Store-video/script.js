@@ -23,4 +23,7 @@ function onRouteChange(e) {
     router[location.pathname].style.display = 'block';
 }
 
+router[location.pathname].style.display = 'block';
+
+
 document.querySelector('nav').addEventListener('click', onRouteChange);
