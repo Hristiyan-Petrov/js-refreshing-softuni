@@ -27,14 +27,21 @@ function renderHomepage() {
         .then(res => res.json())
         .then(data => {
             console.log(data);
+
+            // Convert object to array
+            let furnitureArray = Object.keys(data).map(key => ({ ...data[key], id: key }));
+
+            // Use template to render
+            let furnituresView = document.getElementById('home-section-template').innerHTML;
+            let createTemplate = Handlebars.compile(furnituresView);
+            let allFurnituresHtml = createTemplate({ furniture: furnitureArray });
+
+            // Append to DOM
+            document.getElementById('home-section').innerHTML += allFurnituresHtml;
         })
         .catch(err => {
             console.log(err.message);
-        })
-
-    // Use template to render
-    
-    // Append to DOM
+        });
 }
 
 function onRouteChange(e) {
@@ -51,6 +58,7 @@ function onRouteChange(e) {
     router(location.pathname);
 }
 
+// Add furniture
 function onCreateSubmit(e) {
     e.preventDefault();
 
@@ -59,7 +67,7 @@ function onCreateSubmit(e) {
     let make = formElement.querySelector('#new-make').value;
     let price = formElement.querySelector('#new-price').value;
     let model = formElement.querySelector('#new-model').value;
-    let image = formElement.querySelector('#new-image').value;
+    let imageUrl = formElement.querySelector('#new-image').value;
     let year = formElement.querySelector('#new-year').value;
     let material = formElement.querySelector('#new-material').value;
     let description = formElement.querySelector('#new-description').value;
@@ -68,7 +76,7 @@ function onCreateSubmit(e) {
         make,
         price,
         model,
-        image,
+        imageUrl,
         year,
         material,
         description
@@ -95,6 +103,5 @@ document.querySelector('nav').addEventListener('click', onRouteChange);
 
 let formElement = document.getElementById('create-form');
 formElement.addEventListener('submit', onCreateSubmit);
-
 
 routeMap[location.pathname].style.display = 'block'; // Load content on page reload

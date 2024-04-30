@@ -22,3 +22,7 @@
 .navigation a:hover {
     color: #007bff;  /* Changes the link color on hover to a blue */
 }
+
+.card.text-white.bg-primary {
+    margin: 10px auto
+}
