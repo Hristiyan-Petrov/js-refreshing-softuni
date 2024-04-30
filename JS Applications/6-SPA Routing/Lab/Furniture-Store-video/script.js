@@ -26,6 +26,8 @@ function onRouteChange(e) {
 function onCreateSubmit(e) {
     e.preventDefault();
 
+    const url = 'https://js-apps-routing-lab-furniture-default-rtdb.firebaseio.com';
+
     let make = formElement.querySelector('#new-make').value;
     let price = formElement.querySelector('#new-price').value;
     let model = formElement.querySelector('#new-model').value;
@@ -43,6 +45,21 @@ function onCreateSubmit(e) {
         material,
         description
     };
+
+    fetch(`${url}/furniture.json`, {
+        method: 'POST',
+        headers: {
+            'content-type': 'applicatoin/json'
+        },
+        body: JSON.stringify(newFurniture)
+    })
+    .then(res => res.json())
+    .then(data => {
+        console.log(data);
+    })
+    .catch(err => {
+        console.log(err.message);
+    })
 
 }
 
