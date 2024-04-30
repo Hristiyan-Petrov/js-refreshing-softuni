@@ -1,8 +1,40 @@
-const router = {
+const routeMap = {
     '/home': document.getElementById('home-section'),
     '/create': document.getElementById('create-section'),
     '/details': document.getElementById('details-section'),
     '/profile': document.getElementById('profile-section'),
+};
+
+const router = path => {
+    // Hide all contents on every route click
+    Object.values(routeMap).forEach(section => section.style.display = 'none');
+
+    // Show current content
+    routeMap[location.pathname].style.display = 'block';
+
+    switch (path) {
+        case '/home':
+            renderHomepage();
+            break;
+        default:
+            break;
+    }
+}
+
+function renderHomepage() {
+    // Get all furnitures
+    fetch('https://js-apps-routing-lab-furniture-default-rtdb.firebaseio.com/furniture.json')
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+        })
+        .catch(err => {
+            console.log(err.message);
+        })
+
+    // Use template to render
+    
+    // Append to DOM
 }
 
 function onRouteChange(e) {
@@ -16,17 +48,13 @@ function onRouteChange(e) {
     // Go to the route
     history.pushState({}, '', e.target.href);
 
-    // Hide all contents on every route click
-    Object.values(router).forEach(section => section.style.display = 'none');
-
-    // Show current content
-    router[location.pathname].style.display = 'block';
+    router(location.pathname);
 }
 
 function onCreateSubmit(e) {
     e.preventDefault();
 
-    const url = 'https://js-apps-routing-lab-furniture-default-rtdb.firebaseio.com';
+    const url = 'https://js-apps-routing-lab-furniture-default-rtdb.firebaseio.com/furniture.json';
 
     let make = formElement.querySelector('#new-make').value;
     let price = formElement.querySelector('#new-price').value;
@@ -46,20 +74,20 @@ function onCreateSubmit(e) {
         description
     };
 
-    fetch(`${url}/furniture.json`, {
+    fetch(url, {
         method: 'POST',
         headers: {
             'content-type': 'applicatoin/json'
         },
         body: JSON.stringify(newFurniture)
     })
-    .then(res => res.json())
-    .then(data => {
-        console.log(data);
-    })
-    .catch(err => {
-        console.log(err.message);
-    })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+        })
+        .catch(err => {
+            console.log(err.message);
+        })
 
 }
 
@@ -69,4 +97,4 @@ let formElement = document.getElementById('create-form');
 formElement.addEventListener('submit', onCreateSubmit);
 
 
-router[location.pathname].style.display = 'block'; // Load content on page reload
+routeMap[location.pathname].style.display = 'block'; // Load content on page reload
