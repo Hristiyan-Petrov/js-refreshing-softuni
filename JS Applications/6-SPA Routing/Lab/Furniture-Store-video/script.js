@@ -72,7 +72,7 @@ function renderHomepage() {
             let allFurnituresHtml = createTemplate({ furniture: furnitureArray });
 
             // Append to DOM
-            document.getElementById('home-section').innerHTML += allFurnituresHtml;
+            document.getElementById('home-section').innerHTML = allFurnituresHtml;
         })
         .catch(err => {
             console.log(err.message);
