@@ -5,16 +5,23 @@ const routes = {
     '/profile': document.getElementById('profile-section'),
 };
 
-const router = path => {
+const router = pathname => {
+    let [path, id] = pathname.split('/').filter(x => x); // filter only the thuthy values
+    path = '/' + path;
+
     // Hide all contents on every route click
     Object.values(routes).forEach(section => section.style.display = 'none');
 
     // Show current content
-    routes[location.pathname].style.display = 'block';
+    routes[path].style.display = 'block';
 
     switch (path) {
         case '/home':
             renderHomepage();
+            break;
+
+        case '/details':
+            renderItemDetailsPage(id, routes[path]);
             break;
         default:
             break;
@@ -24,6 +31,22 @@ const router = path => {
 function redirect(path) {
     history.pushState({}, '', path);
     router(path);
+}
+
+function renderItemDetailsPage(id, detailsContainerElement) {
+    fetch(`https://js-apps-routing-lab-furniture-default-rtdb.firebaseio.com/furniture/${id}.json`)
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+
+            let furnitureView = document.getElementById('item-details-template').innerHTML;
+            let createTemplate = Handlebars.compile(furnitureView);
+            let detailsHtml = createTemplate(data);
+            detailsContainerElement.innerHTML += detailsHtml;
+        })
+        .catch(err => {
+            console.log(err.message);
+        });
 }
 
 function renderHomepage() {
@@ -59,7 +82,6 @@ function onRouteChange(e) {
 
     // Go to the route
     let url = new URL(e.target.href);
-    console.log(url);
     redirect(url.pathname);
 }
 

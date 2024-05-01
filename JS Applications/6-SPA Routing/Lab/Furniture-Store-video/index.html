@@ -24,7 +24,7 @@
       <ul>
         <li><a href="/home">Home</a></li>
         <li><a href="/create">Create</a></li>
-        <li><a href="/details">Details</a></li>
+        <!-- <li><a href="/details">Details</a></li> -->
         <li><a href="/profile">Profile</a></li>
       </ul>
     </nav>
@@ -101,7 +101,7 @@
                                 <cite title="{{title}}">{{title}}</cite>
                             </footer>
                             <div class="pull-right">
-                                <a href="furniture/details/{{id}}" class="btn btn-info">Details</a>
+                                <a href="/details/{{id}}" class="btn btn-info">Details</a>
                             </div>
                         </blockquote>
                     </div>
@@ -110,33 +110,37 @@
         {{/each }}
     </div>
   </script>
+  
+  <div class="container" id="details-section">
+  </div>
 
-    <div class="container" id="details-section">
-      <div class="row space-top">
-        <div class="col-md-12">
-          <h1>Furniture Details</h1>
-        </div>
-      </div>
-      <div class="row space-top">
-        <div class="col-md-4">
-          <div class="card text-white bg-primary">
-            <div class="card-body">
-              <blockquote class="card-blockquote">
-                <img src="" />
-              </blockquote>
-            </div>
+    <script id="item-details-template" type="text/x-handlebars">
+        <div class="row space-top">
+          <div class="col-md-12">
+            <h1>Furniture Details</h1>
           </div>
         </div>
-        <div class="col-md-4">
-          <p>Make: make</p>
-          <p>Model: model</p>
-          <p>Year: year</p>
-          <p>Description: description</p>
-          <p>Price: price</p>
-          <p>Material: material</p>
+        <div class="row space-top">
+          <div class="col-md-4">
+            <div class="card text-white bg-primary">
+              <div class="card-body">
+                <blockquote class="card-blockquote">
+                  <img src="{{imageUrl}}" />
+                </blockquote>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <p>Make: {{make}}</p>
+            <p>Model: {{model}}</p>
+            <p>Year: {{year}}</p>
+            <p>Description: {{description}}</p>
+            <p>Price: {{price}}</p>
+            <p>Material: {{material}}</p>
+          </div>
         </div>
-      </div>
-    </div>
+    </script>
+
     <div class="container" id="profile-section">
       <div class="row space-top">
         <div class="col-md-12">
