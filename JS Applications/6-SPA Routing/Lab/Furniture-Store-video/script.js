@@ -94,10 +94,17 @@ function onRouteChange(e) {
 
 // Add furniture
 function onCreateSubmit(e) {
+    if (!e.target.nodeName === 'FORM') return;
+
     e.preventDefault();
 
-    const url = 'https://js-apps-routing-lab-furniture-default-rtdb.firebaseio.com/furniture.json';
+    // Fields Validation
+    let allInputsValid = true; // Define a flag to check if all inputs are valid
+    let inputs = Array.from(e.target.elements);
+    validate();
+    if (!allInputsValid) return;
 
+    const url = 'https://js-apps-routing-lab-furniture-default-rtdb.firebaseio.com/furniture.json';
     let make = formElement.querySelector('#new-make').value;
     let price = formElement.querySelector('#new-price').value;
     let model = formElement.querySelector('#new-model').value;
@@ -129,9 +136,26 @@ function onCreateSubmit(e) {
         })
         .catch(err => {
             console.log(err.message);
-        })
+        });
 
+    function validate() {
+
+        inputs.forEach((input, i) => {
+            // Skip if the input does not have the 'required' attribute 
+            if (!input.hasAttribute('required')) return;
+
+            if (!input.checkValidity()) {
+                input.classList.add('is-invalid');
+                allInputsValid = false;
+            } else {
+                input.classList.remove('is-invalid');
+                input.classList.add('is-valid');
+            }
+        });
+    }
 }
+
+
 
 document.querySelector('nav').addEventListener('click', onRouteChange);
 
