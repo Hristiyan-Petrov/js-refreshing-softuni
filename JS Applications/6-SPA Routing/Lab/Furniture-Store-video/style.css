@@ -8,23 +8,33 @@
 }
 
 .navigation {
-    background-color: #343a40;  /* A dark background for contrast */
-    padding: 1rem;  /* Some padding to add space around navigation items */
+    background-color: #343a40;
+    /* A dark background for contrast */
+    padding: 1rem;
+    /* Some padding to add space around navigation items */
     margin-bottom: 30px;
 }
 
 .navigation a {
-    color: #fff;  /* White color for navigation links */
-    text-decoration: none;  /* Removes the underline */
-    margin-right: 1rem;  /* Adds some margin to the right of each link */
+    color: #fff;
+    /* White color for navigation links */
+    text-decoration: none;
+    /* Removes the underline */
+    margin-right: 1rem;
+    /* Adds some margin to the right of each link */
 }
 
 .navigation a:hover {
-    color: #007bff;  /* Changes the link color on hover to a blue */
+    color: #007bff;
+    /* Changes the link color on hover to a blue */
 }
 
 .card.text-white.bg-primary {
     margin: 10px auto
+}
+
+img {
+    width: 100%
 }
 
 /* Error styles */
