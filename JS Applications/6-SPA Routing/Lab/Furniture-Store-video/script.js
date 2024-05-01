@@ -58,7 +58,9 @@ function onRouteChange(e) {
     e.preventDefault();
 
     // Go to the route
-    redirect(e.target.href);
+    let url = new URL(e.target.href);
+    console.log(url);
+    redirect(url.pathname);
 }
 
 // Add furniture
@@ -94,7 +96,7 @@ function onCreateSubmit(e) {
     })
         .then(res => res.json())
         .then(data => {
-            redirect('home');
+            redirect('/home');
         })
         .catch(err => {
             console.log(err.message);
