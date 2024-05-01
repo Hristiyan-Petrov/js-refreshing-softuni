@@ -26,3 +26,38 @@
 .card.text-white.bg-primary {
     margin: 10px auto
 }
+
+/* Error styles */
+
+#error-section {
+    text-align: center;
+    padding-top: 10%;
+    background-color: #f7f7f7;
+    min-height: 100vh;
+}
+
+#error-section h1.display-1 {
+    font-size: 120px;
+    color: #dc3545;
+}
+
+#error-section h1 {
+    color: #6c757d;
+}
+
+#error-section p {
+    color: #6c757d;
+    font-size: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+#error-section a {
+    font-size: 1.5rem;
+    padding: 1rem 2rem;
+}
+
+#error-section img {
+    width: 40%;
+    max-width: 300px;
+    margin-top: 2rem;
+}

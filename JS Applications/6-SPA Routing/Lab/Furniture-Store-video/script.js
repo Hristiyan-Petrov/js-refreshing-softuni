@@ -3,11 +3,18 @@ const routes = {
     '/create': document.getElementById('create-section'),
     '/details': document.getElementById('details-section'),
     '/profile': document.getElementById('profile-section'),
+    '/error': document.getElementById('error-section'),
 };
 
 const router = pathname => {
     let [path, id] = pathname.split('/').filter(x => x); // filter only the thuthy values
     path = '/' + path;
+
+    // Check if route exists and redirect to error page if not
+    if (!Object.keys(routes).includes(path)) {
+        redirect('/error');
+        return;
+    }
 
     // Hide all contents on every route click
     Object.values(routes).forEach(section => section.style.display = 'none');
