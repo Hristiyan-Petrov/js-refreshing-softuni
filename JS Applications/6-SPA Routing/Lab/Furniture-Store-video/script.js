@@ -104,6 +104,7 @@ function onCreateSubmit(e) {
     validate();
     if (!allInputsValid) return;
 
+    // Start making request
     const url = 'https://js-apps-routing-lab-furniture-default-rtdb.firebaseio.com/furniture.json';
     let make = formElement.querySelector('#new-make').value;
     let price = formElement.querySelector('#new-price').value;
@@ -163,4 +164,4 @@ let formElement = document.getElementById('create-form');
 formElement.addEventListener('submit', onCreateSubmit);
 
 // routes[location.pathname].style.display = 'block'; // Load content on page reload
-router(location.pathname);
+router(location.pathname); // Initial app load
