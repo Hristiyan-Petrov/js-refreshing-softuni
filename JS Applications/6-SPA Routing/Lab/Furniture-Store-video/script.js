@@ -1,4 +1,4 @@
-const routeMap = {
+const routes = {
     '/home': document.getElementById('home-section'),
     '/create': document.getElementById('create-section'),
     '/details': document.getElementById('details-section'),
@@ -7,10 +7,10 @@ const routeMap = {
 
 const router = path => {
     // Hide all contents on every route click
-    Object.values(routeMap).forEach(section => section.style.display = 'none');
+    Object.values(routes).forEach(section => section.style.display = 'none');
 
     // Show current content
-    routeMap[location.pathname].style.display = 'block';
+    routes[location.pathname].style.display = 'block';
 
     switch (path) {
         case '/home':
@@ -19,6 +19,11 @@ const router = path => {
         default:
             break;
     }
+}
+
+function redirect(path) {
+    history.pushState({}, '', path);
+    router(path);
 }
 
 function renderHomepage() {
@@ -53,9 +58,7 @@ function onRouteChange(e) {
     e.preventDefault();
 
     // Go to the route
-    history.pushState({}, '', e.target.href);
-
-    router(location.pathname);
+    redirect(e.target.href);
 }
 
 // Add furniture
@@ -91,7 +94,7 @@ function onCreateSubmit(e) {
     })
         .then(res => res.json())
         .then(data => {
-            console.log(data);
+            redirect('home');
         })
         .catch(err => {
             console.log(err.message);
@@ -104,4 +107,5 @@ document.querySelector('nav').addEventListener('click', onRouteChange);
 let formElement = document.getElementById('create-form');
 formElement.addEventListener('submit', onCreateSubmit);
 
-routeMap[location.pathname].style.display = 'block'; // Load content on page reload
+// routes[location.pathname].style.display = 'block'; // Load content on page reload
+router(location.pathname);
