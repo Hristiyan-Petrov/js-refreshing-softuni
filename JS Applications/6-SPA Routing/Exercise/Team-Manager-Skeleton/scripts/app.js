@@ -29,8 +29,18 @@ const router = Sammy('#main', function () { //#main is the root element in which
         })
         .then(function() {
             this.partial('../templates/register/registerPage.hbs')
+        });
+    });
+
+    this.get('#/about', function() {
+        this.loadPartials({
+            'header': '../templates/common/header.hbs',
+            'footer': '../templates/common/footer.hbs',
         })
-    })
+        .then(function() {
+            this.partial('../templates/about/about.hbs')
+        });
+    });
 });
 
 (() => {
