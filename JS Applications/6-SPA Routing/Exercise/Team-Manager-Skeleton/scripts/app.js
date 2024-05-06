@@ -15,11 +15,22 @@ const router = Sammy('#main', function () { //#main is the root element in which
         this.loadPartials({
             'header': '../templates/common/header.hbs',
             'footer': '../templates/common/footer.hbs',
-            'login': '../templates/login/loginForm.hbs'
+            'loginForm': '../templates/login/loginForm.hbs'
         }).then(function () {
-            this.partial('../templates/login/loginForm.hbs');
+            this.partial('../templates/login/loginPage.hbs');
         });
     });
+
+    this.get('#/register', function() {
+        this.loadPartials({
+            'header': '../templates/common/header.hbs',
+            'footer': '../templates/common/footer.hbs',
+            'registerForm': '../templates/register/registerForm.hbs'
+        })
+        .then(function() {
+            this.partial('../templates/register/registerPage.hbs')
+        })
+    })
 });
 
 (() => {
