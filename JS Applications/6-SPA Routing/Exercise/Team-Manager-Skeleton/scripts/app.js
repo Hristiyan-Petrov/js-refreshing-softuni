@@ -13,6 +13,15 @@ const router = Sammy('#main', function () { //#main is the root element in which
     // GET requests
 
     this.get('/home', function (context) { // Context comes from Sammy out of the box as function argument
+
+        let userInfo = localStorage.getItem('userInfo');
+
+        if (userInfo) {
+            let { uid, email } = JSON.parse(userInfo);
+            context.loggedIn = true;
+            context.email = email;
+        }
+
         registerPartials(context)
             .then(function () {
                 this.partial('../templates/home/home.hbs') // Load template
