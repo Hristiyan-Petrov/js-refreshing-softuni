@@ -69,6 +69,35 @@ const router = Sammy('#main', function () { //#main is the root element in which
             });
     });
 
+    this.get('/catalog', function (context) {
+        let userInfo = localStorage.getItem('userInfo');
+        if (userInfo) {
+            setUserLogIn(userInfo, context);
+        }
+
+        context.hasNoTeam = true;
+        
+        registerPartials(context, {
+            'teamCatalog': '../templates/catalog/teamCatalog.hbs'
+        })
+            .then(function () {
+                this.partial('../templates/catalog/teamCatalog.hbs')
+            });
+    });
+
+    this.get('/create', function(context) {
+        let userInfo = localStorage.getItem('userInfo');
+        if (userInfo) {
+            setUserLogIn(userInfo, context);
+        }
+        
+        registerPartials(context, {
+            'createForm': '../templates/create/createForm.hbs'
+        })
+        .then(function() {
+            this.partial('../templates/create/createPage.hbs');
+        })
+    });
 
     // POST requests
 
