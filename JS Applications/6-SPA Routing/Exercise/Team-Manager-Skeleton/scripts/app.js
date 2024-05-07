@@ -59,8 +59,19 @@ const router = Sammy('#main', function () { //#main is the root element in which
                 this.redirect('/login');
             })
             .catch(error => {
-                console.log(error.message);
-                showErrorMessage(error.message);
+                showErrorMessage(error.message.substring(msg.lastIndexOf(':') + 1));
+            });
+    });
+
+    this.post('/login', function(context) {
+        let { email, password } = context.params; // Sammy gets them after form submit from the html form 'name' attributes and sets their value to the params object
+
+        signInWithEmailAndPassword(auth, email, password)
+            .then(userCredential => {
+                console.log(userCredential);
+            })
+            .catch(error => {
+                showErrorMessage(error.message.substring(msg.lastIndexOf(':') + 1));
             });
     });
 });
