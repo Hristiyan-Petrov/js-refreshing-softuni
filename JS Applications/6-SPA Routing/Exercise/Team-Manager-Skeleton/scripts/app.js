@@ -1,3 +1,10 @@
+import {
+    auth,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    signOut
+} from "./firebase.js";
+
 const router = Sammy('#main', function () { //#main is the root element in which the content will be rendered
 
     // Present template angine and file extension for Sammy to compile 
@@ -5,15 +12,15 @@ const router = Sammy('#main', function () { //#main is the root element in which
 
     // GET requests
 
-    this.get('/home', function (context) { // Context comes from Sammy out of the box
-        loadPartials(context)
+    this.get('/home', function (context) { // Context comes from Sammy out of the box as function argument
+        registerPartials(context)
             .then(function () {
                 this.partial('../templates/home/home.hbs') // Load template
             });
     });
 
     this.get('/login', function (context) {
-        loadPartials(context, {
+        registerPartials(context, {
             'loginForm': '../templates/login/loginForm.hbs'
         })
             .then(function () {
@@ -22,7 +29,7 @@ const router = Sammy('#main', function () { //#main is the root element in which
     });
 
     this.get('/register', function (context) {
-        loadPartials(context, {
+        registerPartials(context, {
             'registerForm': '../templates/register/registerForm.hbs'
         })
             .then(function () {
@@ -31,20 +38,40 @@ const router = Sammy('#main', function () { //#main is the root element in which
     });
 
     this.get('/about', function (context) {
-        loadPartials(context)
+        registerPartials(context)
             .then(function () {
                 this.partial('../templates/about/about.hbs')
             });
     });
-});
 
-// POST requests
+    // POST requests
+
+    this.post('/register', function (context) { // Sammy waits for post request on this route - form action attribute on register form
+        let { email, password, repeatPassword } = context.params; // Sammy gets them after form submit from the html form 'name' attributes and sets their value to the params object
+
+        if (password !== repeatPassword) {
+            showErrorMessage('Passwords should match!');
+        }
+
+        createUserWithEmailAndPassword(auth, email, password)
+            .then(user => {
+                console.log(user);
+                this.redirect('/login');
+            })
+            .catch(error => {
+                console.log(error.message);
+                showErrorMessage(error.message);
+            });
+    });
+});
 
 (() => {
     router.run('/home'); // Load initial route on app start
 })();
 
-function loadPartials(context, extraPartials = {}) {
+// Helper functions 
+
+function registerPartials(context, extraPartials = {}) {
     const commonPartials = { // Register the partials used in the then template
         'header': '../templates/common/header.hbs', // key name must be the same as the partial name
         'footer': '../templates/common/footer.hbs'
@@ -52,4 +79,17 @@ function loadPartials(context, extraPartials = {}) {
 
     let allPartials = Object.assign({}, commonPartials, extraPartials);
     return context.loadPartials(allPartials);
+}
+
+function showErrorMessage(message) {
+    // Show error message
+    let errorBox = document.getElementById('errorBox');
+    errorBox.textContent = message;
+    errorBox.style.display = 'block';
+
+    // Clear error box
+    setTimeout(() => {
+        errorBox.style.display = 'none';
+    }, 3000);
+    return;
 }
