@@ -15,11 +15,8 @@ const router = Sammy('#main', function () { //#main is the root element in which
     this.get('/home', function (context) { // Context comes from Sammy out of the box as function argument
 
         let userInfo = localStorage.getItem('userInfo');
-
         if (userInfo) {
-            let { uid, email } = JSON.parse(userInfo);
-            context.loggedIn = true;
-            context.email = email;
+            setUserLogIn(userInfo, context);
         }
 
         registerPartials(context)
@@ -46,7 +43,7 @@ const router = Sammy('#main', function () { //#main is the root element in which
             });
     });
 
-    this.get('/logout', function(context) {
+    this.get('/logout', function (context) {
 
         signOut(auth)
             .then(() => {
@@ -61,6 +58,11 @@ const router = Sammy('#main', function () { //#main is the root element in which
     });
 
     this.get('/about', function (context) {
+        let userInfo = localStorage.getItem('userInfo');
+        if (userInfo) {
+            setUserLogIn(userInfo, context);
+        }
+        
         registerPartials(context)
             .then(function () {
                 this.partial('../templates/about/about.hbs')
@@ -130,4 +132,10 @@ function showErrorMessage(message) {
         errorBox.style.display = 'none';
     }, 3000);
     return;
+}
+
+function setUserLogIn(userInfo, context) {
+        let { uid, email } = JSON.parse(userInfo);
+        context.loggedIn = true;
+        context.email = email;
 }
