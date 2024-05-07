@@ -46,12 +46,27 @@ const router = Sammy('#main', function () { //#main is the root element in which
             });
     });
 
+    this.get('/logout', function(context) {
+
+        signOut(auth)
+            .then(() => {
+                localStorage.removeItem('userInfo');
+                context.loggedIn = false;
+                context.redirect('/home');
+            })
+            .catch(error => {
+                showErrorMessage(error.message);
+            });
+
+    });
+
     this.get('/about', function (context) {
         registerPartials(context)
             .then(function () {
                 this.partial('../templates/about/about.hbs')
             });
     });
+
 
     // POST requests
 
