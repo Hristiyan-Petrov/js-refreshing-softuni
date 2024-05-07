@@ -1,6 +1,6 @@
 const router = Sammy('#main', function () { //#main is the root element in which the content will be rendered
 
-    this.use('Handlebars', 'hbs'); // Present and define template angine and file extension to Sammy 
+    this.use('Handlebars', 'hbs'); // Present template angine and file extension for Sammy to compile 
 
     this.get('#/home', function () {
         this.loadPartials({ // Register the partials used in the then template
