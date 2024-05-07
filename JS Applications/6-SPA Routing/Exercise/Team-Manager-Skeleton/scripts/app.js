@@ -59,25 +59,28 @@ const router = Sammy('#main', function () { //#main is the root element in which
                 this.redirect('/login');
             })
             .catch(error => {
-                showErrorMessage(error.message.substring(msg.lastIndexOf(':') + 1));
+                showErrorMessage(error.message.substring(error.lastIndexOf(':') + 1));
             });
     });
 
-    this.post('/login', function(context) {
+    this.post('/login', function (context) {
         let { email, password } = context.params; // Sammy gets them after form submit from the html form 'name' attributes and sets their value to the params object
 
         signInWithEmailAndPassword(auth, email, password)
-            .then(userCredential => {
-                console.log(userCredential);
+            .then(({ user: { email, uid } }) => {
+                console.log(email, uid);
+                localStorage.setItem('userInfo', JSON.stringify({ uid, email }));
+                this.redirect('/home');
             })
             .catch(error => {
-                showErrorMessage(error.message.substring(msg.lastIndexOf(':') + 1));
+                showErrorMessage(error.message.substring(error.lastIndexOf(':') + 1));
             });
     });
 });
 
+// Load initial route on app start
 (() => {
-    router.run('/home'); // Load initial route on app start
+    router.run('/home');
 })();
 
 // Helper functions 
