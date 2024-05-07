@@ -2,7 +2,7 @@ const router = Sammy('#main', function () { //#main is the root element in which
 
     this.use('Handlebars', 'hbs'); // Present template angine and file extension for Sammy to compile 
 
-    this.get('#/home', function () {
+    this.get('/home', function () {
         this.loadPartials({ // Register the partials used in the then template
             'header': '../templates/common/header.hbs', // key name must be the same as the partial name
             'footer': '../templates/common/footer.hbs'
@@ -11,7 +11,7 @@ const router = Sammy('#main', function () { //#main is the root element in which
         });
     });
 
-    this.get('#/login', function () {
+    this.get('/login', function () {
         this.loadPartials({
             'header': '../templates/common/header.hbs',
             'footer': '../templates/common/footer.hbs',
@@ -21,7 +21,7 @@ const router = Sammy('#main', function () { //#main is the root element in which
         });
     });
 
-    this.get('#/register', function() {
+    this.get('/register', function() {
         this.loadPartials({
             'header': '../templates/common/header.hbs',
             'footer': '../templates/common/footer.hbs',
@@ -32,7 +32,7 @@ const router = Sammy('#main', function () { //#main is the root element in which
         });
     });
 
-    this.get('#/about', function() {
+    this.get('/about', function() {
         this.loadPartials({
             'header': '../templates/common/header.hbs',
             'footer': '../templates/common/footer.hbs',
@@ -44,5 +44,5 @@ const router = Sammy('#main', function () { //#main is the root element in which
 });
 
 (() => {
-    router.run('#/home'); // Load initial route on app start
+    router.run('/home'); // Load initial route on app start
 })();
