@@ -21,9 +21,15 @@ import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, si
 
 const auth = getAuth(app);
 
+// Realtime Database
+import { getDatabase, ref, set } from 'https://www.gstatic.com/firebasejs/10.11.1/firebase-database.js';
+const db = getDatabase();
+
 export {
     auth,
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
-    signOut
+    signOut,
+    ref,
+    set
 };
