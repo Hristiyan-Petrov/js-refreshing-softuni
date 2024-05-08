@@ -25,10 +25,29 @@ const router = Sammy('#main', function () { //#main is the root element in which
             setUserLogIn(userInfo, context);
         }
 
-        registerPartials(context)
-            .then(function () {
-                this.partial('../templates/home/home.hbs') // Load template
-            });
+        let teamsRef = ref(db, 'teams/');
+        get(teamsRef)
+            .then(snapshot => {
+                console.log(snapshot.val());
+
+                context.hasTeam = Object.entries(snapshot.val()).find(([key, team]) =>
+                    team.members && team.members.some(member =>
+                        member.uid === getSessionUID()
+                    )
+                );
+
+                if (context.hasTeam) {
+                    let [teamKey, teamData] = context.hasTeam;
+                    context.teamId = teamKey;
+                }
+
+                // Render template
+                registerPartials(context)
+                    .then(function () {
+                        this.partial('../templates/home/home.hbs') // Load template
+                    });
+            })
+
     });
 
     this.get('/login', function (context) {
@@ -80,7 +99,6 @@ const router = Sammy('#main', function () { //#main is the root element in which
         if (userInfo) {
             setUserLogIn(userInfo, context);
         }
-        context.hasNoTeam = true;
 
         // DB
         let teamsRef = ref(db, 'teams/');
@@ -92,6 +110,9 @@ const router = Sammy('#main', function () { //#main is the root element in which
                         return { _id: teamId, ...teamData }; // create a new object with _id and spread the teamData properties
                     });
                     console.log(context.teams);
+
+                    context.hasNoTeam = !hasTeam(context.teams);
+
                 } else {
                     console.log("No data available");
                 }
@@ -169,7 +190,8 @@ const router = Sammy('#main', function () { //#main is the root element in which
 
                 // Update members in Firebase
                 update(ref(db, `teams/${teamId}`), {
-                    members: teamData.members
+                    members: teamData.members,
+
                 });
 
                 return teamData.name;
@@ -312,4 +334,12 @@ function setUserLogIn(userInfo, context) {
     context.loggedIn = true;
     context.email = email;
     context.uid = uid;
+}
+
+function hasTeam(teams) {
+    return !teams.some(team => {
+        team.members && team.members.some(member => {
+            member.uid === getSessionUID()
+        });
+    });
 }

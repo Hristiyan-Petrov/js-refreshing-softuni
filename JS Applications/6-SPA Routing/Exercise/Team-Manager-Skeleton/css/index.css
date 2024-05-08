@@ -45,3 +45,7 @@ body {
 #errorBox {
   background: #F50;
 }
+
+.btn {
+  margin: 10px 0;
+}
