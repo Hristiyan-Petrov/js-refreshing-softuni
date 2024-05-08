@@ -46,8 +46,7 @@ const router = Sammy('#main', function () { //#main is the root element in which
                     .then(function () {
                         this.partial('../templates/home/home.hbs') // Load template
                     });
-            })
-
+            });
     });
 
     this.get('/login', function (context) {
@@ -106,12 +105,12 @@ const router = Sammy('#main', function () { //#main is the root element in which
             .then((snapshot) => {
                 if (snapshot.exists()) {
                     // Set teams to context with the key as '_id' property
-                    context.teams = Object.entries(snapshot.val()).map(([teamId, teamData]) => {
-                        return { _id: teamId, ...teamData }; // create a new object with _id and spread the teamData properties
+                    let teamsObj = snapshot.val();
+                    context.teams = Object.entries(teamsObj).map(([teamId, teamData]) => {
+                        return { _id: teamId, ...teamData };
                     });
-                    console.log(context.teams);
 
-                    context.hasNoTeam = !hasTeam(context.teams);
+                    context.hasNoTeam = !hasTeam(context.teams); // Negate the hasTeam return value
 
                 } else {
                     console.log("No data available");
@@ -217,6 +216,33 @@ const router = Sammy('#main', function () { //#main is the root element in which
             .then(function () {
                 this.partial('../templates/create/createPage.hbs');
             })
+    });
+
+    this.get('/leave', function (context) {
+        let teamId = null;
+        let teamsRef = ref(db, 'teams/');
+        get(teamsRef)
+            .then(snapshot => {
+                teamId = findTeamByUserId(snapshot.val(), getSessionUID());
+                let teamRef = ref(db, `teams/${teamId}`);
+                return get(teamRef)
+            })
+            .then(snapshot => {
+                let teamData = snapshot.val();
+
+                // Remove member in DataBase
+                update(ref(db, `teams/${teamId}`), {
+                    members: teamData.members.filter(member => member.uid !== getSessionUID()),
+                });
+                return teamData.name;
+            })
+            .then(teamName => {
+                showInfoMessage(`Succesfully left team ${teamName}`);
+                this.redirect('/catalog');
+            })
+            .catch(error => {
+                console.log(error);
+            });
     });
 
     // POST requests
@@ -337,9 +363,15 @@ function setUserLogIn(userInfo, context) {
 }
 
 function hasTeam(teams) {
-    return !teams.some(team => {
-        team.members && team.members.some(member => {
-            member.uid === getSessionUID()
-        });
+    return teams.some(team => {
+        return team.members && team.members.some(member => member.uid === getSessionUID());
     });
+}
+
+function findTeamByUserId(teams, userId) {
+    let matchingTeamEntry = Object.entries(teams).find(([key, team]) =>
+        team.members && team.members.some(member => member.uid === userId)
+    );
+
+    return matchingTeamEntry ? matchingTeamEntry[0] : null;
 }
