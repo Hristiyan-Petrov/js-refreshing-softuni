@@ -26,7 +26,6 @@ const router = Sammy('#main', function () { //#main is the root element in which
 
         registerPartials(context)
             .then(function () {
-                console.log(this);
                 this.partial('../templates/home/home.hbs') // Load template
             });
     });
@@ -87,7 +86,10 @@ const router = Sammy('#main', function () { //#main is the root element in which
         get(teamsRef)
             .then((snapshot) => {
                 if (snapshot.exists()) {
-                    context.teams = snapshot.val();
+                    // Set teams to context with the key as '_id' property
+                    context.teams = Object.entries(snapshot.val()).map(([teamId, teamData]) => {
+                        return { _id: teamId, ...teamData }; // create a new object with _id and spread the teamData properties
+                    });
                     console.log(context.teams);
                 } else {
                     console.log("No data available");
@@ -101,13 +103,41 @@ const router = Sammy('#main', function () { //#main is the root element in which
                         this.partial("../templates/catalog/teamCatalog.hbs");
                     });
             })
+            .catch(error => {
+                console.log(error);
+                showErrorMessage(error);
+            });
+    });
 
+    this.get('catalog/:teamId', function (context) {
+        let userInfo = localStorage.getItem('userInfo');
+        if (userInfo) {
+            setUserLogIn(userInfo, context);
+        }
 
-        // fetch('https://team-manager-routing-exercise-default-rtdb.firebaseio.com/teams.json')
-        //     .then(res => res.json())
-        //     .then(teams => {
-        //         context.teams = { teams: teams }
-        //     })
+        // DB
+        let teamId = context.params.teamId;
+        let teamsRef = ref(db, `teams/${teamId}`);
+        get(teamsRef)
+            .then(snapshot => {
+                let {  name, comment } = snapshot.val();
+                context.name = name;
+                context.comment = comment;
+                
+                // Render template
+                registerPartials(context, {
+                    'teamMember': '../templates/catalog/teamMember.hbs',
+                    'teamControls': '../templates/catalog/teamControls.hbs',
+                })
+                    .then(function () {
+                        this.partial('../templates/catalog/details.hbs') // Load template
+                    });
+            })
+            .catch(err => {
+                console.log(err);
+                showErrorMessage(err);
+            })
+
     });
 
     this.get('/create', function (context) {
