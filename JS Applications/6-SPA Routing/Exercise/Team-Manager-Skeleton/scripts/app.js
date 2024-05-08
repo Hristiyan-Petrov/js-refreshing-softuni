@@ -121,12 +121,14 @@ const router = Sammy('#main', function () { //#main is the root element in which
         let teamsRef = ref(db, `teams/${teamId}`);
         get(teamsRef)
             .then(snapshot => {
-                let userId = getUID();
+                let userId = getSessionUID();
                 let { name, comment, members } = snapshot.val();
 
-                members.includes(userId) ? context.isOnTeam = true : context.isOnTeam = false;
+                console.log(members);
+                context.isOnTeam = members.some(member => member.uid === userId);
 
                 // Set context values
+                context.members = members;
                 context.name = name;
                 context.comment = comment;
                 context.teamId = teamId;
@@ -148,7 +150,6 @@ const router = Sammy('#main', function () { //#main is the root element in which
     });
 
     this.get('/join/:teamId', function (context) {
-        let userId = getUID();
         let teamId = context.params.teamId;
         let teamRef = ref(db, `teams/${teamId}`);
 
@@ -161,7 +162,10 @@ const router = Sammy('#main', function () { //#main is the root element in which
                 // Add current user to teams joined users property 
                 console.log(teamData);
                 console.log(teamData.members);
-                teamData.members.push(userId);
+                teamData.members.push({
+                    'uid': getSessionUID(),
+                    'email': getSessionEmail()
+                });
 
                 // Update members in Firebase
                 update(ref(db, `teams/${teamId}`), {
@@ -236,8 +240,11 @@ const router = Sammy('#main', function () { //#main is the root element in which
         set(newTeamRef, {
             name,
             comment,
-            creatorUID: getUID(),
-            members: [getUID()]
+            creatorUID: getSessionUID(),
+            members: [{
+                'uid': getSessionUID(),
+                'email': getSessionEmail()
+            }]
         })
             .then(() => {
                 showInfoMessage('Succesfully added new team!');
@@ -292,8 +299,12 @@ function showInfoMessage(message) {
     return;
 }
 
-function getUID() {
+function getSessionUID() {
     return JSON.parse(localStorage.getItem('userInfo')).uid;
+}
+
+function getSessionEmail() {
+    return JSON.parse(localStorage.getItem('userInfo')).email;
 }
 
 function setUserLogIn(userInfo, context) {
