@@ -7,7 +7,8 @@ import {
     push,
     ref,
     set,
-    get
+    get,
+    update
 } from "./firebase.js";
 
 const router = Sammy('#main', function () { //#main is the root element in which the content will be rendered
@@ -120,10 +121,16 @@ const router = Sammy('#main', function () { //#main is the root element in which
         let teamsRef = ref(db, `teams/${teamId}`);
         get(teamsRef)
             .then(snapshot => {
-                let {  name, comment } = snapshot.val();
+                let userId = getUID();
+                let { name, comment, members } = snapshot.val();
+
+                members.includes(userId) ? context.isOnTeam = true : context.isOnTeam = false;
+
+                // Set context values
                 context.name = name;
                 context.comment = comment;
-                
+                context.teamId = teamId;
+
                 // Render template
                 registerPartials(context, {
                     'teamMember': '../templates/catalog/teamMember.hbs',
@@ -138,6 +145,38 @@ const router = Sammy('#main', function () { //#main is the root element in which
                 showErrorMessage(err);
             })
 
+    });
+
+    this.get('/join/:teamId', function (context) {
+        let userId = getUID();
+        let teamId = context.params.teamId;
+        let teamRef = ref(db, `teams/${teamId}`);
+
+        console.log(teamId);
+
+        get(teamRef)
+            .then(snapshot => {
+                let teamData = snapshot.val();
+
+                // Add current user to teams joined users property 
+                console.log(teamData);
+                console.log(teamData.members);
+                teamData.members.push(userId);
+
+                // Update members in Firebase
+                update(ref(db, `teams/${teamId}`), {
+                    members: teamData.members
+                });
+
+                return teamData.name;
+            })
+            .then(teamName => {
+                showInfoMessage(`Succesfully joined team ${teamName}`);
+                this.redirect('/catalog');
+            })
+            .catch(error => {
+                console.log(error);
+            });
     });
 
     this.get('/create', function (context) {
@@ -197,9 +236,11 @@ const router = Sammy('#main', function () { //#main is the root element in which
         set(newTeamRef, {
             name,
             comment,
-            uid: JSON.parse(localStorage.getItem('userInfo')).uid
+            creatorUID: getUID(),
+            members: [getUID()]
         })
             .then(() => {
+                showInfoMessage('Succesfully added new team!');
                 this.redirect('/catalog');
             })
             .catch(error => {
@@ -238,8 +279,26 @@ function showErrorMessage(message) {
     return;
 }
 
+function showInfoMessage(message) {
+    // Show info message
+    let infoBox = document.getElementById('infoBox');
+    infoBox.textContent = message;
+    infoBox.style.display = 'block';
+
+    // Clear info box
+    setTimeout(() => {
+        infoBox.style.display = 'none';
+    }, 3000);
+    return;
+}
+
+function getUID() {
+    return JSON.parse(localStorage.getItem('userInfo')).uid;
+}
+
 function setUserLogIn(userInfo, context) {
     let { uid, email } = JSON.parse(userInfo);
     context.loggedIn = true;
     context.email = email;
+    context.uid = uid;
 }

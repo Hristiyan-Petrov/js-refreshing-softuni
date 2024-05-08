@@ -1,8 +1,8 @@
 {{#if isAuthor}}
-    <a href="/edit/:{{teamId}}" class="btn-primary m-3">Edit Info</a>
+    <a href="/edit/{{teamId}}" class="btn-primary m-3">Edit Info</a>
 {{/if}}
 {{#if isOnTeam}}
     <a href="/leave" class="btn btn-primary m-3">Leave Team</a>
 {{else}}
-    <a href="/join/:{{teamId}}" class="btn btn-primary m-3">Join Team</a>
+    <a href="/join/{{teamId}}" class="btn btn-primary m-3">Join Team</a>
 {{/if}}
