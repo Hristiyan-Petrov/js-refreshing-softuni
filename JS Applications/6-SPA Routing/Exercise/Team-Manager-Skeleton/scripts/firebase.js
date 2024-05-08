@@ -22,14 +22,17 @@ import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, si
 const auth = getAuth(app);
 
 // Realtime Database
-import { getDatabase, ref, set } from 'https://www.gstatic.com/firebasejs/10.11.1/firebase-database.js';
-const db = getDatabase();
+import { getDatabase, ref, set, push, get } from 'https://www.gstatic.com/firebasejs/10.11.1/firebase-database.js';
+const db = getDatabase(app, 'https://team-manager-routing-exercise-default-rtdb.firebaseio.com/');
 
 export {
     auth,
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     signOut,
+    db,
+    push,
     ref,
-    set
+    set,
+    get
 };

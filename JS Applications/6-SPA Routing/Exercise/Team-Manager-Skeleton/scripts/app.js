@@ -2,7 +2,12 @@ import {
     auth,
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
-    signOut
+    signOut,
+    db,
+    push,
+    ref,
+    set,
+    get
 } from "./firebase.js";
 
 const router = Sammy('#main', function () { //#main is the root element in which the content will be rendered
@@ -21,6 +26,7 @@ const router = Sammy('#main', function () { //#main is the root element in which
 
         registerPartials(context)
             .then(function () {
+                console.log(this);
                 this.partial('../templates/home/home.hbs') // Load template
             });
     });
@@ -62,7 +68,7 @@ const router = Sammy('#main', function () { //#main is the root element in which
         if (userInfo) {
             setUserLogIn(userInfo, context);
         }
-        
+
         registerPartials(context)
             .then(function () {
                 this.partial('../templates/about/about.hbs')
@@ -74,29 +80,48 @@ const router = Sammy('#main', function () { //#main is the root element in which
         if (userInfo) {
             setUserLogIn(userInfo, context);
         }
-
         context.hasNoTeam = true;
-        
-        registerPartials(context, {
-            'teamCatalog': '../templates/catalog/teamCatalog.hbs'
-        })
-            .then(function () {
-                this.partial('../templates/catalog/teamCatalog.hbs')
-            });
+
+        // DB
+        let teamsRef = ref(db, 'teams/');
+        get(teamsRef)
+            .then((snapshot) => {
+                if (snapshot.exists()) {
+                    context.teams = snapshot.val();
+                    console.log(context.teams);
+                } else {
+                    console.log("No data available");
+                }
+
+                registerPartials(context, {
+                    'team': '../templates/catalog/team.hbs'
+                })
+                    .then(function () {
+                        console.log(this);
+                        this.partial("../templates/catalog/teamCatalog.hbs");
+                    });
+            })
+
+
+        // fetch('https://team-manager-routing-exercise-default-rtdb.firebaseio.com/teams.json')
+        //     .then(res => res.json())
+        //     .then(teams => {
+        //         context.teams = { teams: teams }
+        //     })
     });
 
-    this.get('/create', function(context) {
+    this.get('/create', function (context) {
         let userInfo = localStorage.getItem('userInfo');
         if (userInfo) {
             setUserLogIn(userInfo, context);
         }
-        
+
         registerPartials(context, {
             'createForm': '../templates/create/createForm.hbs'
         })
-        .then(function() {
-            this.partial('../templates/create/createPage.hbs');
-        })
+            .then(function () {
+                this.partial('../templates/create/createPage.hbs');
+            })
     });
 
     // POST requests
@@ -131,6 +156,26 @@ const router = Sammy('#main', function () { //#main is the root element in which
                 showErrorMessage(error.message.substring(error.lastIndexOf(':') + 1));
             });
     });
+
+    this.post('/create', function (context) {
+
+        let { name, comment } = context.params;
+
+        let teamsRef = ref(db, 'teams/');
+
+        const newTeamRef = push(teamsRef);
+        set(newTeamRef, {
+            name,
+            comment,
+            uid: JSON.parse(localStorage.getItem('userInfo')).uid
+        })
+            .then(() => {
+                this.redirect('/catalog');
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    });
 });
 
 // Load initial route on app start
@@ -142,8 +187,8 @@ const router = Sammy('#main', function () { //#main is the root element in which
 
 function registerPartials(context, extraPartials = {}) {
     const commonPartials = { // Register the partials used in the then template
+        'footer': '../templates/common/footer.hbs',
         'header': '../templates/common/header.hbs', // key name must be the same as the partial name
-        'footer': '../templates/common/footer.hbs'
     };
 
     let allPartials = Object.assign({}, commonPartials, extraPartials);
@@ -164,7 +209,7 @@ function showErrorMessage(message) {
 }
 
 function setUserLogIn(userInfo, context) {
-        let { uid, email } = JSON.parse(userInfo);
-        context.loggedIn = true;
-        context.email = email;
+    let { uid, email } = JSON.parse(userInfo);
+    context.loggedIn = true;
+    context.email = email;
 }
