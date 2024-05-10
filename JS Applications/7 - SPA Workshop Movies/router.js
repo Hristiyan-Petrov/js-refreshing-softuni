@@ -2,7 +2,7 @@ const routes = { // Mapping object, dictionary
     'home': 'home-template', // Id of Handlebars template
     'login': 'login-form-template',
     'register': 'register-form-template',
-
+    'add-movie': 'add-movie-template',
 }
 
 // Router is responsible for rendering views on specific path / Adjuster, traffic cop, regulirovchik

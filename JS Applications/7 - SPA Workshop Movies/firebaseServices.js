@@ -1,6 +1,21 @@
 // Helper functions
 
 const apiKey = 'AIzaSyB8X6MY_E3j_WaWWOhQvQVRc4w6LcCfuhE';
+const dataBaseUrl = 'https://movies-dd028.firebaseio.com';
+
+const request = async (url, method, body) => {
+    let response = await fetch(url, {
+        method,
+        headers: {
+            'content-type': 'application/json'
+        },
+        body: JSON.stringify(body)
+    });
+
+    let data = await response.json();
+
+    return data;
+}
 
 const authService = {
     async login(email, password) {
@@ -42,5 +57,12 @@ const authService = {
 
     logout() {
         localStorage.removeItem('auth');
+    }
+}
+
+const movieService = {
+    async add(movieData) {
+        let response = await request(dataBaseUrl + '/movies.json', 'POST', movieData);
+        return response;
     }
 }
