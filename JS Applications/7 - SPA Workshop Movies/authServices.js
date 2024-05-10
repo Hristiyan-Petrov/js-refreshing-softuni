@@ -1,3 +1,5 @@
+// Helper functions
+
 const apiKey = 'AIzaSyB8X6MY_E3j_WaWWOhQvQVRc4w6LcCfuhE';
 
 const authService = {

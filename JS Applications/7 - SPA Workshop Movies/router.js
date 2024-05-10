@@ -9,6 +9,7 @@ const routes = { // Mapping object, dictionary
 const router = path => {
     const mainElement = document.getElementById('main');
 
+    // Using this switch only for logout as there is no view to render
     switch (path) {
         case 'logout':
             authService.logout();

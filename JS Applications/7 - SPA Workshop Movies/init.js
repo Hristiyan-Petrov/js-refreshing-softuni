@@ -1,3 +1,5 @@
+// Execute this file only once on initial load
+
 (function addEvenetListeners() {
     // Register navigation partial
     let navigationTemplate = Handlebars.compile(document.getElementById('navigation-template').innerHTML);
