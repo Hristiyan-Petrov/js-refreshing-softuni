@@ -1,6 +1,9 @@
 (function addEvenetListeners() {
-    document.querySelector('.navigation').addEventListener('click', naviagateHandler);
+    let navigationTemplate = Handlebars.compile(document.getElementById('navigation-template').innerHTML);
+    Handlebars.registerPartial('navigation-template', navigationTemplate);
 
+    // Initial app load
+    navigate('home');
 })();
 
 function naviagateHandler(e) {
@@ -12,7 +15,6 @@ function naviagateHandler(e) {
 
     let url = new URL(e.target.href); // Skip string operations
     navigate(url.pathname.slice(1));
-
 }
 
 function onLoginSubmit(e) {
@@ -29,3 +31,4 @@ function onLoginSubmit(e) {
         });
 }
 
+window.naviagateHandler = naviagateHandler;
