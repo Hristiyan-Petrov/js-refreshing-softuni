@@ -4,7 +4,6 @@ const routes = { // Mapping object, dictionary
 
 }
 
-
 // Router is responsible for rendering views on specific path / Adjuster, traffic cop, regulirovchik
 const router = path => {
     const mainElement = document.getElementById('main');
@@ -13,21 +12,3 @@ const router = path => {
 
     mainElement.innerHTML = template();
 };
-
-(function addEvenetListeners() {
-    document.querySelector('.navigation').addEventListener('click', naviagateHandler);
-
-})();
-
-function naviagateHandler(e) {
-    e.preventDefault();
-
-    if (!e.target.classList.contains('nav-link')) { // Contains is key word for Nodelist API (In this case DOMTokenList); little different from .tagName attr
-        return;
-    }
-
-    let url = new URL(e.target.href); // Skip string operations
-    history.pushState({}, '', url.pathname); // Change route / url
-
-    router(url.pathname.slice(1));
-}
