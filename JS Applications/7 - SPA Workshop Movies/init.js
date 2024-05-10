@@ -25,7 +25,7 @@ function onLoginSubmit(e) {
 
     authService.login(email, password)
         .then(data => {
-            navigate('/');
-        })
+            navigate('home');
+        });
 }
 
