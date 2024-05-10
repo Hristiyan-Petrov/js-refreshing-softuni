@@ -1,5 +1,7 @@
 const routes = { // Mapping object, dictionary
-    'login': 'login-form-template' // Id of Handlebars template
+    'login': 'login-form-template', // Id of Handlebars template
+    'register': 'register-form-template' 
+
 }
 
 
