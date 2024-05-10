@@ -33,14 +33,15 @@
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark" onclick="naviagateHandler(event)">
                 <a class="navbar-brand text-light nav-link" href="/home">Movies maika</a>
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link">Welcome, {{email}}</a>
-                    </li>
                     
                     {{#if isAuthenticated}}
 
                     <li class="nav-item">
-                        <a class="nav-link" href="/logut">Logout</a>
+                        <a class="nav-link">Welcome, {{email}}</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Logout</a>
                     </li>
 
                     {{else}}
@@ -51,7 +52,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/register">Register</a>
                     </li>
-                    
+
                     {{/if}}
                 </ul>
             </nav>

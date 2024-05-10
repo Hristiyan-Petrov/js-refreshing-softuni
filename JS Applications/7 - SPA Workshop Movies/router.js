@@ -9,6 +9,15 @@ const routes = { // Mapping object, dictionary
 const router = path => {
     const mainElement = document.getElementById('main');
 
+    switch (path) {
+        case 'logout':
+            authService.logout();
+            console.log('logged out');
+            return navigate('home'); // Same as navigate being on previous line 
+        default:
+            break;
+    }
+
     let template = Handlebars.compile(document.getElementById(routes[path]).innerHTML); // Creates function which returns HTML
 
     let authData = authService.getData(); // { isAuthenticated, email }

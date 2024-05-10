@@ -20,10 +20,25 @@ const authService = {
     },
 
     getData() {
-        let data = JSON.parse(localStorage.getItem('auth'));
-        return {
-            isAuthenticated: Boolean(data.idToken),
-            email: data.email || ''
-        };
+
+        try {
+            let data = JSON.parse(localStorage.getItem('auth'));
+
+            return {
+                isAuthenticated: Boolean(data.idToken),
+                email: data.email
+            };
+            // Handle case when user is not logged in, cause getData() is executed on every route 
+        } catch (error) {
+            return {
+                isAuthenticated: false,
+                email: ''
+            }
+        }
+
+    },
+
+    logout() {
+        localStorage.removeItem('auth');
     }
 }
