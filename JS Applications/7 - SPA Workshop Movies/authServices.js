@@ -18,4 +18,12 @@ const authService = {
         localStorage.setItem('auth', JSON.stringify(data)); // Save data for logged user in localStorage
         return data;
     },
+
+    getData() {
+        let data = JSON.parse(localStorage.getItem('auth'));
+        return {
+            isAuthenticated: Boolean(data.idToken),
+            email: data.email || ''
+        };
+    }
 }

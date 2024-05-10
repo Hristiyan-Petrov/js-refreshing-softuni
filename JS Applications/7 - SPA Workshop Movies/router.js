@@ -11,7 +11,9 @@ const router = path => {
 
     let template = Handlebars.compile(document.getElementById(routes[path]).innerHTML); // Creates function which returns HTML
 
-    mainElement.innerHTML = template();
+    let authData = authService.getData(); // { isAuthenticated, email }
+
+    mainElement.innerHTML = template(authData); // Pass user data from session storage to template to use 
 };
 
 const navigate = path => {
