@@ -103,12 +103,9 @@
             <h1 class="display-4">Movies</h1>
             <p class="lead">Unlimited movies, TV shows, and more. Watch anywhere. Cancel anytime.</p>
         </div> 
-        </script>
 
-
-        <!-- 
-        
-        <h1 class="text-center">Movies</h1>
+        {{#if isAuthenticated}}
+<h1 class="text-center">Movies</h1>
         <section>
             <a href="#" class="btn btn-warning ">Add Movie</a>
             <form class="search float-right">
@@ -159,6 +156,11 @@
                 </div>
             </div>
         </div>
+        {{/if}}
+        </script>
+
+
+        <!-- 
 
         <form class="text-center border border-light p-5" action="#" method="">
             <h1>Add Movie</h1>
