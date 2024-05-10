@@ -1,6 +1,7 @@
 const routes = { // Mapping object, dictionary
     'login': 'login-form-template', // Id of Handlebars template
-    'register': 'register-form-template' 
+    'register': 'register-form-template',
+    '/': 'home-template'
 
 }
 
@@ -12,3 +13,8 @@ const router = path => {
 
     mainElement.innerHTML = template();
 };
+
+const navigate = path => {
+    history.pushState({}, '', path); // Change route / url
+    router(path); // Activate router to change view
+}

@@ -11,9 +11,8 @@ function naviagateHandler(e) {
     }
 
     let url = new URL(e.target.href); // Skip string operations
-    history.pushState({}, '', url.pathname); // Change route / url
+    navigate(url.pathname.slice(1));
 
-    router(url.pathname.slice(1));
 }
 
 function onLoginSubmit(e) {
@@ -24,4 +23,9 @@ function onLoginSubmit(e) {
     let email = loginFormData.get('email'); // Get by name attr from HTML input element
     let password = loginFormData.get('password');
 
+    authService.login(email, password)
+        .then(data => {
+            navigate('/');
+        })
 }
+
