@@ -3,10 +3,13 @@ const routes = { // Mapping object, dictionary
     'login': 'login-form-template',
     'register': 'register-form-template',
     'add-movie': 'add-movie-template',
+    'details': 'movie-details-template',
 }
 
 // Router is responsible for rendering views on specific path / Adjuster, traffic cop, regulirovchik
-const router = async path => {
+const router = async fullPath => {
+    let [path, movieKey] = fullPath.split('/'); // id when click on details 
+    console.log(path, movieKey);
     const mainElement = document.getElementById('main');
 
     // Initial templateData is authData = { isAuthenticated, email }
@@ -22,6 +25,12 @@ const router = async path => {
             authService.logout();
             console.log('logged out');
             return navigate('home'); // Same as navigate being on previous line 
+
+        case 'details':
+            let movieDetailsData = await movieService.getOne(movieKey);
+            Object.assign(templateData, movieDetailsData);
+            console.log(templateData);
+            break;
 
         default:
             break;

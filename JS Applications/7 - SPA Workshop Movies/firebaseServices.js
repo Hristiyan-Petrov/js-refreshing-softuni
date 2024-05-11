@@ -91,6 +91,13 @@ const movieService = {
     },
 
     async getAll() {
-        return await request(dataBaseUrl + '/movies.json', 'GET');
+        let res = await request(dataBaseUrl + '/movies.json', 'GET');
+        return Object.keys(res).map(key => ({ key, ...res[key] })); // Set the movie key into the object from associative array response
+    },
+
+    async getOne(key) {
+        let res =  await request(dataBaseUrl + `/movies/${key}.json`, 'GET');
+        console.log(res);
+        return res;
     }
 }

@@ -3,7 +3,7 @@
 (function addEventListeners() {
     // Register partials
     let navigationTemplate = Handlebars.compile(document.getElementById('navigation-template').innerHTML);
-    let movieCardTemplate = Handlebars.compile(document.getElementById('movie-card-template').innerHTML);
+    let movieCardTemplate = Handlebars.compile(document.getElementById('movie-card-partial-template').innerHTML);
 
     Handlebars.registerPartial('navigation-template', navigationTemplate);
     Handlebars.registerPartial('movie-card-partial-template', movieCardTemplate);
