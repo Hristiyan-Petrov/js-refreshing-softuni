@@ -35,6 +35,26 @@ function onLoginSubmit(e) {
         });
 }
 
+function onRegisterSubmit(e) {
+    e.preventDefault();
+
+    let registerFormData = new FormData(document.forms['register-form']); // Get form by its id from doucment property 'forms'
+
+    let email = registerFormData.get('email'); // Get by name attr from HTML input element
+    let password = registerFormData.get('password');
+    let rePassword = registerFormData.get('password');
+
+    if (password !== rePassword) {
+        console.log('Passwords should match!');
+        return;
+    }
+
+    authService.register(email, password)
+        .then(data => {
+            navigate('home');
+        });
+}
+
 function onAddMovieSubmit(e) {
     e.preventDefault();
 
