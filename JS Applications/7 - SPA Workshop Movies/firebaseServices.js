@@ -5,16 +5,21 @@ const dataBaseUrl = 'https://movies-dd028.firebaseio.com';
 const authUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:';
 
 const request = async (url, method, body) => {
-    let response = await fetch(url, {
-        method,
-        headers: {
-            'content-type': 'application/json'
-        },
-        body: JSON.stringify(body)
-    });
+    let options = {
+        method
+    }
 
+    if (body) {
+        Object.assign(options, {
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(body)
+        });
+    }
+
+    let response = await fetch(url, options);
     let data = await response.json();
-
     return data;
 }
 
@@ -82,7 +87,10 @@ const authService = {
 
 const movieService = {
     async add(movieData) {
-        let response = await request(dataBaseUrl + '/movies.json', 'POST', movieData);
-        return response;
+        return await request(dataBaseUrl + '/movies.json', 'POST', movieData);
+    },
+
+    async getAll() {
+        return await request(dataBaseUrl + '/movies.json', 'GET');
     }
 }

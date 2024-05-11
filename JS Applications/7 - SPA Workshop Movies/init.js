@@ -1,9 +1,12 @@
 // Execute this file only once on initial load
 
 (function addEventListeners() {
-    // Register navigation partial
+    // Register partials
     let navigationTemplate = Handlebars.compile(document.getElementById('navigation-template').innerHTML);
+    let movieCardTemplate = Handlebars.compile(document.getElementById('movie-card-template').innerHTML);
+
     Handlebars.registerPartial('navigation-template', navigationTemplate);
+    Handlebars.registerPartial('movie-card-partial-template', movieCardTemplate);
 
     // Initial app load
     navigate('home');
