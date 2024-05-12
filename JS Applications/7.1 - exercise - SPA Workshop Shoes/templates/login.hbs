@@ -4,13 +4,14 @@
 <p class="form-info">Don't have account?
     <a href="/register">Register now</a> and fix that!
 </p>
-<form action="">
+{{!-- Action and method are important so Sammy can orientate. Name attributes also for getting the values in the func --}}
+<form action="/login" method="post">
     <div>
-        <input type="email" placeholder="Email...">
+        <input type="email" placeholder="Email..." name="email">
     </div>
 
     <div>
-        <input type="password" placeholder="Password...">
+        <input type="password" placeholder="Password..." name="password">
     </div>
     <div>
         <button>Login</button>

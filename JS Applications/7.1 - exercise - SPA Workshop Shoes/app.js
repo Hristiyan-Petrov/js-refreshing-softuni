@@ -1,6 +1,7 @@
 import {
     auth,
-    createUserWithEmailAndPassword
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword
 } from "./firebase-config.js"
 
 const app = Sammy('#root', function () {
@@ -38,8 +39,9 @@ const app = Sammy('#root', function () {
         // Use Firebase Auth to create a user
         createUserWithEmailAndPassword(auth, email, password)
             .then(userData => {
+                saveUser(userData);
                 console.log(userData);
-                // this.redirect('#/home');
+                this.redirect('/home');
             })
             .catch(err => {
                 console.log(err);
@@ -51,6 +53,18 @@ const app = Sammy('#root', function () {
         extendContext(context)
             .then(function () {
                 this.partial('./templates/login.hbs');
+            });
+    });
+
+    this.post('/login', function (context) {
+        let { email, password } = context.params;
+        signInWithEmailAndPassword(auth, email, password)
+            .then(res => {
+                console.log(res);
+                this.redirect('/home');
+            })
+            .catch(err => {
+                console.log(err);
             });
     });
 
@@ -91,4 +105,16 @@ function extendContext(context) {
         'header': './partials/header.hbs',
         'footer': './partials/footer.hbs'
     });
+}
+
+// Helper functions
+
+function saveUser(data) {
+    let user = { user: { email, uid } };
+    localStorage.setItem('userData', JSON.stringify({ email, uid }));
+}
+
+function getUserData() {
+    let user = localStorage.getItem('user');
+    return user ? JSON.parse(user) : null;
 }
