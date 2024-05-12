@@ -1,6 +1,8 @@
 {
   "dependencies": {
     "handlebars": "^4.7.8",
+    "jquery": "^3.7.1",
+    "lite-server": "^2.6.1",
     "sammy": "^0.7.6"
   }
 }
