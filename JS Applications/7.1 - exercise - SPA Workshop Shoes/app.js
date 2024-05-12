@@ -14,6 +14,7 @@ const app = Sammy('#root', function () {
 
         extendContext(context)
             .then(function () {
+                console.log(context);
                 this.partial('./templates/homeGuest.hbs'); // Sammy out of the box function for loading views, templates
             });
 
@@ -39,9 +40,8 @@ const app = Sammy('#root', function () {
         // Use Firebase Auth to create a user
         createUserWithEmailAndPassword(auth, email, password)
             .then(userData => {
-                saveUser(userData);
                 console.log(userData);
-                this.redirect('/home');
+                this.redirect('/login');
             })
             .catch(err => {
                 console.log(err);
@@ -58,9 +58,11 @@ const app = Sammy('#root', function () {
 
     this.post('/login', function (context) {
         let { email, password } = context.params;
+
         signInWithEmailAndPassword(auth, email, password)
-            .then(res => {
-                console.log(res);
+            .then(userData => {
+                console.log(userData);
+                saveUser(userData);
                 this.redirect('/home');
             })
             .catch(err => {
@@ -101,6 +103,12 @@ const app = Sammy('#root', function () {
 
 // Function for loading partials
 function extendContext(context) {
+
+    let user = getUserData();
+    // Check if logged user
+    context.isLoggedIn = Boolean(user);
+    context.email = user ? user.email : '';
+
     return context.loadPartials({
         'header': './partials/header.hbs',
         'footer': './partials/footer.hbs'
@@ -110,11 +118,11 @@ function extendContext(context) {
 // Helper functions
 
 function saveUser(data) {
-    let user = { user: { email, uid } };
+    let { user: { email, uid } } = data;
     localStorage.setItem('userData', JSON.stringify({ email, uid }));
 }
 
 function getUserData() {
-    let user = localStorage.getItem('user');
+    let user = localStorage.getItem('userData');
     return user ? JSON.parse(user) : null;
 }
