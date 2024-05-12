@@ -1,3 +1,8 @@
+import {
+    auth,
+    createUserWithEmailAndPassword
+} from "./firebase-config.js"
+
 const app = Sammy('#root', function () {
 
     this.use('Handlebars', 'hbs'); // Say to Sammy to use Handlebars for template engine; and .hbs for file extension
@@ -20,6 +25,25 @@ const app = Sammy('#root', function () {
             .then(function () {
                 this.partial('./templates/register.hbs');
             });
+    });
+
+    this.post('/register', function (context) {
+        let { email, password, rePassword } = context.params;
+
+        if (password !== rePassword) {
+            console.log('passwords must match');
+            return;
+        }
+
+        // Use Firebase Auth to create a user
+        createUserWithEmailAndPassword(auth, email, password)
+            .then(userData => {
+                console.log(userData);
+                // this.redirect('#/home');
+            })
+            .catch(err => {
+                console.log(err);
+            });
 
     });
 
@@ -28,7 +52,6 @@ const app = Sammy('#root', function () {
             .then(function () {
                 this.partial('./templates/login.hbs');
             });
-
     });
 
     // Offers routes
