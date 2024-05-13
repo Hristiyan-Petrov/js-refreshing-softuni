@@ -1,9 +1,18 @@
 import {
+    // Authentication
     auth,
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
-    signOut
+    signOut,
+    // Firestore
+    db,
+    addDoc,
+    collection,
+    getDocs
+
 } from "./firebase-config.js"
+
+const dbRef = collection(db, 'offers');
 
 const app = Sammy('#root', function () {
 
@@ -13,12 +22,23 @@ const app = Sammy('#root', function () {
 
     this.get('/home', function (context) { // Get Sammy functions is used to render views; Post and others not 
 
-        extendContext(context)
-            .then(function () {
-                console.log(context);
-                this.partial('./templates/home.hbs'); // Sammy out of the box function for loading views, templates
-            });
+        getDocs(dbRef)
+            .then(res => {
+                
+                // getDocs() method from Firebase's Firestore returns a QuerySnapshot object that contains zero or more QueryDocumentSnapshot objects. 
+                // Each of these objects represents a document in the Firestore database.
+                // Attach shoes array to context, use it in the template 
+                context.offers = res.docs.map(offer => ({id: offer.id, ...offer.data()}));
 
+                // Rendering
+                extendContext(context)
+                    .then(function () {
+                        this.partial('./templates/home.hbs'); // Sammy out of the box function for loading views, templates
+                    });
+            })
+            .catch(err => {
+                console.log(err);
+            });
     });
 
     // User routes
@@ -81,12 +101,33 @@ const app = Sammy('#root', function () {
     });
 
     // Offers routes
+
     this.get('/create-offer', function (context) {
         extendContext(context)
             .then(function () {
                 this.partial('./templates/createOffer.hbs');
             });
 
+    });
+
+    this.post('/create-offer', function (context) {
+        let { productName, price, brand, description, imageUrl } = context.params;
+
+        addDoc(dbRef, {
+            productName,
+            price,
+            imageUrl,
+            description,
+            brand,
+            creatorId: getUserData().uid
+        })
+            .then(res => {
+                console.log(res);
+                this.redirect('/home');
+            })
+            .catch(err => {
+                console.log(err);
+            })
     });
 
     this.get('/edit-offer', function (context) {
@@ -97,7 +138,7 @@ const app = Sammy('#root', function () {
 
     });
 
-    this.get('/details', function (context) {
+    this.get('/details/:id', function (context) {
         extendContext(context)
             .then(function () {
                 this.partial('./templates/details.hbs');
