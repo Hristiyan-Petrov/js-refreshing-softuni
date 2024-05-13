@@ -1,7 +1,8 @@
 import {
     auth,
     createUserWithEmailAndPassword,
-    signInWithEmailAndPassword
+    signInWithEmailAndPassword,
+    signOut
 } from "./firebase-config.js"
 
 const app = Sammy('#root', function () {
@@ -70,6 +71,15 @@ const app = Sammy('#root', function () {
             });
     });
 
+    this.get('logout', function (context) {
+        signOut(auth)
+            .then(res => {
+                clearUserData();
+                console.log('logged out');
+                this.redirect('/home');
+            })
+    });
+
     // Offers routes
     this.get('/create-offer', function (context) {
         extendContext(context)
@@ -125,4 +135,8 @@ function saveUser(data) {
 function getUserData() {
     let user = localStorage.getItem('userData');
     return user ? JSON.parse(user) : null;
+}
+
+function clearUserData() {
+    localStorage.removeItem('userData');
 }
