@@ -11,7 +11,9 @@ import {
     doc,
     getDocs,
     getDoc,
-    setDoc
+    setDoc,
+    updateDoc,
+    arrayUnion
 
 } from "./firebase-config.js"
 
@@ -122,7 +124,8 @@ const app = Sammy('#root', function () {
             imageUrl,
             description,
             brand,
-            creatorId: getUserData().uid
+            creatorId: getUserData().uid,
+            peopleBoughtIt: []
         })
             .then(res => {
                 console.log(res);
@@ -174,6 +177,23 @@ const app = Sammy('#root', function () {
             })
     });
 
+    this.get('/buy/:id', function (context) {
+        const { id } = context.params; // id comes from the URL parameter
+        const offerRef = doc(db, 'offers', id); // Reference the document
+
+        updateDoc(offerRef, {
+            peopleBoughtIt: arrayUnion(getUserData().email)
+        })
+            .then(() => {
+                console.log("Document successfully updated!");
+                this.redirect(`#/details/${id}`);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+
+    });
+
     this.get('/details/:id', context => {
 
         const { id } = context.params; // id comes from the URL parameter
@@ -182,9 +202,12 @@ const app = Sammy('#root', function () {
         getDoc(offerRef)
             .then(res => {
 
+                let { creatorId, peopleBoughtIt } = res.data();
                 // Attach context data for template
                 context.offer = { id: res.id, ...res.data() };
-                context.isCreator = Boolean(isCreator(res.data().creatorId));
+                context.isCreator = Boolean(isCreator(creatorId));
+                context.isBought = Boolean(peopleBoughtIt.includes(getUserData().email));
+                context.buys = peopleBoughtIt.length;
 
                 // Rendering
                 extendContext(context)

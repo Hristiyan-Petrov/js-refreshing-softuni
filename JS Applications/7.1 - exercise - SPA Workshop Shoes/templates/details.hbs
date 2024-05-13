@@ -8,6 +8,7 @@
         <div class="description">{{offer.description}}
             <br>
             <br>
+            <p lass="price">Total buys: {{this.buys}}</p>
             <p class="price">${{offer.price}}</p>
         </div>
     </div>
@@ -16,8 +17,13 @@
         <a href="#/edit-offer/{{offer.id}}">Edit</a>
         <a href="#/delete/{{offer.id}}">Delete</a>
         {{else}}
-        <a>Buy</a>
-        <span>You bought it</span>
+
+            {{#if isBought}}
+                <span>You bought it</span>
+            {{else}}
+                <a href="/buy/{{offer.id}}" >Buy</a>
+            {{/if}}
+
         {{/if}}
     </div>
 </div>
