@@ -16,7 +16,7 @@ const app = Sammy('#root', function () {
         extendContext(context)
             .then(function () {
                 console.log(context);
-                this.partial('./templates/homeGuest.hbs'); // Sammy out of the box function for loading views, templates
+                this.partial('./templates/home.hbs'); // Sammy out of the box function for loading views, templates
             });
 
     });
