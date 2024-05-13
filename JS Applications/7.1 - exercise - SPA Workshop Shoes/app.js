@@ -8,7 +8,9 @@ import {
     db,
     addDoc,
     collection,
-    getDocs
+    doc,
+    getDocs,
+    getDoc
 
 } from "./firebase-config.js"
 
@@ -24,11 +26,11 @@ const app = Sammy('#root', function () {
 
         getDocs(dbRef)
             .then(res => {
-                
+
                 // getDocs() method from Firebase's Firestore returns a QuerySnapshot object that contains zero or more QueryDocumentSnapshot objects. 
                 // Each of these objects represents a document in the Firestore database.
                 // Attach shoes array to context, use it in the template 
-                context.offers = res.docs.map(offer => ({id: offer.id, ...offer.data()}));
+                context.offers = res.docs.map(offer => ({ id: offer.id, ...offer.data() }));
 
                 // Rendering
                 extendContext(context)
@@ -138,12 +140,24 @@ const app = Sammy('#root', function () {
 
     });
 
-    this.get('/details/:id', function (context) {
-        extendContext(context)
-            .then(function () {
-                this.partial('./templates/details.hbs');
-            });
+    this.get('/details/:id', context => {
 
+        const { id } = context.params; // id comes from the URL parameter
+        const docRef = doc(db, 'offers', id); // Reference the document
+
+        getDoc(docRef)
+            .then(res => {
+
+                // Attach context data for template
+                context.offer = { id: res.id, ...res.data() };
+                context.isCreator = Boolean(isCreator(res.data().creatorId));
+
+                // Rendering
+                extendContext(context)
+                    .then(function () {
+                        this.partial('./templates/details.hbs');
+                    });
+            });
     });
 });
 
@@ -180,4 +194,8 @@ function getUserData() {
 
 function clearUserData() {
     localStorage.removeItem('userData');
+}
+
+function isCreator(uid) {
+    return uid === getUserData().uid;
 }
