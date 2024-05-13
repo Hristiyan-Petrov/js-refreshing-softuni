@@ -13,7 +13,8 @@ import {
     getDoc,
     setDoc,
     updateDoc,
-    arrayUnion
+    arrayUnion,
+    deleteDoc
 
 } from "./firebase-config.js"
 
@@ -107,6 +108,29 @@ const app = Sammy('#root', function () {
 
     // Offers routes
 
+    this.get('/details/:id', context => {
+
+        const { id } = context.params; // id comes from the URL parameter
+        const offerRef = doc(db, 'offers', id); // Reference the document
+
+        getDoc(offerRef)
+            .then(res => {
+
+                let { creatorId, peopleBoughtIt } = res.data();
+                // Attach context data for template
+                context.offer = { id: res.id, ...res.data() };
+                context.isCreator = Boolean(isCreator(creatorId));
+                context.isBought = Boolean(peopleBoughtIt.includes(getUserData().email));
+                context.buys = peopleBoughtIt.length;
+
+                // Rendering
+                extendContext(context)
+                    .then(function () {
+                        this.partial('./templates/details.hbs');
+                    });
+            });
+    });
+
     this.get('/create-offer', function (context) {
         extendContext(context)
             .then(function () {
@@ -194,26 +218,17 @@ const app = Sammy('#root', function () {
 
     });
 
-    this.get('/details/:id', context => {
-
-        const { id } = context.params; // id comes from the URL parameter
+    this.get('/delete-offer/:id', function (context) {
+        const { id } = context.params;
         const offerRef = doc(db, 'offers', id); // Reference the document
 
-        getDoc(offerRef)
-            .then(res => {
-
-                let { creatorId, peopleBoughtIt } = res.data();
-                // Attach context data for template
-                context.offer = { id: res.id, ...res.data() };
-                context.isCreator = Boolean(isCreator(creatorId));
-                context.isBought = Boolean(peopleBoughtIt.includes(getUserData().email));
-                context.buys = peopleBoughtIt.length;
-
-                // Rendering
-                extendContext(context)
-                    .then(function () {
-                        this.partial('./templates/details.hbs');
-                    });
+        deleteDoc(offerRef)
+            .then(() => {
+                console.log("Document successfully deleted!");
+                this.redirect('#/home');
+            })
+            .catch((error) => {
+                console.log(error);
             });
     });
 });
