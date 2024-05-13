@@ -13,8 +13,8 @@
     </div>
     <div class="actions">
         {{#if isCreator}}
-        <a>Edit</a>
-        <a>Delete</a>
+        <a href="#/edit-offer/{{offer.id}}">Edit</a>
+        <a href="#/delete/{{offer.id}}">Delete</a>
         {{else}}
         <a>Buy</a>
         <span>You bought it</span>

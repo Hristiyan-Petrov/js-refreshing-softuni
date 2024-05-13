@@ -2,21 +2,21 @@
 
 <h1>Edit Offer</h1>
 <p class="message"></p>
-<form>
+<form action="/edit-offer/{{offer.id}}" method="post">
     <div>
-        <input type="text" placeholder="Name...">
+        <input type="text" name="productName" value="{{offer.productName}}">
     </div>
     <div>
-        <input type="text" placeholder="Price...">
+        <input type="text" name="price" value="{{offer.price}}">
     </div>
     <div>
-        <input type="text" placeholder="Image url...">
+        <input type="text" name="imageUrl" value="{{offer.imageUrl}}">
     </div>
     <div>
-        <textarea placeholder="Give us some description about this offer..."></textarea>
+        <textarea name="description">{{offer.description}}</textarea>
     </div>
     <div>
-        <input type="text" placeholder="Brand...">
+        <input type="text" name="brand" value="{{offer.brand}}">
     </div>
     <div>
         <button>Edit</button>

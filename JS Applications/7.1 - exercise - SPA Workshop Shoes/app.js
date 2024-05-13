@@ -10,7 +10,8 @@ import {
     collection,
     doc,
     getDocs,
-    getDoc
+    getDoc,
+    setDoc
 
 } from "./firebase-config.js"
 
@@ -132,20 +133,53 @@ const app = Sammy('#root', function () {
             })
     });
 
-    this.get('/edit-offer', function (context) {
-        extendContext(context)
-            .then(function () {
-                this.partial('./templates/editOffer.hbs');
+    this.get('/edit-offer/:id', function (context) {
+        const { id } = context.params; // id comes from the URL parameter
+        const docRef = doc(db, 'offers', id); // Reference the document
+
+        getDoc(docRef)
+            .then(res => {
+
+                // Attach context data for template
+                context.offer = { id: res.id, ...res.data() };
+                console.log(context.offer);
+
+                // Rendering
+                extendContext(context)
+                    .then(function () {
+                        this.partial('./templates/editOffer.hbs');
+                    });
             });
 
+    });
+
+    this.post('/edit-offer/:id', function (context) {
+        let { productName, price, brand, description, imageUrl } = context.params;
+        const { id } = context.params; // id comes from the URL parameter
+        const offerRef = doc(db, 'offers', id); // Reference the document
+
+        setDoc(offerRef, {
+            productName,
+            price,
+            imageUrl,
+            description,
+            brand,
+            // creatorId: getUserData().uid
+        }, { merge: true }) // Using merge: true to prevent deletion of fields not included in this setDoc call
+            .then(() => {
+                this.redirect(`/details/${id}`);
+            })
+            .catch(err => {
+                console.log(err);
+            })
     });
 
     this.get('/details/:id', context => {
 
         const { id } = context.params; // id comes from the URL parameter
-        const docRef = doc(db, 'offers', id); // Reference the document
+        const offerRef = doc(db, 'offers', id); // Reference the document
 
-        getDoc(docRef)
+        getDoc(offerRef)
             .then(res => {
 
                 // Attach context data for template
