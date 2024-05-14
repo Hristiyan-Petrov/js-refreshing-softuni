@@ -102,7 +102,7 @@ const movieService = {
     async getOne(key) {
         let res = await request(dataBaseUrl + `/movies/${key}.json`, 'GET');
         console.log(res);
-        return res;
+        return {...res, isCreator: res.creator === authService.getUserId()};
     },
 
     async deleteMovie(key) {

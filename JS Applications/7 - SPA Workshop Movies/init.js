@@ -94,19 +94,23 @@ function deleteMovie(e) {
         });
 }
 
-function onEditMovieSubmit(e) {
+function onEditMovieSubmit(e, movieKey) {
     e.preventDefault(e);
 
-    let id = location.pathname.split('/').pop();
+    // let id = location.pathname.split('/').pop();
 
     let editMovieFormData = new FormData(document.forms['edit-movie-form']);
     let title = editMovieFormData.get('title');
     let description = editMovieFormData.get('description');
     let imageUrl = editMovieFormData.get('imageUrl');
 
-    movieService.editMovie(id, { title, description, imageUrl })
+    movieService.editMovie(movieKey, {
+        title,
+        description,
+        imageUrl
+    })
         .then(res => {
-            navigate(`details/${id}`);
+            navigate(`details/${movieKey}`);
         })
         .catch(err => {
             console.log(err);

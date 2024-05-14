@@ -188,7 +188,7 @@
 
                     {{#if isCreator}}
                         <a class="btn btn-danger" href="#" data-id="{{movieKey}}" onclick="deleteMovie(event)">Delete</a>
-                        <a class="btn btn-warning" href="/edit-movie/{{movieKey}}" onclick="navigateHandler(event)">Edit</a>
+                        <a class="btn btn-warning" href="/details/{{movieKey}}/edit" onclick="navigateHandler(event)">Edit</a>
                     {{else}}
                         <a class="btn btn-primary" href="#">Like</a>
                         <span class="enrolled-span">Liked 1</span>
@@ -201,7 +201,7 @@
         <script type="text/x-hanlebars-template" id="edit-movie-template">
             {{> navigation-template}}
 
-            <form id="edit-movie-form" class="text-center border border-light p-5" action="#" method="" onsubmit="onEditMovieSubmit(event)">
+            <form id="edit-movie-form" class="text-center border border-light p-5" action="#" method="" onsubmit="onEditMovieSubmit(event, '{{movieKey}}')">
                 <h1>Edit Movie</h1>
                 <div class="form-group">
                     <label for="title">Movie Title</label>
