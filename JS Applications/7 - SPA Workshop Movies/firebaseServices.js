@@ -96,8 +96,12 @@ const movieService = {
     },
 
     async getOne(key) {
-        let res =  await request(dataBaseUrl + `/movies/${key}.json`, 'GET');
+        let res = await request(dataBaseUrl + `/movies/${key}.json`, 'GET');
         console.log(res);
         return res;
+    },
+
+    async deleteMovie(key) {
+        return await request(dataBaseUrl + `/movies/${key}.json`, 'DELETE');
     }
 }

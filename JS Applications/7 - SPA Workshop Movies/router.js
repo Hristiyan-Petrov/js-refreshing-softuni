@@ -28,7 +28,7 @@ const router = async fullPath => {
 
         case 'details':
             let movieDetailsData = await movieService.getOne(movieKey);
-            Object.assign(templateData, movieDetailsData);
+            Object.assign(templateData, movieDetailsData, { movieKey });
             console.log(templateData);
             break;
 

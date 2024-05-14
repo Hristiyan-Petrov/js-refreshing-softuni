@@ -31,7 +31,7 @@
 
         <script type="text/x-hanlebars-template" id="navigation-template">
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark" onclick="navigateHandler(event)">
-                <a class="navbar-brand text-light nav-link" href="home">Movies maika</a>
+                <a class="navbar-brand text-light nav-link" href="/home">Movies maika</a>
                 <ul class="navbar-nav ml-auto">
                     
                     {{#if isAuthenticated}}
@@ -105,30 +105,30 @@
             </div> 
 
         {{#if isAuthenticated}}
-<h1 class="text-center">Movies</h1>
-        <section>
-            <a href="/add-movie" class="btn btn-warning" onclick="navigateHandler(event)">Add Movie</a>
-            <form class="search float-right">
-                <label>Search: </label>
-                <input type="text">
-                <input type="submit" class="btn btn-info" value="Search">
-            </form>
-        </section>
+            <h1 class="text-center">Movies</h1>
+            <section>
+                <a href="/add-movie" class="btn btn-warning" onclick="navigateHandler(event)">Add Movie</a>
+                <form class="search float-right">
+                    <label>Search: </label>
+                    <input type="text">
+                    <input type="submit" class="btn btn-info" value="Search">
+                </form>
+            </section>
         
-        <div class=" mt-3 ">
-            <div class="row d-flex d-wrap">
-        
-                <div class="card-deck d-flex justify-content-center">
-        
-                    {{#each movies}}
-                        {{> movie-card-partial-template}}
-                    {{else}}
-                        <p>There are no movies</p>
-                    {{/each}}
-        
+            <div class=" mt-3 ">
+                <div class="row d-flex d-wrap">
+            
+                    <div class="card-deck d-flex justify-content-center">
+            
+                        {{#each movies}}
+                            {{> movie-card-partial-template}}
+                        {{else}}
+                            <p>There are no movies</p>
+                        {{/each}}
+            
+                    </div>
                 </div>
             </div>
-        </div>
         {{/if}}
         </script>
 
@@ -185,7 +185,7 @@
                 <div class="col-md-4 text-center">
                     <h3 class="my-3 ">Movie Description</h3>
                     <p>{{description}}</p>
-                    <a class="btn btn-danger" href="#">Delete</a>
+                    <a class="btn btn-danger" href="#" data-id="{{movieKey}}" onclick="deleteMovie(event)">Delete</a>
                     <a class="btn btn-warning" href="#">Edit</a>
                     <a class="btn btn-primary" href="#">Like</a>
                     <span class="enrolled-span">Liked 1</span>

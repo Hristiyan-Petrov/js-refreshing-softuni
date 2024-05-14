@@ -75,5 +75,20 @@ function onAddMovieSubmit(e) {
         .then(res => {
             navigate('home');
         })
+        .catch(err => {
+            console.log(err);
+        });
+}
 
+function deleteMovie(e) {
+    e.preventDefault();
+    let id = e.target.dataset.id;
+
+    movieService.deleteMovie(id)
+        .then(() => {
+            navigate('home');
+        })
+        .catch(err => {
+            console.log(err);
+        });
 }
