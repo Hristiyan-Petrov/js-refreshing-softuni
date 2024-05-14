@@ -82,6 +82,10 @@ const authService = {
 
     logout() {
         localStorage.removeItem('auth');
+    },
+
+    getUserId() {
+        return JSON.parse(localStorage.getItem('auth')).localId;
     }
 }
 
@@ -103,5 +107,9 @@ const movieService = {
 
     async deleteMovie(key) {
         return await request(dataBaseUrl + `/movies/${key}.json`, 'DELETE');
+    },
+
+    async editMovie(key, movieData) {
+        return await request(dataBaseUrl + `/movies/${key}.json`, 'PUT', movieData);
     }
 }

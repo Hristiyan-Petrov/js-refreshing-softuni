@@ -4,6 +4,7 @@ const routes = { // Mapping object, dictionary
     'register': 'register-form-template',
     'add-movie': 'add-movie-template',
     'details': 'movie-details-template',
+    'edit-movie': 'edit-movie-template'
 }
 
 // Router is responsible for rendering views on specific path / Adjuster, traffic cop, regulirovchik
@@ -14,6 +15,8 @@ const router = async fullPath => {
 
     // Initial templateData is authData = { isAuthenticated, email }
     let templateData = authService.getData();
+
+    let movieDetailsData = null; // Predefine so can be used in 2 cases if needed
 
     // Using this switch only for logout as there is no view to render
     switch (path) {
@@ -27,7 +30,14 @@ const router = async fullPath => {
             return navigate('home'); // Same as navigate being on previous line 
 
         case 'details':
-            let movieDetailsData = await movieService.getOne(movieKey);
+            movieDetailsData = await movieService.getOne(movieKey);
+            let isCreator = movieDetailsData.creator === authService.getUserId();
+            Object.assign(templateData, movieDetailsData, { movieKey, isCreator});
+            console.log(templateData);
+            break;
+
+        case 'edit-movie':
+            movieDetailsData = await movieService.getOne(movieKey);
             Object.assign(templateData, movieDetailsData, { movieKey });
             console.log(templateData);
             break;

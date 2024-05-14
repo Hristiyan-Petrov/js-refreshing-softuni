@@ -70,7 +70,8 @@ function onAddMovieSubmit(e) {
     movieService.add({
         title,
         description,
-        imageUrl
+        imageUrl,
+        creator: authService.getUserId()
     })
         .then(res => {
             navigate('home');
@@ -87,6 +88,25 @@ function deleteMovie(e) {
     movieService.deleteMovie(id)
         .then(() => {
             navigate('home');
+        })
+        .catch(err => {
+            console.log(err);
+        });
+}
+
+function onEditMovieSubmit(e) {
+    e.preventDefault(e);
+
+    let id = location.pathname.split('/').pop();
+
+    let editMovieFormData = new FormData(document.forms['edit-movie-form']);
+    let title = editMovieFormData.get('title');
+    let description = editMovieFormData.get('description');
+    let imageUrl = editMovieFormData.get('imageUrl');
+
+    movieService.editMovie(id, { title, description, imageUrl })
+        .then(res => {
+            navigate(`details/${id}`);
         })
         .catch(err => {
             console.log(err);
