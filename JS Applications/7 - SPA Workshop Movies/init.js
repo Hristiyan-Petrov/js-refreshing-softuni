@@ -97,8 +97,6 @@ function deleteMovie(e) {
 function onEditMovieSubmit(e, movieKey) {
     e.preventDefault(e);
 
-    // let id = location.pathname.split('/').pop();
-
     let editMovieFormData = new FormData(document.forms['edit-movie-form']);
     let title = editMovieFormData.get('title');
     let description = editMovieFormData.get('description');
@@ -117,11 +115,11 @@ function onEditMovieSubmit(e, movieKey) {
         });
 }
 
-function likeMovie(e, movieId) {
+function likeMovie(e, movieKey) {
     e.preventDefault();
 
-    movieService.likeMovie(movieId)
+    movieService.likeMovie(movieKey)
         .then(res => {
-            navigate(`details/${movieId}`);
+            navigate(`details/${movieKey}`);
         })
 }

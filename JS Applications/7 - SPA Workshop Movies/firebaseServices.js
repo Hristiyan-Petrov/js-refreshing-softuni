@@ -120,7 +120,6 @@ const movieService = {
 
     async likeMovie(key) {
         let movieData = await request(dataBaseUrl + `/movies/${key}.json`, 'GET');
-
         const userId = authService.getUserId(); // Get current user's id
 
         if (!movieData.likes) {
@@ -129,8 +128,7 @@ const movieService = {
             movieData.likes.push(userId); // Push the current userId to the 'likes' array
         }
 
-        // Send a PATCH request to update the movie data
+        // Send a PATCH request to update the movie data (PUT will also work)
         return await request(dataBaseUrl + `/movies/${key}.json`, 'PATCH', movieData);
-
     }
 }
