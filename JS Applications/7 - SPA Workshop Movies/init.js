@@ -71,7 +71,7 @@ function onAddMovieSubmit(e) {
         title,
         description,
         imageUrl,
-        creator: authService.getUserId()
+        creator: authService.getUserId(),
     })
         .then(res => {
             navigate('home');
@@ -115,4 +115,13 @@ function onEditMovieSubmit(e, movieKey) {
         .catch(err => {
             console.log(err);
         });
+}
+
+function likeMovie(e, movieId) {
+    e.preventDefault();
+
+    movieService.likeMovie(movieId)
+        .then(res => {
+            navigate(`details/${movieId}`);
+        })
 }

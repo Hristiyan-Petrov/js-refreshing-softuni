@@ -102,7 +102,12 @@ const movieService = {
     async getOne(key) {
         let res = await request(dataBaseUrl + `/movies/${key}.json`, 'GET');
         console.log(res);
-        return {...res, isCreator: res.creator === authService.getUserId()};
+        return {
+            ...res,
+            isCreator: res.creator === authService.getUserId(),
+            isLiked: res.likes ? Boolean(res.likes.includes(authService.getUserId())) : false,
+            likesNumber: res.likes ? res.likes.length : false
+        };
     },
 
     async deleteMovie(key) {
@@ -111,5 +116,21 @@ const movieService = {
 
     async editMovie(key, movieData) {
         return await request(dataBaseUrl + `/movies/${key}.json`, 'PUT', movieData);
+    },
+
+    async likeMovie(key) {
+        let movieData = await request(dataBaseUrl + `/movies/${key}.json`, 'GET');
+
+        const userId = authService.getUserId(); // Get current user's id
+
+        if (!movieData.likes) {
+            movieData.likes = [userId]; // If 'likes' attribute does not exist, initialize it as an empty array
+        } else {
+            movieData.likes.push(userId); // Push the current userId to the 'likes' array
+        }
+
+        // Send a PATCH request to update the movie data
+        return await request(dataBaseUrl + `/movies/${key}.json`, 'PATCH', movieData);
+
     }
 }

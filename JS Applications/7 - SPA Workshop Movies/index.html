@@ -190,8 +190,11 @@
                         <a class="btn btn-danger" href="#" data-id="{{movieKey}}" onclick="deleteMovie(event)">Delete</a>
                         <a class="btn btn-warning" href="/details/{{movieKey}}/edit" onclick="navigateHandler(event)">Edit</a>
                     {{else}}
-                        <a class="btn btn-primary" href="#">Like</a>
-                        <span class="enrolled-span">Liked 1</span>
+                        {{#if isLiked}}            
+                            <span class="enrolled-span">Liked {{likesNumber}}</span>
+                        {{else}}
+                            <a class="btn btn-primary" href="#" onclick="likeMovie(event, '{{movieKey}}')">Like</a>
+                        {{/if}}
                     {{/if}}
                 </div>
             </div>
