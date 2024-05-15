@@ -14,7 +14,11 @@ const app = Sammy('#root', function () {
     // Attach user data to 'App context'. 
     // Better practice than attaching to event context (previous logic in extendContext)
     // Available on all controllers
-    this.userData = getUserData();
+    let user = getUserData(this);
+    this.userData = {
+        isLoggedIn: Boolean(user),
+        user
+    }
 
     // User routes
     this.get('/register', registerPage);

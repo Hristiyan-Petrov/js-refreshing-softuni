@@ -24,5 +24,7 @@ export async function homePage(context) { // Get Sammy functions is used to rend
     // });
 
     await extendContext(context);
-    this.partial('./templates/home.hbs', { offers, isLoggedIn: Boolean(this.app.userData) }); // Sammy out of the box function for loading views, templates
+    this.partial('./templates/home.hbs', { offers, ...this.app.userData });
+    // Sammy out of the box function for loading views, templates
+    // Pass template params as object as second arg
 }

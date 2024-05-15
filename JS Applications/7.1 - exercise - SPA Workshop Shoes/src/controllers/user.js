@@ -1,4 +1,4 @@
-import { extendContext, saveUser, clearUserData } from '../helpers.js';
+import { extendContext, saveUser, clearUserData, getUserData } from '../helpers.js';
 import {
     // Authentication
     auth,
@@ -6,21 +6,21 @@ import {
     signInWithEmailAndPassword,
     signOut,
 } from "../firebase-config.js"
- 
+
 // Rendering functions
 
-export function registerPage(context) {
-    extendContext(context)
-        .then(function () {
-            this.partial('./templates/register.hbs');
-        });
+export async function registerPage(context) {
+    await extendContext(context)
+    this.partial('./templates/register.hbs');
 }
 
-export function loginPage(context) {
-    extendContext(context)
-        .then(function () {
-            this.partial('./templates/login.hbs');
-        });
+export async function loginPage(context) {
+    await extendContext(context)
+    this.partial('./templates/login.hbs');
+    // extendContext(context)
+    //     .then(function () {
+    //         this.partial('../../templates/login.hbs');
+    //     });
 }
 
 // Auth functions
@@ -50,7 +50,8 @@ export function loginPost(context) {
     signInWithEmailAndPassword(auth, email, password)
         .then(userData => {
             console.log(userData);
-            saveUser(userData);
+
+            saveUser(userData, context.app);
             this.redirect('/home');
         })
         .catch(err => {
@@ -61,7 +62,7 @@ export function loginPost(context) {
 export function logout(context) {
     signOut(auth)
         .then(res => {
-            clearUserData();
+            clearUserData(context.app);
             console.log('logged out');
             this.redirect('/home');
         })
