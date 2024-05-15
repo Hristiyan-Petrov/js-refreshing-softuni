@@ -1,17 +1,16 @@
-import { collection , db} from "./firebase-config.js"
+import { collection, db } from "./firebase-config.js"
 
 // Function for loading partials
-export function extendContext(context) {
+export async function extendContext(context) {
+    const partials = await Promise.all([
+        context.load('../partials/header.hbs'),
+        context.load('../partials/footer.hbs')
+    ]);
 
-    let user = getUserData();
-    // Check if logged user
-    context.isLoggedIn = Boolean(user);
-    context.email = user ? user.email : '';
-
-    return context.loadPartials({
-        'header': './partials/header.hbs',
-        'footer': './partials/footer.hbs'
-    });
+    context.partials = {
+        header: partials[0],
+        footer: partials[1]
+    }
 }
 
 // Helper functions

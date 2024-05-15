@@ -2,17 +2,21 @@ import { homePage } from './controllers/home.js'
 import { loginPage, loginPost, logout, registerPage, registerPost } from "./controllers/user.js";
 import { buyOffer, createOffer, createOfferPage, deleteOffer, detailsPage, editOfferPage, editOffer } from "./controllers/catalog.js";
 import './firebase-config.js';
+import { getUserData } from './helpers.js';
 
 const app = Sammy('#root', function () {
 
     this.use('Handlebars', 'hbs'); // Say to Sammy to use Handlebars for template engine; and .hbs for file extension
 
     // Home
-
     this.get('/home', homePage);
 
-    // User routes
+    // Attach user data to 'App context'. 
+    // Better practice than attaching to event context (previous logic in extendContext)
+    // Available on all controllers
+    this.userData = getUserData();
 
+    // User routes
     this.get('/register', registerPage);
 
     this.post('/register', registerPost);
@@ -22,7 +26,6 @@ const app = Sammy('#root', function () {
     this.get('logout', logout);
 
     // Offers routes
-
     this.get('/details/:id', detailsPage);
 
     this.get('/create-offer', createOfferPage);
