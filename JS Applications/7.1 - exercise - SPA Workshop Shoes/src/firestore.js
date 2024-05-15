@@ -1,12 +1,13 @@
 // Helper functions
 
 const apiKey = 'AIzaSyBcIr7fqdVoidKUobm7dDRC5wFq52xX8as';
-const dataBaseUrl = 'https://movies-dd028.firebaseio.com';
+const dataBaseUrl = 'https://firestore.googleapis.com/v1/projects/shoeshelf-251a2/databases/(default)/documents/offers';
 const authUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:';
 
 const endpoints = {
     LOGIN: `${authUrl}signInWithPassword?key=`,
     REGISTER: `${authUrl}signUp?key=`,
+    OFFERS: 'offers.json'
 };
 
 async function request(url, method, body) {
@@ -49,18 +50,6 @@ async function patch(url) {
 
 async function login(email, password) {
 
-    // let response = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${apiKey}`, {
-    //     method: 'POST',
-    //     headers: {
-    //         'content-type': 'application/json'
-    //     },
-    //     body: JSON.stringify({
-    //         email,
-    //         password,
-    //         // returnSecureToken: true
-    //     })
-    // });
-
     let response = await post(endpoints.LOGIN + apiKey, {
         email,
         password,
@@ -77,6 +66,7 @@ async function register(email, password) {
         password,
         // returnSecureToken: true
     });
+
     localStorage.setItem('auth', JSON.stringify(response)); // Save data for logged user in localStorage
     return response;
 }
@@ -89,6 +79,13 @@ const authService = {
         return JSON.parse(localStorage.getItem('auth')).localId;
     }
 }
+
+async function getOffers() {
+    return get(dataBaseUrl);
+}
+
+window.getOffers = getOffers;
+
 
 const movieService = {
     async add(movieData) {
