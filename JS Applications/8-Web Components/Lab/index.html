@@ -5,50 +5,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plain JS Web Component Example</title>
-    <script src="my-component.js" defer></script>
+    <title>Mindblowing Counter Web Component</title>
+    <!-- Include the canvas-confetti library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="./counter.js" defer></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap">
 </head>
 
 <body>
-    <my-counter></my-counter>
-
-    <!-- Template for the component markup -->
-    <template id="my-counter-template">
-        <style>
-            :host {
-              display: flex;
-              align-items: center;
-              gap: 10px;
-              font-family: 'Poppins', sans-serif;
-            }
-      
-            span {
-              font-size: 2rem;
-              font-weight: 600;
-              color: #333;
-            }
-      
-            button {
-              padding: 10px 20px;
-              background-color: #007bff;
-              color: #fff;
-              border: none;
-              border-radius: 5px;
-              font-size: 1rem;
-              font-weight: 600;
-              cursor: pointer;
-              transition: background-color 0.3s ease;
-            }
-      
-            button:hover {
-              background-color: #0056b3;
-            }
-          </style>
-        <span></span>
-        <button>Increment</button>
-    </template>
-
-    <script type="module" src="./counter.js"></script>
+    <my-counter max="100" step="5" start-value="10" confetti></my-counter>
 </body>
 
-</html>
+<!-- Template for the component markup -->
+<template id="my-counter-template">
+    <style>
+        :host {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .counter-value {
+            font-size: 5rem;
+            font-weight: 600;
+            color: #333;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .counter-controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .confetti-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+        }
+    </style>
+
+    <div class="counter-value"></div>
+    <div class="counter-controls">
+        <button class="decrement">-</button>
+        <button class="increment">+</button>
+    </div>
+    <canvas class="confetti-container"></canvas>
+</template>

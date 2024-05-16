@@ -14,19 +14,65 @@ class MyCounter extends HTMLElement {
         this.shadowRoot.appendChild(templateContent.cloneNode(true));
 
         // Get references to the component elements
-        this.counterValue = this.shadowRoot.querySelector('span');
-        this.incrementBtn = this.shadowRoot.querySelector('button');
+        this.counterValue = this.shadowRoot.querySelector('.counter-value');
+        this.decrementBtn = this.shadowRoot.querySelector('.decrement');
+        this.incrementBtn = this.shadowRoot.querySelector('.increment');
+        this.confettiContainer = this.shadowRoot.querySelector('.confetti-container');
 
-        // Initialize the counter value
-        this.counterValue.textContent = '0';
+        // Initialize the counter value and properties
+        this.value = this.hasAttribute('start-value') ? parseInt(this.getAttribute('start-value')) : 0;
+        this.max = this.hasAttribute('max') ? parseInt(this.getAttribute('max')) : Infinity;
+        this.step = this.hasAttribute('step') ? parseInt(this.getAttribute('step')) : 1;
+        this.showConfetti = this.hasAttribute('confetti');
 
-        // Add event listener to the button
+        // Render the initial counter value
+        this.renderValue();
+
+        // Add event listeners
+        this.decrementBtn.addEventListener('click', () => this.decrement());
         this.incrementBtn.addEventListener('click', () => this.increment());
     }
 
+    renderValue() {
+        this.counterValue.textContent = this.value;
+        this.counterValue.style.transform = 'scale(1)';
+
+        // Show confetti if the attribute is present and the value is equal to the max
+        if (this.showConfetti && this.value === this.max) {
+            this.showConfettiAnimation();
+        }
+    }
+
     increment() {
-        const currentValue = parseInt(this.counterValue.textContent, 10);
-        this.counterValue.textContent = currentValue + 1;
+        if (this.value < this.max) {
+            this.value += this.step;
+            this.renderValue();
+        }
+    }
+
+    decrement() {
+        if (this.value > 0) {
+            this.value -= this.step;
+            this.renderValue();
+        }
+    }
+
+    showConfettiAnimation() {
+        const canvas = this.confettiContainer;
+        const myConfetti = confetti.create(canvas, {
+            resize: true,
+            useWorker: true,
+        });
+
+        myConfetti({
+            particleCount: 200,
+            spread: 160,
+            origin: { y: 0.6 },
+        });
+
+        setTimeout(() => {
+            myConfetti.reset();
+        }, 5000);
     }
 }
 
