@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <my-counter></my-counter> 
+
+    <script type="module">
+        // my-component.js
+        class MyCounter extends HTMLElement {
+            constructor() {
+                super();
+
+                // Create a shadow root to encapsulate the component's styles and markup
+                this.attachShadow({ mode: 'open' });
+
+                // Create the component's markup
+                const counterValue = document.createElement('span');
+                counterValue.textContent = '0';
+
+                const incrementBtn = document.createElement('button');
+                incrementBtn.textContent = 'Increment';
+                incrementBtn.addEventListener('click', () => this.increment());
+
+                // Attach the created elements to the shadow root
+                const shadowRoot = this.shadowRoot;
+                shadowRoot.appendChild(counterValue);
+                shadowRoot.appendChild(incrementBtn);
+            }
+
+            increment() {
+                const counterValue = this.shadowRoot.querySelector('span');
+                const currentValue = parseInt(counterValue.textContent, 10);
+                counterValue.textContent = currentValue + 1;
+            }
+        }
+
+        // Define the new custom element
+        customElements.define('my-counter', MyCounter);
+    </script>
+</body>
+
+</html>
