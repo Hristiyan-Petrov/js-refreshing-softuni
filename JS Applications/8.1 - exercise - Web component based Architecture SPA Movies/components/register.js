@@ -1,6 +1,9 @@
 // Use lit-html library for templating, Docs: https://lit.dev/docs/v1/lit-html/introduction/
 import { html, render } from 'https://esm.run/lit-html@1';
 
+// Named import
+import { register } from '../services/authServices.js'
+
 // Tagged function
 const template = (context) => html`
     <form class="text-center border border-light p-5" action="#" method="post" @submit=${context.onSubmit}>  <!-- @eventName comes from lit-html -->
@@ -51,23 +54,30 @@ export default class Register extends HTMLElement {
             return;
         }
 
-        this.dispatchNotificationEvent('Successfully registered!', 'success');
+        register(email, password)
+            .then(res => {
+                this.dispatchNotificationEvent('Successfully registered!', 'success');
+                // TO DO: redirect home
+            })
+            .catch(err => {
+                this.dispatchNotificationEvent(err, 'error');
+            });
     }
 
-    
+
     // Implemented the `dispatchNotificationEvent` method in the `Register` component to create and dispatch the custom event on the `NotificationComponent` instance, ensuring proper event propagation.
 
     // This method creates a custom event 'showNotification' with the provided message and type, and dispatches it on the NotificationComponent instance to trigger the notification display
     dispatchNotificationEvent(message, type) {
         const notificationComponent = this.getRootNode().querySelector('notification-component');
         const notificationEvent = new CustomEvent('showNotification', {
-          detail: {
-            message,
-            type
-          },
-          bubbles: true, // Add this option to allow event bubbling
-          composed: true // Add this option to allow event propagation across Shadow DOM boundaries
+            detail: {
+                message,
+                type
+            },
+            bubbles: true, // Add this option to allow event bubbling
+            composed: true // Add this option to allow event propagation across Shadow DOM boundaries
         });
         notificationComponent.dispatchEvent(notificationEvent);
-      }
+    }
 }
