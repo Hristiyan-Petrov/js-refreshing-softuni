@@ -5,10 +5,12 @@ import { Router } from 'https://unpkg.com/@vaadin/router';
 // Import components
 import Home from './components/home.js';
 import Register from './components/register.js';
+import Notification from './components/notification.js';
 
 // Register components
 customElements.define('home-component', Home);
 customElements.define('register-component', Register);
+customElements.define('notification-component', Notification);
 
 const rootElement = document.getElementById('root');
 const router = new Router(rootElement);

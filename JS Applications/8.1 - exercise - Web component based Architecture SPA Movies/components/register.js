@@ -31,27 +31,43 @@ export default class Register extends HTMLElement {
 
     // Render method; good for scaling
     render() {
-        render(template(this), this, { eventContex: this }); // This is the current class instanse - 'Home'
+        render(template(this), this, { eventContext: this }); // This is the current class instanse - 'class Register'
     }
 
     onSubmit(e) {
         e.preventDefault();
-
         let formData = new FormData(e.target);
         let email = formData.get('email');
         let password = formData.get('password');
         let repeatPassword = formData.get('repeatPassword');
 
         if (password.length < 6) {
-            showNotification('Password must be greater that 6 characters!', 'fail')
+            this.dispatchNotificationEvent('Password must be greater that 6 characters!', 'error');
             return;
         }
 
         if (password !== repeatPassword) {
-            showNotification('Passwords must match!', 'fail')
+            this.dispatchNotificationEvent('Passwords must match!', 'error');
             return;
         }
 
-        showNotification('Succesully registered!', 'success')
+        this.dispatchNotificationEvent('Successfully registered!', 'success');
     }
+
+    
+    // Implemented the `dispatchNotificationEvent` method in the `Register` component to create and dispatch the custom event on the `NotificationComponent` instance, ensuring proper event propagation.
+
+    // This method creates a custom event 'showNotification' with the provided message and type, and dispatches it on the NotificationComponent instance to trigger the notification display
+    dispatchNotificationEvent(message, type) {
+        const notificationComponent = this.getRootNode().querySelector('notification-component');
+        const notificationEvent = new CustomEvent('showNotification', {
+          detail: {
+            message,
+            type
+          },
+          bubbles: true, // Add this option to allow event bubbling
+          composed: true // Add this option to allow event propagation across Shadow DOM boundaries
+        });
+        notificationComponent.dispatchEvent(notificationEvent);
+      }
 }

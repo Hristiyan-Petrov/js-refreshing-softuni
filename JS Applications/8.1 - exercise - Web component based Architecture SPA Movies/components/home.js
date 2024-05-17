@@ -20,6 +20,6 @@ export default class Home extends HTMLElement {
 
     // Render method; good for scaling
     render() {
-        render(template(), this); // This is the current class instanse - 'Home'
+        render(template(), this); // This is the current class instanse - 'class Home'
     }
 }
