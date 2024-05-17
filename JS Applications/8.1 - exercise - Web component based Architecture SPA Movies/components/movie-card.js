@@ -8,7 +8,7 @@ const template = (context) => html`
                  <h4 class="card-title">${context.data.title}</h4>
              </div>
              <div class="card-footer">
-                 <a href="#/details/${context.data.key}"><button type="button" class="btn btn-info">Details</button></a>
+                 <a href="/details/${context.data.key}"><button type="button" class="btn btn-info">Details</button></a>
              </div>
          </div>
 `;

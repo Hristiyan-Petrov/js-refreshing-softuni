@@ -11,6 +11,7 @@ import Login from './components/login.js';
 import Notification from './components/notification.js';
 import Movies from './components/movies.js';
 import MovieCard from './components/movie-card.js';
+import MovieDetails from './components/movie-details.js';
 
 // Register components
 customElements.define('home-component', Home);
@@ -19,6 +20,7 @@ customElements.define('login-component', Login);
 customElements.define('notification-component', Notification);
 customElements.define('movies-component', Movies);
 customElements.define('movie-card', MovieCard);
+customElements.define('movie-details-component', MovieDetails);
 
 const rootElement = document.getElementById('root');
 const router = new Router(rootElement);
@@ -43,4 +45,8 @@ router.setRoutes([
             // TO DO: redirect
         }
     },
+    {
+        path: '/details/:movieKey',
+        component: 'movie-details-component'
+    }
 ]);
