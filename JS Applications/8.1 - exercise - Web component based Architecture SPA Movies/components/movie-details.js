@@ -1,5 +1,5 @@
 import { html, render, directive } from 'https://esm.run/lit-html@1';
-import { getOneMovie } from '../services/dbService.js';
+import { getOneMovie, likeMovie } from '../services/dbService.js';
 import { getUserData } from '../services/authServices.js';
 import { likeDirective } from '../directives/likeDirective.js';
 
@@ -36,7 +36,7 @@ const template = (context) => html`
                         : html`
                             ${isLiked(context.likes, context.user.uid)
                                 ? html`<span class="enrolled-span">Liked ${Object.keys(context.likes).length}</span>`
-                                : html`<a class="btn btn-primary" href="#">Like</a>`
+                                : html`<a class="btn btn-primary" @click=${context.onLike}>Like</a>`
                             }                            
                         `
                     }
@@ -64,6 +64,14 @@ export default class MovieDetails extends HTMLElement {
 
     render() {
         render(template(this), this, { eventContext: this }); // This is the current class instanse - 'class Register'
+    }
+
+    onLike(e) {
+        likeMovie(this.location.params.movieKey, this.user.uid)
+            .then(res => {
+                console.log(res);
+                this.render();
+            })
     }
 
 }
