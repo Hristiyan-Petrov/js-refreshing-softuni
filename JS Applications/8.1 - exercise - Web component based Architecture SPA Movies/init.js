@@ -2,14 +2,18 @@
 // It solves the reloading when clicking (<a href> - links) out of the box
 import { Router } from 'https://unpkg.com/@vaadin/router';
 
+import { logout } from './services/authServices.js';
+
 // Import components
 import Home from './components/home.js';
 import Register from './components/register.js';
+import Login from './components/login.js';
 import Notification from './components/notification.js';
 
 // Register components
 customElements.define('home-component', Home);
 customElements.define('register-component', Register);
+customElements.define('login-component', Login);
 customElements.define('notification-component', Notification);
 
 const rootElement = document.getElementById('root');
@@ -23,5 +27,16 @@ router.setRoutes([
     {
         path: '/register',
         component: 'register-component'
-    }
+    },
+    {
+        path: '/login',
+        component: 'login-component'
+    },
+    {
+        path: '/logout',
+        action: (context, commands) => {
+            logout();
+            // return commands.redirect('/');
+        }
+    },
 ]);
