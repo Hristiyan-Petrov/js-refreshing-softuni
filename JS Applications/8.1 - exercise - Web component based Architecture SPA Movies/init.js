@@ -9,12 +9,16 @@ import Home from './components/home.js';
 import Register from './components/register.js';
 import Login from './components/login.js';
 import Notification from './components/notification.js';
+import Movies from './components/movies.js';
+import MovieCard from './components/movie-card.js';
 
 // Register components
 customElements.define('home-component', Home);
 customElements.define('register-component', Register);
 customElements.define('login-component', Login);
 customElements.define('notification-component', Notification);
+customElements.define('movies-component', Movies);
+customElements.define('movie-card', MovieCard);
 
 const rootElement = document.getElementById('root');
 const router = new Router(rootElement);
@@ -34,9 +38,9 @@ router.setRoutes([
     },
     {
         path: '/logout',
-        action: (context, commands) => {
+        action: () => {
             logout();
-            // return commands.redirect('/');
+            // TO DO: redirect
         }
     },
 ]);

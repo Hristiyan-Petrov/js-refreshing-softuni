@@ -1,5 +1,4 @@
 const apiKey = 'AIzaSyB8X6MY_E3j_WaWWOhQvQVRc4w6LcCfuhE';
-const dataBaseUrl = 'https://movies-dd028.firebaseio.com';
 const authUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:';
 
 const apiUrls = {
