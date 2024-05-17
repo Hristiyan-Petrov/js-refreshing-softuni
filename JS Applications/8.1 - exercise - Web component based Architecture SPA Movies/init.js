@@ -1,6 +1,6 @@
 // Using vaadin router; Docs: https://vaadin.github.io/router/vaadin-router/demo/#vaadin-router-getting-started-demos
 // It solves the reloading when clicking (<a href> - links) out of the box
-import {Router} from 'https://unpkg.com/@vaadin/router';
+import { Router } from 'https://unpkg.com/@vaadin/router';
 
 // Import components
 import Home from './components/home.js';
