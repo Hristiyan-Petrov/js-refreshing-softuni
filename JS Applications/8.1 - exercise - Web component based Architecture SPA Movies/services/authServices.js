@@ -36,7 +36,8 @@ export const getUserData = () => {
 
         return {
             isAuthenticated: Boolean(data.idToken),
-            email: data.email
+            email: data.email,
+            uid: data.localId
         };
         // Handle case when user is not logged in, cause getData() is executed on every route 
     } catch (error) {

@@ -1,5 +1,17 @@
-import { html, render } from 'https://esm.run/lit-html@1';
+import { html, render, directive } from 'https://esm.run/lit-html@1';
 import { getOneMovie } from '../services/dbService.js';
+import { getUserData } from '../services/authServices.js';
+import { likeDirective } from '../directives/likeDirective.js';
+
+// const likeDirective = directive(() => (part) => { part.setValue('Like') });
+// Directives are very complicated
+
+const isLiked = (likes, currUid) => {
+    return Object
+        .values(likes)
+        .some(uid => uid === currUid);
+}
+
 
 // Tagged function
 const template = (context) => html`
@@ -13,22 +25,39 @@ const template = (context) => html`
                 <div class="col-md-4 text-center">
                     <h3 class="my-3 ">Movie Description</h3>
                     <p>${context.description}</p>
-                    <a class="btn btn-danger" href="#">Delete</a>
-                    <a class="btn btn-warning" href="#">Edit</a>
-                    <a class="btn btn-primary" href="#">Like</a>
-                    <span class="enrolled-span">Liked 1</span>
+
+                    <!-- <h3>${likeDirective()}</h3> -->
+
+                    ${context.creator === context.user.uid
+                        ? html`
+                            <a class="btn btn-danger" href="#">Delete</a>
+                            <a class="btn btn-warning" href="#">Edit</a>
+                        `   
+                        : html`
+                            ${isLiked(context.likes, context.user.uid)
+                                ? html`<span class="enrolled-span">Liked ${Object.keys(context.likes).length}</span>`
+                                : html`<a class="btn btn-primary" href="#">Like</a>`
+                            }                            
+                        `
+                    }
                 </div>
             </div>
         </div>
 `;
 
 export default class MovieDetails extends HTMLElement {
+    constructor() {
+        super();
+        this.user = getUserData();
+    }
+
     connectedCallback() {
         // console.log(this.location.params.movieKey);
 
         getOneMovie(this.location.params.movieKey)
             .then(movieData => {
-                Object.assign(this, movieData);
+                // console.log(movieData);
+                Object.assign(this, movieData); // Attach movieData to this
                 this.render();
             });
     }

@@ -16,6 +16,7 @@ export const getOneMovie = async (key) => {
 
     return res;
 
+    // This should not be done here. dbServices should only retrieve data. 
     // return {
     //     ...res,
     //     isCreator: res.creator === authService.getUserId(),
