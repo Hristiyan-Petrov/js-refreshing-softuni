@@ -1,4 +1,4 @@
-// Use lit-html library for templating
+// Use lit-html library for templating; Docs: https://lit.dev/docs/v1/lit-html/introduction/
 import { html, render } from 'https://esm.run/lit-html@1';
 
 // Tagged function
