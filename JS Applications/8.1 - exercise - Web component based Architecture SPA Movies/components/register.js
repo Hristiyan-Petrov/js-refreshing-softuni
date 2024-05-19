@@ -3,6 +3,8 @@ import { html, render } from 'https://esm.run/lit-html@1';
 
 // Named import
 import { register } from '../services/authServices.js'
+import { Router } from 'https://unpkg.com/@vaadin/router';
+
 
 // Tagged function
 const template = (context) => html`
@@ -58,6 +60,7 @@ export default class Register extends HTMLElement {
             .then(res => {
                 this.dispatchNotificationEvent('Successfully registered!', 'success');
                 // TO DO: redirect home
+                Router.go('/');
             })
             .catch(err => {
                 this.dispatchNotificationEvent(err, 'error');

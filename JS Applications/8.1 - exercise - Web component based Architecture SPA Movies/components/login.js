@@ -3,7 +3,6 @@ import { html, render } from 'https://esm.run/lit-html@1';
 
 // Named import
 import { login } from '../services/authServices.js'
-
 import { Router } from 'https://unpkg.com/@vaadin/router';
 
 // Tagged function
