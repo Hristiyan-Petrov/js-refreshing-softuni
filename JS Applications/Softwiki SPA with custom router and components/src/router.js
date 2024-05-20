@@ -2,6 +2,8 @@ import { html, render } from 'lit-html';
 
 // import { html, render } from '../node_modules/lit-html/lit-html.js'; // Without webpack
 
+import authService from './services/authService.js';
+
 import layout from './views/layout.js';
 import home from './views/home.js';    // home is function
 import login from './views/login.js';  // login is function
@@ -42,7 +44,9 @@ export const router = (path) => {
     let route = routes.find(x => x.path === path) || routes.find(x => x.path === '/not-found'); // Route is an object from routes
     let context = route.context;
 
-    render(layout(route.temlpate(context), { navigationHandler }), document.getElementById('app')); // Not hard, just follow the arg pass flow. Functional programming
+    let userData = authService.getData();
+
+    render(layout(route.temlpate(context), { navigationHandler, ...userData}), document.getElementById('app')); // Not hard, just follow the arg pass flow. Functional programming
 };
 
 // For maximum loose coupling this hanlder should be taken out of this file (Dependency resolving)

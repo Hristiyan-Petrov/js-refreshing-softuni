@@ -35,7 +35,7 @@ export default {
             let data = JSON.parse(localStorage.getItem('auth'));
 
             return {
-                isAuthenticated: Boolean(data.idToken),
+                isAuthenticated: Boolean(data['user-token']),
                 email: data.email
             };
             // Handle case when user is not logged in, cause getData() is executed on every route 
