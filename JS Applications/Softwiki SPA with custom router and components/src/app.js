@@ -33,7 +33,7 @@ const routes = [
 
 // Change url and render view
 const router = (path) => {
-    console.log(path);
+    history.pushState({}, '', path);    // Change the state
 
     let route = routes.find(x => x.path === path) || routes.find(x => x.path === '/not-found'); // Route is an object from routes
 
