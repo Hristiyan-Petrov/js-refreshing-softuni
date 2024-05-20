@@ -7,6 +7,8 @@ import home from './views/home.js';    // home is function
 import login from './views/login.js';  // login is function
 import notFound from './views/notFound.js';
 
+import { onLoginSubmit } from './eventListeners.js';
+
 const routes = [
     {
         path: '/',
@@ -16,7 +18,7 @@ const routes = [
         path: '/login',
         temlpate: login, // login is function
         context: {
-            
+            onLoginSubmit
         }
     },
     {
@@ -30,8 +32,9 @@ export const router = (path) => {
     history.pushState({}, '', path);    // Change the state
 
     let route = routes.find(x => x.path === path) || routes.find(x => x.path === '/not-found'); // Route is an object from routes
+    let context = route.context;
 
-    render(layout(route.temlpate, { navigationHandler }), document.getElementById('app')); // Not hard, just follow the arg pass flow. Functional programming
+    render(layout(route.temlpate(context), { navigationHandler }), document.getElementById('app')); // Not hard, just follow the arg pass flow. Functional programming
 };
 
 // For maximum loose coupling this hanlder should be taken out of this file (Dependency resolving)

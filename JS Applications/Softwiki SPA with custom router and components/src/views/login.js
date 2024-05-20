@@ -5,7 +5,7 @@ export default ({
     onLoginSubmit
 }) => html`
     <div class="container auth">
-        <form action="#" method="">
+        <form action="#" method="" @submit=${onLoginSubmit}>
             <fieldset>
                 <legend>Login</legend>
                 <blockquote>Knowledge is like money: to be of value it must circulate, and in circulating it can increase in quantity and, hopefully, in value</blockquote>

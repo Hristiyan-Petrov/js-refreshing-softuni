@@ -7,7 +7,7 @@ export default (temaplateResult, props) => html`    <!-- Pass props to header --
     ${header(props)}
     
     <div id="layout-wrapper">
-        ${temaplateResult(props)}
+        ${temaplateResult}
     </div> 
 
     ${footer()}
