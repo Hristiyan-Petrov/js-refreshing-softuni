@@ -1,23 +1,25 @@
 import request from "./request.js";
+import authService from './authService.js';
 
 const subdomain = 'willingyak-eu.backendless.app';
 const dataBaseEndpoint = `https://${subdomain}/api/data/Articles`;
 
-const applicationJsonHeaders = {
-    'Content-Type': 'application/json'
+// const applicationJsonHeaders = {
+//     'Content-Type': 'application/json'
+// };
+
+const backendlessLoggedHeaders = {
+    'Content-Type': 'application/json',
+    'user-token': authService.getUserToken()
 }
 
 export default {
     async create(articleBody) {
-        let headers = Object.assign(applicationJsonHeaders, {
-            'user-token': this.getUserToken()
-        });
-        return await request.post(dataBaseEndpoint, headers, articleBody);
+        return await request.post(dataBaseEndpoint, backendlessLoggedHeaders, articleBody);
     },
 
-
-    getUserToken() {
-        return JSON.parse(localStorage.getItem('auth'))['user-token'];
-    }
+    async getAll() {
+        return await request.get(dataBaseEndpoint, backendlessLoggedHeaders);
+    },
 
 }

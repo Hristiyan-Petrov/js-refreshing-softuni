@@ -14,8 +14,8 @@ export default ({
 
                 <p class="field category">
                     <select class="category-select" name="category">
-                        <option class="category-option" value="javascript">JavaScript</option>
-                        <option class="category-option" value="c#">C#</option>
+                        <option class="category-option" value="js">JavaScript</option>
+                        <option class="category-option" value="csharp">C#</option>
                         <option class="category-option" value="python">Python</option>
                         <option class="category-option" value="java">Java</option>
                     </select>

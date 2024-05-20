@@ -3,6 +3,7 @@ import { html, render } from 'lit-html';
 // import { html, render } from '../node_modules/lit-html/lit-html.js'; // Without webpack
 
 import authService from './services/authService.js';
+import articleService from './services/articleService.js';
 
 import layout from './views/layout.js';
 import home from './views/home.js';    // home is function
@@ -28,12 +29,13 @@ const routes = [
             }
 
             history.pushState({}, '', path);
-            
+
             return template(props);
         },
         context: {
             onLogout
-        }
+        },
+        getData: articleService.getAll    // For rendering all articles from db on homepage
     },
     {
         path: '/login',
@@ -70,6 +72,14 @@ export const router = (path) => {
     let context = route.context;
 
     let userData = authService.getData();
+
+    if (route.getData) {    // For loading all articles on home
+        route.getData()
+            .then(articles => {
+                // Double render
+                render(layout(route.template, { navigationHandler, ...userData, ...context, articles }), document.getElementById('app'));
+            })
+    }
 
     render(layout(route.template, { navigationHandler, ...userData, ...context }), document.getElementById('app')); // Not hard, just follow the arg pass flow. Functional programming
 };
