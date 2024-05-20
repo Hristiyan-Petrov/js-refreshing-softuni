@@ -11,6 +11,7 @@ import login from './views/login.js';  // login is function
 import register from './views/register.js';
 import notFound from './views/notFound.js';
 import createArticle from './views/create-article.js';
+import articleDetails from './views/article-details.js';
 
 import { onLoginSubmit, onLogout, onRegisterSubmit, onArticleCreateSubmit } from './eventListeners.js';
 
@@ -46,7 +47,7 @@ const routes = [
     },
     {
         path: '/register',
-        template: register, // login is function
+        template: register, // register is function
         context: {
             onRegisterSubmit
         }
@@ -59,8 +60,13 @@ const routes = [
         }
     },
     {
+        path: '/details/(?<id>\.+)',
+        template: articleDetails,
+        getData: articleService.getOne
+    },
+    {
         path: '/not-found',
-        template: notFound
+        template: notFound,
     }
 ];
 
@@ -68,20 +74,40 @@ const routes = [
 export const router = (path) => {
     history.pushState({}, '', path);    // Change the state
 
-    let route = routes.find(x => x.path === path) || routes.find(x => x.path === '/not-found'); // Route is an object from routes
+    // Using RegEx because of details/id. Need a way to determine the path. All routers use regex underneath
+    let route = routes.find(x => new RegExp(`${x.path}$`, 'i').test(path)) || routes.find(x => x.path === '/not-found'); // Route is an object from routes
     let context = route.context;
+
+    // Pass params to article details template // It is <id> from path: '/details/(?<id>\.+)',
+    let params = new RegExp(`${route.path}$`, 'i').exec(path).groups;
 
     let userData = authService.getData();
 
     if (route.getData) {    // For loading all articles on home
-        route.getData()
-            .then(articles => {
-                // Double render
-                render(layout(route.template, { navigationHandler, ...userData, ...context, articles }), document.getElementById('app'));
-            })
+        switch (route.getData) {
+            case articleService.getOne:
+                route.getData(params.id)
+                    .then(article => {
+                        // Double render
+                        render(layout(route.template, { navigationHandler, ...userData, ...context, ...article, params }), document.getElementById('app'));
+                    })
+                break;
+
+            case articleService.getAll:
+                route.getData()
+                    .then(articles => {
+                        // Double render
+                        render(layout(route.template, { navigationHandler, ...userData, ...context, articles, params }), document.getElementById('app'));
+                    });
+                break;
+
+            default:
+                break;
+        }
+
     }
 
-    render(layout(route.template, { navigationHandler, ...userData, ...context }), document.getElementById('app')); // Not hard, just follow the arg pass flow. Functional programming
+    render(layout(route.template, { navigationHandler, ...userData, ...context, params }), document.getElementById('app')); // Not hard, just follow the arg pass flow. Functional programming
 };
 
 // For maximum loose coupling this hanlder should be taken out of this file (Dependency resolving)

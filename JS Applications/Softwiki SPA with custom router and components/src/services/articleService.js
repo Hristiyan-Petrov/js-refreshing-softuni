@@ -22,4 +22,7 @@ export default {
         return await request.get(dataBaseEndpoint, backendlessLoggedHeaders);
     },
 
+    async getOne(id) {
+        return await request.get(`${dataBaseEndpoint}/${id}`, backendlessLoggedHeaders);
+    }
 }
