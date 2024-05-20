@@ -10,7 +10,7 @@ import login from './views/login.js';  // login is function
 import register from './views/register.js';
 import notFound from './views/notFound.js';
 
-import { onLoginSubmit, onRegisterSubmit } from './eventListeners.js';
+import { onLoginSubmit, onLogout, onRegisterSubmit } from './eventListeners.js';
 
 const routes = [
     {
@@ -29,6 +29,9 @@ const routes = [
             history.pushState({}, '', path);
             
             return template(props);
+        },
+        context: {
+            onLogout
         }
     },
     {
@@ -68,7 +71,7 @@ export const router = (path) => {
 
 // On anchor tag click event - to prevent reloading
 function navigationHandler(e) {
-    if (!e.target.tagName === 'A') {
+    if (!e.target.tagName === 'A' || !e.target.attributes.getNamedItem('href')) {
         return;
     }
 

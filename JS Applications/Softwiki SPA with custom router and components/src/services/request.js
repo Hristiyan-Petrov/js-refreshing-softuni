@@ -1,15 +1,18 @@
 // Abstract function
 // Named export
-const request = async (method, url, body) => {
+const request = async (method, url, headers, body) => {
     let options = {
         method
     }
 
+    if (headers) {
+        Object.assign(options, {
+            headers
+        });
+    }
+
     if (body) {
         Object.assign(options, {
-            headers: {
-                'Content-Type': 'application/json'
-            },
             body: JSON.stringify(body)
         });
     }

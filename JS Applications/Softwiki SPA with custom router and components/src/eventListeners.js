@@ -10,8 +10,12 @@ export const onLoginSubmit = (e) => {
 
     authService.login(login, password)
         .then(userData => {
-            console.log(userData);
+            localStorage.setItem('auth', JSON.stringify({
+                'user-token': userData['user-token'],   // For Backendless
+                'email': userData.email
+            }));
             console.log('logged');
+            router('/');
         })
 };
 
@@ -36,3 +40,13 @@ export const onRegisterSubmit = e => {
             router('/login');
         })
 };
+
+export const onLogout = e => {
+    e.preventDefault();
+    authService.logout(authService.getData()["user-token"])
+        .then(() => {
+            localStorage.removeItem('auth');
+            console.log('logged out');
+            router('/login');
+        })
+}

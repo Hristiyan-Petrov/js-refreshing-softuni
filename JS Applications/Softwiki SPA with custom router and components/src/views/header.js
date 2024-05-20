@@ -1,10 +1,10 @@
 // import { html, render } from 'lit-html'; // For webpack
 import { html, render } from 'lit-html';
 
-const loggedInLinks = (email) => html`
+const loggedInLinks = (email, onLogout) => html`
     <a>Hello ${email}</a>
     <a href="/create">Create</a>
-    <a href="/logout">Logout</a>
+    <a @click=${onLogout}>Logout</a>
 `;
 
 const guestLinks = html`
@@ -14,7 +14,8 @@ const guestLinks = html`
 export default ({
     navigationHandler,   // Recieved from app.js, throught layout 
     isAuthenticated,
-    email
+    email,
+    onLogout
 }) => html`
     <header @click=${navigationHandler}>    <!-- Attach with lit-html syntax -->
         <h1><a class="home" href="/">SoftWiki</a></h1>
@@ -22,9 +23,9 @@ export default ({
             
         <!-- Dynamic content depending on if user is logged -->
             ${isAuthenticated
-            ? loggedInLinks(email)
-            : guestLinks
-        }
+        ? loggedInLinks(email, onLogout)
+        : guestLinks
+    }
         </nav>
     </header>
 `;
