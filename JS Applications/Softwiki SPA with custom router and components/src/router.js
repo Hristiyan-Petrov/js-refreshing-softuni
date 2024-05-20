@@ -2,10 +2,10 @@ import { html, render } from 'lit-html';
 
 // import { html, render } from '../node_modules/lit-html/lit-html.js'; // Without webpack
 
-import layout from '../views/layout.js';
-import home from '../views/home.js';    // home is function
-import login from '../views/login.js';  // login is function
-import notFound from '../views/notFound.js';
+import layout from './views/layout.js';
+import home from './views/home.js';    // home is function
+import login from './views/login.js';  // login is function
+import notFound from './views/notFound.js';
 
 const routes = [
     {
@@ -14,7 +14,10 @@ const routes = [
     },
     {
         path: '/login',
-        temlpate: login // login is function
+        temlpate: login, // login is function
+        context: {
+            
+        }
     },
     {
         path: '/not-found',
@@ -43,9 +46,9 @@ function navigationHandler(e) {
     e.preventDefault();
 
     console.log(e.target);
-    
+
     let url = new URL(e.target.href);
-    console.log(url);    
-    
+    console.log(url);
+
     router(url.pathname, { navigationHandler });    // Pass event handler as 'props' to layout, so header can access it
 }

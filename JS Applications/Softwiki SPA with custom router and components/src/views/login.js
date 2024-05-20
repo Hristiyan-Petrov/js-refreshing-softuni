@@ -1,7 +1,9 @@
 // import { html, render } from 'lit-html';  // For webpack
-import { html, render } from '../node_modules/lit-html/lit-html.js';
+import { html, render } from 'lit-html';
 
-export default () => html`
+export default ({
+    onLoginSubmit
+}) => html`
     <div class="container auth">
         <form action="#" method="">
             <fieldset>
