@@ -5,6 +5,8 @@ import '../styles/create.css';
 import '../styles/home.css';
 import '../styles/auth.css';
 import '../styles/details.css';
+import '../styles/notFound.css';
+
 import { html, render } from 'lit-html';
 
 // import { html, render } from '../node_modules/lit-html/lit-html.js'; // Without webpack
@@ -12,6 +14,7 @@ import { html, render } from 'lit-html';
 import layout from '../views/layout.js';
 import home from '../views/home.js';    // home is function
 import login from '../views/login.js';  // login is function
+import notFound from '../views/notFound.js';
 
 const routes = [
     {
@@ -21,6 +24,10 @@ const routes = [
     {
         path: '/login',
         temlpate: login // login is function
+    },
+    {
+        path: '/not-found',
+        temlpate: notFound
     }
 ];
 
@@ -28,9 +35,9 @@ const routes = [
 const router = (path) => {
     console.log(path);
 
-    let route = routes.find(x => x.path === path); // Route is an object from routes
+    let route = routes.find(x => x.path === path) || routes.find(x => x.path === '/not-found'); // Route is an object from routes
 
-    render(layout(route.temlpate(), { navigationHandler }), document.getElementById('app')); // Not hard, just follow the arg pass flow. Functional programming
+    render(layout(route.temlpate, { navigationHandler }), document.getElementById('app')); // Not hard, just follow the arg pass flow. Functional programming
 };
 
 // On anchor tag click event - to prevent reloading
@@ -42,8 +49,10 @@ function navigationHandler(e) {
     e.preventDefault();
 
     console.log(e.target);
+    
     let url = new URL(e.target.href);
     console.log(url);    
+    
     router(url.pathname, { navigationHandler });    // Pass event handler as 'props' to layout, so header can access it
 }
 
