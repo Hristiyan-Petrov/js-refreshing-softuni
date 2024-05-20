@@ -70,3 +70,28 @@ div.container {
     background-color: rgba(12, 14, 12, 0.575);
     color: white;
 }
+
+.category-select {
+    margin: 1.2em auto;
+    width: 100%;
+    padding: 0.3em;
+    border-radius: 0.5em;
+    border: 2px solid rgb(151, 150, 150);
+    border-bottom-color: lightgrey;
+    border-right-color: lightgrey;
+    color: darkslategray;
+    background-color: whitesmoke;
+}
+
+.category-select:focus {
+    outline: none;
+    border: 2px solid darkslategray;
+}
+
+.category-select:required:invalid {
+    color: gray;
+}
+
+.category-option {
+    color: black;
+}

@@ -9,13 +9,14 @@ import home from './views/home.js';    // home is function
 import login from './views/login.js';  // login is function
 import register from './views/register.js';
 import notFound from './views/notFound.js';
+import createArticle from './views/create-article.js';
 
-import { onLoginSubmit, onLogout, onRegisterSubmit } from './eventListeners.js';
+import { onLoginSubmit, onLogout, onRegisterSubmit, onArticleCreateSubmit } from './eventListeners.js';
 
 const routes = [
     {
         path: '/',
-        temlpate: (props) => {
+        template: (props) => {
 
             let template = home;
             let path = '/';
@@ -36,21 +37,28 @@ const routes = [
     },
     {
         path: '/login',
-        temlpate: login, // login is function
+        template: login, // login is function
         context: {
             onLoginSubmit
         }
     },
     {
         path: '/register',
-        temlpate: register, // login is function
+        template: register, // login is function
         context: {
             onRegisterSubmit
         }
     },
     {
+        path: '/create',
+        template: createArticle,
+        context: {
+            onArticleCreateSubmit
+        }
+    },
+    {
         path: '/not-found',
-        temlpate: notFound
+        template: notFound
     }
 ];
 
@@ -63,7 +71,7 @@ export const router = (path) => {
 
     let userData = authService.getData();
 
-    render(layout(route.temlpate, { navigationHandler, ...userData, ...context }), document.getElementById('app')); // Not hard, just follow the arg pass flow. Functional programming
+    render(layout(route.template, { navigationHandler, ...userData, ...context }), document.getElementById('app')); // Not hard, just follow the arg pass flow. Functional programming
 };
 
 // For maximum loose coupling this hanlder should be taken out of this file (Dependency resolving)

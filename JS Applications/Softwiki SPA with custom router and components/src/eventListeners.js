@@ -1,4 +1,5 @@
 import authService from "./services/authService.js";
+import articleService from './services/articleService.js';
 import { router } from "./router.js";
 
 export const onLoginSubmit = (e) => {
@@ -43,10 +44,30 @@ export const onRegisterSubmit = e => {
 
 export const onLogout = e => {
     e.preventDefault();
-    authService.logout(authService.getData()["user-token"])
+    authService.logout()
         .then(() => {
             localStorage.removeItem('auth');
             console.log('logged out');
             router('/login');
+        })
+}
+
+export const onArticleCreateSubmit = e => {
+    e.preventDefault();
+
+    let formdata = new FormData(e.target);
+    let title = formdata.get('title');
+    let category = formdata.get('category');
+    let content = formdata.get('content');
+
+
+    articleService.create({
+        title,
+        category,
+        content
+    })
+        .then(articleId => {
+            console.log(articleId);
+            router('/');
         })
 }

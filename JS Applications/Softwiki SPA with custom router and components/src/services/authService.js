@@ -1,4 +1,3 @@
-import register from "../views/register.js";
 import request from "./request.js";
 
 const subdomain = 'willingyak-eu.backendless.app';
@@ -29,19 +28,19 @@ export default {
         });
     },
 
-    async logout(userToken) {
+    async logout() {
         let headers = {
-            'user-token': userToken
+            'user-token': this.getUserToken()
         };
 
-        // return await request.get(endpoints.logout, headers);
+        return await request.get(endpoints.logout, headers);
 
-        return await fetch("https://willingyak-eu.backendless.app/api/users/logout", {
-            method: "GET",
-            headers: {
-                "user-token": "FB994E06-6977-4129-95F1-81EF83FA4A7D"
-            }
-        });
+        // return await fetch("https://willingyak-eu.backendless.app/api/users/logout", {
+        //     method: "GET",
+        //     headers: {
+        //         "user-token": "FB994E06-6977-4129-95F1-81EF83FA4A7D"
+        //     }
+        // });
     },
 
     getData() {
@@ -64,7 +63,7 @@ export default {
         }
     },
 
-    // getUserToken() {
-    //     return JSON.parse(localStorage.getItem('auth'))['user-token'];
-    // }
+    getUserToken() {
+        return JSON.parse(localStorage.getItem('auth'))['user-token'];
+    }
 }
