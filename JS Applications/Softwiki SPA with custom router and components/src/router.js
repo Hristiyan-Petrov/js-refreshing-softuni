@@ -15,7 +15,21 @@ import { onLoginSubmit, onRegisterSubmit } from './eventListeners.js';
 const routes = [
     {
         path: '/',
-        temlpate: home // home is function
+        temlpate: (props) => {
+
+            let template = home;
+            let path = '/';
+
+            // If user is not logged in render and redirect to login page
+            if (!props.isAuthenticated) {
+                template = login;
+                path = 'login';
+            }
+
+            history.pushState({}, '', path);
+            
+            return template(props);
+        }
     },
     {
         path: '/login',
@@ -46,7 +60,7 @@ export const router = (path) => {
 
     let userData = authService.getData();
 
-    render(layout(route.temlpate(context), { navigationHandler, ...userData}), document.getElementById('app')); // Not hard, just follow the arg pass flow. Functional programming
+    render(layout(route.temlpate, { navigationHandler, ...userData, ...context }), document.getElementById('app')); // Not hard, just follow the arg pass flow. Functional programming
 };
 
 // For maximum loose coupling this hanlder should be taken out of this file (Dependency resolving)
