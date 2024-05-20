@@ -5,9 +5,10 @@ import { html, render } from 'lit-html';
 import layout from './views/layout.js';
 import home from './views/home.js';    // home is function
 import login from './views/login.js';  // login is function
+import register from './views/register.js';
 import notFound from './views/notFound.js';
 
-import { onLoginSubmit } from './eventListeners.js';
+import { onLoginSubmit, onRegisterSubmit } from './eventListeners.js';
 
 const routes = [
     {
@@ -19,6 +20,13 @@ const routes = [
         temlpate: login, // login is function
         context: {
             onLoginSubmit
+        }
+    },
+    {
+        path: '/register',
+        temlpate: register, // login is function
+        context: {
+            onRegisterSubmit
         }
     },
     {
