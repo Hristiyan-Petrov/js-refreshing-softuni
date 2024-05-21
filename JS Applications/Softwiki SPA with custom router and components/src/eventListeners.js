@@ -11,11 +11,8 @@ export const onLoginSubmit = (e) => {
 
     authService.login(login, password)
         .then(userData => {
-            localStorage.setItem('auth', JSON.stringify({
-                'user-token': userData['user-token'],   // For Backendless
-                'email': userData.email
-            }));
             console.log('logged');
+            saveUserCredentials(userData['user-token'], userData.email);
             router('/');
         })
 };
@@ -37,8 +34,12 @@ export const onRegisterSubmit = e => {
         .then(userData => {
             console.log(userData);
             console.log('registered');
-            // history.pushState({}, '', '/login');
-            router('/login');
+
+            return authService.login(userData.email, password)
+        })
+        .then(userData => {
+            saveUserCredentials(userData['user-token'], userData.email);
+            router('/');
         })
 };
 
@@ -70,4 +71,11 @@ export const onArticleCreateSubmit = e => {
             console.log(articleId);
             router('/');
         })
+}
+
+const saveUserCredentials = (userToken, email) => {
+    localStorage.setItem('auth', JSON.stringify({
+        'user-token': userToken,   // For Backendless
+        email
+    }));
 }

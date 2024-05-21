@@ -18,6 +18,11 @@ const request = async (method, url, headers, body) => {
     }
 
     let response = await fetch(url, options);
+
+    if (url.includes('logout')) {
+        return response;
+    }
+
     let data = await response.json();
     return data;
 }

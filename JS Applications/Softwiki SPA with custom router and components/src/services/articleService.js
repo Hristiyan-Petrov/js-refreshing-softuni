@@ -8,21 +8,26 @@ const dataBaseEndpoint = `https://${subdomain}/api/data/Articles`;
 //     'Content-Type': 'application/json'
 // };
 
-const backendlessLoggedHeaders = {
+const jsonHeaders = {
     'Content-Type': 'application/json',
-    'user-token': authService.getUserToken()
 }
+
+const getUserHeaders = () => ({
+    'user-token': authService.getData()['user-token']
+})
 
 export default {
     async create(articleBody) {
-        return await request.post(dataBaseEndpoint, backendlessLoggedHeaders, articleBody);
+        return await request.post(dataBaseEndpoint, Object.assign(jsonHeaders, getUserHeaders()), articleBody);
     },
 
     async getAll() {
-        return await request.get(dataBaseEndpoint, backendlessLoggedHeaders);
+        console.log(getUserHeaders());
+        console.log(Object.assign(jsonHeaders, getUserHeaders()));
+        return await request.get(dataBaseEndpoint, Object.assign(jsonHeaders, getUserHeaders()));
     },
 
     async getOne(id) {
-        return await request.get(`${dataBaseEndpoint}/${id}`, backendlessLoggedHeaders);
+        return await request.get(`${dataBaseEndpoint}/${id}`, Object.assign(jsonHeaders, getUserHeaders()));
     }
 }

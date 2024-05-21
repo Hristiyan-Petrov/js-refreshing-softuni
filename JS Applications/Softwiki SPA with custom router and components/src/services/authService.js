@@ -30,17 +30,10 @@ export default {
 
     async logout() {
         let headers = {
-            'user-token': this.getUserToken()
+            'user-token': this.getData()['user-token']
         };
 
         return await request.get(endpoints.logout, headers);
-
-        // return await fetch("https://willingyak-eu.backendless.app/api/users/logout", {
-        //     method: "GET",
-        //     headers: {
-        //         "user-token": "FB994E06-6977-4129-95F1-81EF83FA4A7D"
-        //     }
-        // });
     },
 
     getData() {
@@ -57,13 +50,9 @@ export default {
         } catch (error) {
             return {
                 isAuthenticated: false,
-                email: null,
-                'user-token': null
+                email: '',
+                'user-token': ''
             }
         }
     },
-
-    getUserToken() {
-        return JSON.parse(localStorage.getItem('auth'))['user-token'];
-    }
 }

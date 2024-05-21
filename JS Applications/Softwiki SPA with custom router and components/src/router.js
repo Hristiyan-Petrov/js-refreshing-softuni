@@ -33,9 +33,6 @@ const routes = [
 
             return template(props);
         },
-        context: {
-            onLogout
-        },
         getData: articleService.getAll    // For rendering all articles from db on homepage
     },
     {
@@ -89,7 +86,7 @@ export const router = (path) => {
                 route.getData(params.id)
                     .then(article => {
                         // Double render
-                        render(layout(route.template, { navigationHandler, ...userData, ...context, ...article, params }), document.getElementById('app'));
+                        render(layout(route.template, { navigationHandler, onLogout, ...userData, ...context, ...article, params }), document.getElementById('app'));
                     })
                 break;
 
@@ -97,7 +94,7 @@ export const router = (path) => {
                 route.getData()
                     .then(articles => {
                         // Double render
-                        render(layout(route.template, { navigationHandler, ...userData, ...context, articles, params }), document.getElementById('app'));
+                        render(layout(route.template, { navigationHandler, onLogout, ...userData, ...context, articles, params }), document.getElementById('app'));
                     });
                 break;
 
@@ -107,7 +104,7 @@ export const router = (path) => {
 
     }
 
-    render(layout(route.template, { navigationHandler, ...userData, ...context, params }), document.getElementById('app')); // Not hard, just follow the arg pass flow. Functional programming
+    render(layout(route.template, { navigationHandler, onLogout, ...userData, ...context, params }), document.getElementById('app')); // Not hard, just follow the arg pass flow. Functional programming
 };
 
 // For maximum loose coupling this hanlder should be taken out of this file (Dependency resolving)
