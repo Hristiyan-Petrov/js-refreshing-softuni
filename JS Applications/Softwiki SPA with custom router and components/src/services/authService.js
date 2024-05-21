@@ -44,14 +44,16 @@ export default {
             return {
                 isAuthenticated: Boolean(data['user-token']),
                 email: data.email,
-                'user-token': data['user-token']
+                'user-token': data['user-token'],
+                uid: data.uid
             };
             // Handle case when user is not logged in, cause getData() is executed on every route 
         } catch (error) {
             return {
                 isAuthenticated: false,
                 email: '',
-                'user-token': ''
+                'user-token': '',
+                uid: ''
             }
         }
     },
