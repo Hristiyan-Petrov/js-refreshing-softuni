@@ -22,7 +22,6 @@ export default {
     },
 
     async getAll() {
-        console.log(Object.assign(jsonHeaders, getUserHeaders()));
         return await request.get(dataBaseEndpoint, Object.assign(jsonHeaders, getUserHeaders()));
     },
 
@@ -32,5 +31,9 @@ export default {
 
     async edit(id, articleBody) {
         return await request.put(`${dataBaseEndpoint}/${id}`, jsonHeaders, articleBody);
+    },
+
+    async delete(id) {
+        return await request.delete(`${dataBaseEndpoint}/${id}`, getUserHeaders());
     }
 }

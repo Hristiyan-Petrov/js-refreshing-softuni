@@ -8,7 +8,8 @@ export default ({
     ownerId,
     uid,
     onBackClick,
-    navigationHandler
+    navigationHandler,
+    onDeleteClick
 }) => html`
    <div class="container details">
         <div class="details-content">
@@ -19,7 +20,7 @@ export default ({
                 ${ownerId === uid
                     ?
                         html`
-                        <a href="/delete/${objectId}" class="btn delete" >Delete</a>
+                        <a class="btn delete" data-adticleid=${objectId} @click=${onDeleteClick}>Delete</a>
                         <a href="/edit/${objectId}" class="btn edit" @click=${navigationHandler}>Edit</a>
                         `
                     : html`

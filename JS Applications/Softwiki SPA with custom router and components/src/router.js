@@ -14,7 +14,7 @@ import createArticle from './views/create-article.js';
 import articleDetails from './views/article-details.js';
 import articleEdit from './views/article-edit.js';
 
-import { onLoginSubmit, onLogout, onRegisterSubmit, onArticleCreateSubmit, onBackClick, onArticleEditSubmit } from './eventListeners.js';
+import { onLoginSubmit, onLogout, onRegisterSubmit, onArticleCreateSubmit, onBackClick, onArticleEditSubmit, onDeleteClick } from './eventListeners.js';
 
 const routes = [
     {
@@ -60,7 +60,10 @@ const routes = [
     {
         path: /^\/details\/(?<id>.+)$/i,     // For details/:id; get id later in 'param'
         template: articleDetails,
-        getData: articleService.getOne
+        getData: articleService.getOne,
+        context: {
+            onDeleteClick
+        }
     },
     {
         path: /^\/edit\/(?<id>.+)$/i,     // For details/:id; get id later in 'param'

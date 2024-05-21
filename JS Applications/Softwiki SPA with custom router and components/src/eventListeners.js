@@ -73,6 +73,16 @@ export const onArticleCreateSubmit = e => {
         })
 };
 
+export const onDeleteClick = e => {
+    e.preventDefault();
+    let id = e.target.dataset.adticleid;
+    articleService.delete(id)
+        .then(res => {
+            console.log(res);
+            router('/');
+        })
+};
+
 export const onArticleEditSubmit = e => {
     e.preventDefault();
 
