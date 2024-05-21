@@ -13,7 +13,10 @@ export default ({
             <div class="articles">
                 <!-- Render all articles; ? -> Optional chaining  -->
                 ${articles?.some(x => x.category === 'js') 
-                    ? articles.filter(x => x.category === 'js').map(x => articleItem({ ...x, navigationHandler })) 
+                    ? articles
+                        .filter(x => x.category === 'js')
+                        .sort((a, b) => b.title.localeCompare(a.title)) 	// Sort by title ascending
+                        .map(x => articleItem({ ...x, navigationHandler })) 
                     : 'No articles yet.'}
             </div>
         </section>
@@ -21,7 +24,10 @@ export default ({
             <h2>C#</h2>
             <div class="articles">
                 ${articles?.some(x => x.category === 'csharp') 
-                    ? articles.filter(x => x.category === 'csharp').map(x => articleItem({ ...x, navigationHandler })) 
+                     ? articles
+                        .filter(x => x.category === 'csharp')
+                        .sort((a, b) => b.title.localeCompare(a.title))
+                        .map(x => articleItem({ ...x, navigationHandler }))  
                     : 'No articles yet.'}
             </div>
         </section>
@@ -29,7 +35,10 @@ export default ({
             <h2>Java</h2>
             <div class="articles">
                 ${articles?.some(x => x.category === 'java') 
-                    ? articles.filter(x => x.category === 'java').map(x => articleItem({ ...x, navigationHandler })) 
+                    ? articles
+                        .filter(x => x.category === 'java')
+                        .sort((a, b) => b.title.localeCompare(a.title))
+                        .map(x => articleItem({ ...x, navigationHandler }))  
                     : 'No articles yet.'}
             </div>
         </section>
@@ -37,7 +46,10 @@ export default ({
             <h2>Pyton</h2>
             <div class="articles">
                 ${articles?.some(x => x.category === 'python') 
-                    ? articles.filter(x => x.category === 'python').map(x => articleItem({ ...x, navigationHandler })) 
+                    ? articles
+                        .filter(x => x.category === 'python')
+                        .sort((a, b) => b.title.localeCompare(a.title))
+                        .map(x => articleItem({ ...x, navigationHandler }))  
                     : 'No articles yet.'}
             </div>
         </section>
