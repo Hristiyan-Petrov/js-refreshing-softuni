@@ -13,7 +13,7 @@ import notFound from './views/notFound.js';
 import createArticle from './views/create-article.js';
 import articleDetails from './views/article-details.js';
 
-import { onLoginSubmit, onLogout, onRegisterSubmit, onArticleCreateSubmit } from './eventListeners.js';
+import { onLoginSubmit, onLogout, onRegisterSubmit, onArticleCreateSubmit, onBackClick } from './eventListeners.js';
 
 const routes = [
     {
@@ -86,7 +86,7 @@ export const router = (path) => {
                 route.getData(params.id)
                     .then(article => {
                         // Double render
-                        render(layout(route.template, { navigationHandler, onLogout, ...userData, ...context, ...article, params }), document.getElementById('app'));
+                        render(layout(route.template, { navigationHandler, onLogout, onBackClick ,...userData, ...context, ...article, params }), document.getElementById('app'));
                     })
                 break;
 
@@ -125,3 +125,8 @@ function navigationHandler(e) {
 
     router(url.pathname, { navigationHandler });    // Pass event handler as 'props' to layout, so header can access it
 }
+
+// Make browser back button to render
+window.onpopstate = () => {
+    router(location.pathname);
+};

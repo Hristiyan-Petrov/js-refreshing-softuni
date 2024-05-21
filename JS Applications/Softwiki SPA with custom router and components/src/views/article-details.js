@@ -6,7 +6,8 @@ export default ({
     content,
     objectId,
     ownerId,
-    uid
+    uid,
+    onBackClick
 }) => html`
    <div class="container details">
         <div class="details-content">
@@ -21,7 +22,7 @@ export default ({
                         <a href="/edit/${objectId}" class="btn edit">Edit</a>
                         `
                     : html`
-                        <a href="/back" class="btn back">Back</a>
+                        <a class="btn back" @click=${onBackClick}>Back</a>
                     `
                 }
             </div>

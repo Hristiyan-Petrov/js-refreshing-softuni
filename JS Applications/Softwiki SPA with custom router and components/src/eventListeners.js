@@ -73,6 +73,16 @@ export const onArticleCreateSubmit = e => {
         })
 }
 
+export const onBackClick = (e) => {
+    e.preventDefault();
+
+    window.onpopstate = () => {
+        router(location.pathname);
+    };
+
+    history.back();
+} 
+
 const saveUserCredentials = (userToken, email, uid) => {
     localStorage.setItem('auth', JSON.stringify({
         'user-token': userToken,   // For Backendless
