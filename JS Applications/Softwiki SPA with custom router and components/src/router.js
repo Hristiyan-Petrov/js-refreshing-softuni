@@ -12,8 +12,9 @@ import register from './views/register.js';
 import notFound from './views/notFound.js';
 import createArticle from './views/create-article.js';
 import articleDetails from './views/article-details.js';
+import articleEdit from './views/article-edit.js';
 
-import { onLoginSubmit, onLogout, onRegisterSubmit, onArticleCreateSubmit, onBackClick } from './eventListeners.js';
+import { onLoginSubmit, onLogout, onRegisterSubmit, onArticleCreateSubmit, onBackClick, onArticleEditSubmit } from './eventListeners.js';
 
 const routes = [
     {
@@ -60,6 +61,14 @@ const routes = [
         path: /^\/details\/(?<id>.+)$/i,     // For details/:id; get id later in 'param'
         template: articleDetails,
         getData: articleService.getOne
+    },
+    {
+        path: /^\/edit\/(?<id>.+)$/i,     // For details/:id; get id later in 'param'
+        template: articleEdit,
+        getData: articleService.getOne,
+        context: {
+            onArticleEditSubmit
+        }
     },
     {
         path: /^\/not-found$/i,

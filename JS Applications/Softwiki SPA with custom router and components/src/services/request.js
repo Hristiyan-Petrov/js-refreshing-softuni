@@ -23,8 +23,7 @@ const request = async (method, url, headers, body) => {
         return response;
     }
 
-    let data = await response.json();
-    return data;
+    return await response.json();
 }
 
 // Additional abstraction

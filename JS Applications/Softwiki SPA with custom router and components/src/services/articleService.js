@@ -22,12 +22,15 @@ export default {
     },
 
     async getAll() {
-        console.log(getUserHeaders());
         console.log(Object.assign(jsonHeaders, getUserHeaders()));
         return await request.get(dataBaseEndpoint, Object.assign(jsonHeaders, getUserHeaders()));
     },
 
     async getOne(id) {
         return await request.get(`${dataBaseEndpoint}/${id}`, Object.assign(jsonHeaders, getUserHeaders()));
+    },
+
+    async edit(id, articleBody) {
+        return await request.put(`${dataBaseEndpoint}/${id}`, jsonHeaders, articleBody);
     }
 }

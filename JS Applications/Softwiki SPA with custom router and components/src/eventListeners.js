@@ -51,7 +51,7 @@ export const onLogout = e => {
             console.log('logged out');
             router('/login');
         })
-}
+};
 
 export const onArticleCreateSubmit = e => {
     e.preventDefault();
@@ -71,7 +71,27 @@ export const onArticleCreateSubmit = e => {
             console.log(articleId);
             router('/');
         })
-}
+};
+
+export const onArticleEditSubmit = e => {
+    e.preventDefault();
+
+    let articleId = e.target.dataset.articleid;
+    let formdata = new FormData(e.target);
+    let title = formdata.get('title');
+    let category = formdata.get('category');
+    let content = formdata.get('content');
+
+    articleService.edit(articleId, {
+        title,
+        category,
+        content
+    })
+    .then(article => {
+        console.log('edited');
+        router('/');
+    })
+};
 
 export const onBackClick = (e) => {
     e.preventDefault();
@@ -81,7 +101,7 @@ export const onBackClick = (e) => {
     };
 
     history.back();
-} 
+}
 
 const saveUserCredentials = (userToken, email, uid) => {
     localStorage.setItem('auth', JSON.stringify({
