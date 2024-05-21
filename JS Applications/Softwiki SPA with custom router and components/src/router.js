@@ -17,7 +17,7 @@ import { onLoginSubmit, onLogout, onRegisterSubmit, onArticleCreateSubmit } from
 
 const routes = [
     {
-        path: '/',
+        path: /^\/$/i,    // path is: '/'
         template: (props) => {
 
             let template = home;
@@ -39,33 +39,33 @@ const routes = [
         getData: articleService.getAll    // For rendering all articles from db on homepage
     },
     {
-        path: '/login',
+        path: /^\/login$/i,
         template: login, // login is function
         context: {
             onLoginSubmit
         }
     },
     {
-        path: '/register',
+        path: /^\/register$/i,
         template: register, // register is function
         context: {
             onRegisterSubmit
         }
     },
     {
-        path: '/create',
+        path: /^\/create$/i,
         template: createArticle,
         context: {
             onArticleCreateSubmit
         }
     },
     {
-        path: '/details/(?<id>\.+)',
+        path: /^\/details\/(?<id>.+)$/i,     // For details/:id; get id later in 'param'
         template: articleDetails,
         getData: articleService.getOne
     },
     {
-        path: '/not-found',
+        path: /^\/not-found$/i,
         template: notFound,
     }
 ];
@@ -75,11 +75,11 @@ export const router = (path) => {
     history.pushState({}, '', path);    // Change the state
 
     // Using RegEx because of details/id. Need a way to determine the path. All routers use regex underneath
-    let route = routes.find(x => new RegExp(`${x.path}$`, 'i').test(path)) || routes.find(x => x.path === '/not-found'); // Route is an object from routes
+    let route = routes.find(x => x.path.test(path)) || routes.find(x => x.path.test('/not-found')); // Route is an object from routes;    x.path is new RegEx obj
     let context = route.context;
 
     // Pass params to article details template // It is <id> from path: '/details/(?<id>\.+)',
-    let params = new RegExp(`${route.path}$`, 'i').exec(path).groups;
+    let params = route.path.exec(path).groups;
 
     let userData = authService.getData();
 
