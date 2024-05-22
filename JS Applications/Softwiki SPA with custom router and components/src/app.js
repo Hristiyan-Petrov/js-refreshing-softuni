@@ -1,3 +1,5 @@
+// Actually is not custom component based app. It is kinda using MVC but simplified version. Using Webpack as well.
+
 import '../styles/typography.css'; // Webpack usage
 import '../styles/common.css';
 import '../styles/form.css';
