@@ -21,6 +21,7 @@ export async function postRegister(ctx) {
     } else {
         register(email, password)
             .then(res => {
+                ctx.app.userData = res;     // Update app context dynamically
                 ctx.redirect('/home');
             })
             .catch(err => {
@@ -38,6 +39,7 @@ export async function postLogin(ctx) {
     } else {
         login(email, password)
             .then(res => {
+                ctx.app.userData = res;     // Update app context dynamically
                 ctx.redirect('/home');
             })
             .catch(err => {
