@@ -1,4 +1,5 @@
 import { homePage } from "./controllers/catalog.js";
+import { loginPage, registerPage } from "./controllers/user.js";
 import * as api from './data.js';
 
 window.api = api;
@@ -10,6 +11,10 @@ const app = Sammy('#root', function () {
     // Home
     this.get('/home', homePage);
     this.get('/', homePage);
+
+    // User routes
+    this.get('/register', registerPage);
+    this.get('/login', loginPage);
 
     // Attach user data to 'App context'. 
     // Better practice than attaching to event context (previous logic in extendContext)
