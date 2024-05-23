@@ -1,5 +1,7 @@
 // Using Backendless as db
 
+import { getUserToken, setUserData } from "./helpers.js";
+
 const subdomain = 'willingyak-eu.backendless.app';
 const dataBaseUrl = `https://${subdomain}/api/data/Articles`;
 const authUrl = `https://${subdomain}/api/users`;
@@ -30,6 +32,11 @@ async function request(url, method, body) {
         },
     }
 
+    if (!url.includes(authUrl)) {
+        // Every article operation needs 'user-token'in headers 
+        options.headers['user-token'] = getUserToken();
+    }
+
     if (body) {
         Object.assign(options, {
             body: JSON.stringify(body)
@@ -40,6 +47,44 @@ async function request(url, method, body) {
     let data = await response.json();
     return data;
 }
+
+// Auth Services
+
+export async function login(email, password) {
+
+    let response = await post(endpoints.login, {
+        login: email,
+        password,
+        // returnSecureToken: true
+    });
+
+    setUserData(response);
+    return response;
+};
+
+export async function register(email, password) {
+    let registerRes = await post(endpoints.register, {
+        email,
+        password,
+        // returnSecureToken: true  // for Firebase 
+    });
+
+    let loginRes = await login(registerRes.email, password);
+
+    setUserData(loginRes);
+    return loginRes;
+};
+
+window.login = login;
+window.register = register;
+
+
+// DB Services
+
+export const createArticle = async (body) => await post(dataBaseUrl, body);
+
+
+
 
 // Decorators !!!
 async function get(url) {
@@ -57,39 +102,3 @@ async function del(url) {
 async function patch(url) {
     return request(url, 'PATCH');
 }
-
-// Auth Services
-
-export async function login(email, password) {
-
-    let response = await post(endpoints.login, {
-        email,
-        password,
-        // returnSecureToken: true
-    });
-
-    sessionStorage.setItem('auth', JSON.stringify(response)); // Save data for logged user in sessionStorage
-    return response;
-}
-
-export async function register(email, password) {
-    let response = await post(endpoints.register, {
-        email,
-        password,
-        // returnSecureToken: true  // for Firebase 
-    });
-
-    sessionStorage.setItem('auth', JSON.stringify(response)); // Save data for logged user in sessionStorage
-    return response;
-}
-
-window.login = login;
-window.register = register;
-
-// const authService = {
-//     getUserId() {
-//         return JSON.parse(sessionStorage.getItem('auth')).localId;
-//     }
-// }
-
-// DB Services
