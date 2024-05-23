@@ -23,18 +23,18 @@ export function saveUser(data, context) {
         email,
         uid
     }
-    // localStorage.setItem('userData', JSON.stringify({ email, uid }));
+    // localStorage.setItem('auth', JSON.stringify({ email, uid }));
 }
 
 export function getUserData(context) {
-    let user = localStorage.getItem('userData');
+    let user = localStorage.getItem('auth');
     return user ? JSON.parse(user) : null;
 }
 
 export function clearUserData(context) {
     console.log(context);
     delete context.userData;
-    // localStorage.removeItem('userData');
+    // localStorage.removeItem('auth');
 }
 
 export function isCreator(uid) {
