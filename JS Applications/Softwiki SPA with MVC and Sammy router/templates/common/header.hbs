@@ -1,5 +1,8 @@
 <header>
-    <h1><a class="home" href="#/home">SoftWiki</a></h1>
+    {{#if user}}
+        <h1><a class="home" href="#/home">SoftWiki</a></h1>
+    {{/if}}
+
     <nav class="nav-buttons">
         {{#if user}}
             <a href="/create">Create</a>

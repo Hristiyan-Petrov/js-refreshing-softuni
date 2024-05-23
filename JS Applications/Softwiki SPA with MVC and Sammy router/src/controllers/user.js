@@ -18,17 +18,17 @@ export async function postRegister(ctx) {
         throw new Error('All fields must have value!');
     } else if (password !== rePass) {
         throw new Error('Passwords must match!');
-    } else {
-        register(email, password)
-            .then(res => {
-                ctx.app.userData = res;     // Update app context dynamically
-                ctx.redirect('/home');
-            })
-            .catch(err => {
-                console.log('Error from catch');
-                throw new Error(err.message);
-            })
     }
+
+    register(email, password)
+        .then(res => {
+            ctx.app.userData = res;     // Update app context dynamically
+            ctx.redirect('/home');
+        })
+        .catch(err => {
+            console.log('Error from catch');
+            throw new Error(err.message);
+        });
 }
 
 export async function postLogin(ctx) {
@@ -36,15 +36,15 @@ export async function postLogin(ctx) {
 
     if (email.length === 0 || password.length === 0) {
         throw new Error('All fields must have value!');
-    } else {
-        login(email, password)
-            .then(res => {
-                ctx.app.userData = res;     // Update app context dynamically
-                ctx.redirect('/home');
-            })
-            .catch(err => {
-                console.log('Error from catch');
-                throw new Error(err);
-            })
     }
+
+    login(email, password)
+        .then(res => {
+            ctx.app.userData = res;     // Update app context dynamically
+            ctx.redirect('/home');
+        })
+        .catch(err => {
+            console.log('Error from catch');
+            throw new Error(err);
+        });
 }
