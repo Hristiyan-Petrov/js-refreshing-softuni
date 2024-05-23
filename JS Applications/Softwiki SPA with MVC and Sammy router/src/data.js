@@ -3,12 +3,14 @@
 import { getUserToken, setUserData } from "./helpers.js";
 
 const subdomain = 'willingyak-eu.backendless.app';
-const dataBaseUrl = `https://${subdomain}/api/data/Articles`;
 const authUrl = `https://${subdomain}/api/users`;
 
 const endpoints = {
     login: `${authUrl}/login`,
     register: `${authUrl}/register`,
+    articles: `https://${subdomain}/api/data/Articles`,
+    artilceByID: `https://${subdomain}/api/data/Articles/`,
+    
 };
 
 function assembleUrl(url) {
@@ -81,9 +83,15 @@ window.register = register;
 
 // DB Services
 
-export const createArticle = async (body) => await post(dataBaseUrl, body);
+export const createArticle = async (body) => await post(endpoints.articles, body);
 
+export const getAllArticles = async () => await get(endpoints.articles);
 
+export const getOneById = async (id) => await get(endpoints.artilceByID + id);
+
+export const editArticle = async (id, body) => await put(endpoints.artilceByID + id, body);
+
+export const deleteArticle = async (id) => await del(endpoints.artilceByID + id);
 
 
 // Decorators !!!
@@ -99,6 +107,6 @@ async function del(url) {
     return request(url, 'DELETE');
 }
 
-async function patch(url) {
-    return request(url, 'PATCH');
+async function put(url, body) {
+    return request(url, 'PUT', body);
 }
