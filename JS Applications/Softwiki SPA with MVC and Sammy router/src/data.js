@@ -13,19 +13,6 @@ const endpoints = {
     
 };
 
-function assembleUrl(url) {
-    let resultUrl = dataBaseUrl + url + '.json';
-
-    // let auth = getUserData();
-
-    // Firebase wants auth token attached to the request for security.
-    if (auth != null) {
-        resultUrl += `?auth=${auth.idToken}`;
-    }
-
-    return resultUrl;
-};
-
 async function request(url, method, body) {
     let options = {
         method,
@@ -44,9 +31,15 @@ async function request(url, method, body) {
             body: JSON.stringify(body)
         });
     }
+    
 
     let response = await fetch(url, options);
     let data = await response.json();
+
+    if (data.errorData) {
+        throw new Error (data.message);
+    }
+
     return data;
 }
 
@@ -57,8 +50,12 @@ export async function login(email, password) {
     let response = await post(endpoints.login, {
         login: email,
         password,
-        // returnSecureToken: true
+        // returnSecureToken: true  // For Firebase
     });
+
+    // if (response.errorData) {
+    //     throw new Error (response.message);
+    // }
 
     setUserData(response);
     return response;
