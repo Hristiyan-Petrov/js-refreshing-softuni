@@ -2,14 +2,21 @@
 export async function addPartials(ctx) {
     const partials = await Promise.all([
         ctx.load('/templates/common/header.hbs'),
-        ctx.load('/templates/common/footer.hbs'),        
+        ctx.load('/templates/common/footer.hbs'),
     ]);
 
-    ctx.partials = {
+    ctx.partials = {    // Similar to ctx.loadPartials. At the end Sammy searches for 'partials' param attached to the context
         header: partials[0],
         footer: partials[1],
     }
 }
+
+export const mapCategories = (articles) => ({
+    js: articles.filter(x => x.category === 'js'),
+    csharp: articles.filter(x => x.category === 'csharp'),
+    java: articles.filter(x => x.category === 'java'),
+    python: articles.filter(x => x.category === 'python'),
+})
 
 // User helpers
 
