@@ -16,7 +16,14 @@ export const mapCategories = (articles) => ({
     csharp: articles.filter(x => x.category === 'csharp'),
     java: articles.filter(x => x.category === 'java'),
     python: articles.filter(x => x.category === 'python'),
-})
+});
+
+export const mapCurrentCategory = (category) => ({
+    isCategoryJs: category === 'js',
+    isCategoryCsharp: category === 'csharp',
+    isCategoryPython: category === 'java',
+    isCategoryJava: category === 'python',
+});
 
 // User helpers
 
