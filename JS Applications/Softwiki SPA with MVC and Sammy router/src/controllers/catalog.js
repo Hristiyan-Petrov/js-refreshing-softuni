@@ -1,7 +1,7 @@
 // Responsible for rendering articles
 
 import { createArticle, editArticle, getAllArticles, getOneById } from "../data.js";
-import { addPartials, mapCategories, mapCurrentCategory } from "../helpers.js";
+import { addPartials, mapCategories, mapCurrentCategory, onBackButtonClick } from "../helpers.js";
 
 export async function homePage() {
     await addPartials(this);
@@ -57,11 +57,20 @@ export async function detailsPage() {
     await addPartials(this);
 
     const context = await getOneById(this.params.id);
-    Object.assign(context, {
-        isCreator: context.ownerId === this.app.userData.objectId
-    });
 
-    this.partial('/templates/catalog/detailsPage.hbs', context);
+    const isCreator = context.ownerId === this.app.userData.objectId;
+
+    if (isCreator) {
+        Object.assign(context, {
+            isCreator
+        });
+    }
+
+    this.partial('/templates/catalog/detailsPage.hbs', context)
+    // Attach back button functionality
+        .then(() => {
+            $("#back-button").on("click", onBackButtonClick);
+        });
 }
 
 export async function editPage() {
@@ -93,3 +102,9 @@ export async function editPost(ctx) {
             throw new Error(err);
         });
 }
+
+// export function backGet() {
+//     history.back();
+//     history.back();
+//     this.redirect(location.hash);
+// }

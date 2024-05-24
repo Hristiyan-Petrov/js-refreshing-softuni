@@ -24,16 +24,16 @@ const app = Sammy('#root', function () {
     this.get('/login', loginPage);
     this.get('/logout', logoutGet);
 
-    this.post('/register', (ctx) => { postRegister(ctx); });    // This is needed because Sammy is old and cannot handle async/await funcs which return promises. Fix this problem by passing anonymous func to invoke 'postRegister' and won't return anything.
+    this.post('/register', (ctx) => { postRegister(ctx); });    // This syntax is needed because Sammy is old and cannot handle async/await funcs which return promises. Fix this problem by passing anonymous func to invoke 'postRegister' and won't return anything.
     this.post('/login', (ctx) => { postLogin(ctx); });
 
-    // Articles and DB routes
+    // Articles DB routes
     this.get('/create', createPage);
-    this.post('/create', (ctx) => { createPost(ctx); } );
-
-    this.get('/details/:id', detailsPage);
-
     this.get('/edit/:id', editPage);
+    this.get('/details/:id', detailsPage);
+    // this.get('/back', backGet);
+    
+    this.post('/create', (ctx) => { createPost(ctx); } );
     this.put('/edit/:id', (ctx) => { editPost(ctx); } );
 
 });

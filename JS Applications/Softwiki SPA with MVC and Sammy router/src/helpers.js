@@ -44,3 +44,8 @@ export function getUserToken() {
 export function removeUserData() {
     sessionStorage.removeItem('auth');
 }
+
+export function onBackButtonClick() {
+    console.log('heeey');
+    history.back();
+}
