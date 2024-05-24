@@ -1,6 +1,6 @@
 // Using Backendless as db
 
-import { getUserToken, setUserData } from "./helpers.js";
+import { getUserToken, removeUserData, setUserData } from "./helpers.js";
 
 const subdomain = 'willingyak-eu.backendless.app';
 const authUrl = `https://${subdomain}/api/users`;
@@ -8,6 +8,7 @@ const authUrl = `https://${subdomain}/api/users`;
 const endpoints = {
     login: `${authUrl}/login`,
     register: `${authUrl}/register`,
+    logout: `${authUrl}/logout`,
     articles: `https://${subdomain}/api/data/Articles`,
     artilceByID: `https://${subdomain}/api/data/Articles/`,
     
@@ -21,7 +22,7 @@ async function request(url, method, body) {
         },
     }
 
-    if (!url.includes(authUrl)) {
+    if (url !== endpoints.login && url !== endpoints.register) {
         // Every article operation needs 'user-token'in headers 
         options.headers['user-token'] = getUserToken();
     }
@@ -34,9 +35,13 @@ async function request(url, method, body) {
     
 
     let response = await fetch(url, options);
-    let data = await response.json();
+    let data;
 
-    if (data.errorData) {
+    if (url !== endpoints.logout) {
+        data = await response.json();
+    }
+
+    if (data && data.errorData) {
         throw new Error (data.message);
     }
 
@@ -73,6 +78,12 @@ export async function register(email, password) {
     setUserData(loginRes);
     return loginRes;
 };
+
+export async function logout() {
+    let response = await get(endpoints.logout);
+    removeUserData();
+    return response;
+}
 
 window.login = login;
 window.register = register;

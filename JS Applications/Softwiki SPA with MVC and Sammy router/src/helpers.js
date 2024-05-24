@@ -40,3 +40,7 @@ export function getUserToken() {
     let auth = sessionStorage.getItem('auth');
     return auth ? JSON.parse(auth)['user-token'] : null;
 }
+
+export function removeUserData() {
+    sessionStorage.removeItem('auth');
+}

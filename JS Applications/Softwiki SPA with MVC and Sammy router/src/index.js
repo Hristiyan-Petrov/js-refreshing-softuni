@@ -1,5 +1,5 @@
 import { createPage, createPost, detailsPage, editPage, editPost, homePage } from "./controllers/catalog.js";
-import { loginPage, postLogin, postRegister, registerPage } from "./controllers/user.js";
+import { loginPage, logoutGet, postLogin, postRegister, registerPage } from "./controllers/user.js";
 import * as api from './data.js';
 import { getUserData } from "./helpers.js";
 
@@ -22,6 +22,7 @@ const app = Sammy('#root', function () {
     // User routes
     this.get('/register', registerPage);
     this.get('/login', loginPage);
+    this.get('/logout', logoutGet);
 
     this.post('/register', (ctx) => { postRegister(ctx); });    // This is needed because Sammy is old and cannot handle async/await funcs which return promises. Fix this problem by passing anonymous func to invoke 'postRegister' and won't return anything.
     this.post('/login', (ctx) => { postLogin(ctx); });

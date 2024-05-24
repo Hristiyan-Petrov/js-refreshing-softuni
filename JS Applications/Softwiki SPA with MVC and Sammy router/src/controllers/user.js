@@ -1,4 +1,4 @@
-import { login, register } from "../data.js";
+import { login, register, logout } from "../data.js";
 import { addPartials } from "../helpers.js";
 
 export async function registerPage() {
@@ -42,6 +42,18 @@ export async function postLogin(ctx) {
         .then(res => {
             ctx.app.userData = res;     // Update app context dynamically
             ctx.redirect('/home');
+        })
+        .catch(err => {
+            console.log('Error from catch');
+            throw new Error(err);
+        });
+}
+
+export async function logoutGet() {
+    logout()
+        .then(() => {
+            this.app.userData = null;
+            this.redirect('/home')
         })
         .catch(err => {
             console.log('Error from catch');
