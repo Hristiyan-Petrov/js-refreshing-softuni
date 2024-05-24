@@ -1,6 +1,6 @@
 // Responsible for rendering articles
 
-import { createArticle, getAllArticles } from "../data.js";
+import { createArticle, getAllArticles, getOneById } from "../data.js";
 import { addPartials, mapCategories } from "../helpers.js";
 
 export async function homePage() {
@@ -51,4 +51,16 @@ export async function createPost(ctx) {
             console.log('Error from catch');
             throw new Error(err);
         });
+}
+
+
+export async function detailsPage() {
+    await addPartials(this);
+
+    const context = await getOneById(this.params.id)
+    Object.assign(context, {
+        isCreator: context.ownerId === this.app.userData.objectId
+    });
+
+    this.partial('/templates/catalog/detailsPage.hbs', context);
 }

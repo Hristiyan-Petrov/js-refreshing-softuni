@@ -1,4 +1,4 @@
-import { createPage, createPost, homePage } from "./controllers/catalog.js";
+import { createPage, createPost, detailsPage, homePage } from "./controllers/catalog.js";
 import { loginPage, postLogin, postRegister, registerPage } from "./controllers/user.js";
 import * as api from './data.js';
 import { getUserData } from "./helpers.js";
@@ -29,6 +29,11 @@ const app = Sammy('#root', function () {
     // Articles and DB routes
     this.get('/create', createPage);
     this.post('/create', (ctx) => { createPost(ctx); } );
+
+    this.get('/details/:id', detailsPage);
+
+    // this.get('/edit/:id', editPage);
+    // this.post('/edit/:id', (ctx) => { editPost(ctx); } );
 
 });
 
