@@ -14,6 +14,7 @@ import Notification from './components/notification.js';
 import Movies from './components/movies.js';
 import MovieCard from './components/movie-card.js';
 import MovieDetails from './components/movie-details.js';
+import CreateMovie from './components/create-movie.js';
 
 // Register components
 customElements.define('home-component', Home);
@@ -23,6 +24,8 @@ customElements.define('notification-component', Notification);
 customElements.define('movies-component', Movies);
 customElements.define('movie-card', MovieCard);
 customElements.define('movie-details-component', MovieDetails);
+customElements.define('create-movie-component', CreateMovie);
+
 
 const rootElement = document.getElementById('root');
 const router = new Router(rootElement);
@@ -50,10 +53,14 @@ router.setRoutes([
             let homeComponent = document.querySelector('home-component');
             if (homeComponent) {
                 homeComponent.connectedCallback();
-                dispatchNotificationEvent('Successfully logged out!', 'success')
+                dispatchNotificationEvent('Logged out!', 'success')
             }
         },
         component: 'home-component'
+    },
+    {
+        path: '/create',
+        component: 'create-movie-component'
     },
     {
         path: '/details/:movieKey',

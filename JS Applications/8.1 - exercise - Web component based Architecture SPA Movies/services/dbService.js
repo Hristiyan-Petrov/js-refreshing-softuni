@@ -22,8 +22,12 @@ export const getOneMovie = async (key) => {
     //     ...res,
     //     isCreator: res.creator === authService.getUserId(),
     //     isLiked: res.likes ? Boolean(res.likes.includes(authService.getUserId())) : false,
-    //     likesNumber: res.likes ? res.likes.length : false
+    //     likesNumber: res.likes ? res.likes.length : 0
     // };
+}
+
+export const addMovie = async (body) => {
+    return await request(apiUrls.allMovies, 'POST', body);
 }
 
 export const likeMovie = async (key, uid) => {

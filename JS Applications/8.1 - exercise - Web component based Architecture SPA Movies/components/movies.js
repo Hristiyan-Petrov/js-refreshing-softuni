@@ -5,7 +5,7 @@ import { getAllMovies } from '../services/dbService.js';
 const template = (context) => html`
         <h1 class="text-center">Movies</h1>
         <section>
-            <a href="#" class="btn btn-warning ">Add Movie</a>
+            <a href="/create" class="btn btn-warning ">Add Movie</a>
             <form class="search float-right">
                 <label>Search: </label>
                 <input type="text">
