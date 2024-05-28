@@ -33,14 +33,10 @@ const template = (context) => html`
 
                     ${context.creator === context.user.uid
                         ? html`
-                            <a class="btn btn-danger" href="#">Delete</a>
-                            <a class="btn btn-warning" href="#">Edit</a>
+                            <a class="btn btn-danger" href="/delete/${context.location.params.movieKey}">Delete</a>
+                            <a class="btn btn-warning" href="/edit/${context.location.params.movieKey}">Edit</a>
                         `   
                         : html`
-                            <!-- ${isLiked(context.likes, context.user.uid)
-                                ? html`<span class="enrolled-span">Liked ${Object.keys(context.likes).length}</span>`
-                                : html`<a class="btn btn-primary" @click=${context.onLike}>Like</a>`
-                            }     -->
                             ${isLiked(context.likes, context.user.uid)
                                 ? html`<span class="enrolled-span">
                                             Liked ${Object.keys(context.likes).length}

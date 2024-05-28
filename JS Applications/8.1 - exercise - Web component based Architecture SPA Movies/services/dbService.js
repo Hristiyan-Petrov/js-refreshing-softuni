@@ -4,6 +4,7 @@ const dataBaseUrl = 'https://movies-dd028.firebaseio.com';
 
 const apiUrls = {
     allMovies: `${dataBaseUrl}/movies.json`,
+    oneMovie: `${dataBaseUrl}/movies/`
 };
 
 export const getAllMovies = async (searchText) => {
@@ -13,7 +14,7 @@ export const getAllMovies = async (searchText) => {
 }
 
 export const getOneMovie = async (key) => {
-    let res = await request(dataBaseUrl + `/movies/${key}.json`, 'GET');
+    let res = await request(apiUrls.oneMovie + key + '.json', 'GET');
 
     return res;
 
@@ -28,6 +29,10 @@ export const getOneMovie = async (key) => {
 
 export const addMovie = async (body) => {
     return await request(apiUrls.allMovies, 'POST', body);
+}
+
+export const editMovie = async (key, body) => {
+    return await request(apiUrls.oneMovie + key + '.json', 'PATCH', body);
 }
 
 export const likeMovie = async (key, uid) => {

@@ -17,18 +17,21 @@ import Movies from './components/movies.js';
 import MovieCard from './components/movie-card.js';
 import MovieDetails from './components/movie-details.js';
 import CreateMovie from './components/create-movie.js';
+import EditMovie from './components/edit-movie.js';
 
 // Register components
 customElements.define('navigation-component', Navigation);
 customElements.define('footer-component', Footer);
+customElements.define('notification-component', Notification);
 customElements.define('home-component', Home);
 customElements.define('register-component', Register);
 customElements.define('login-component', Login);
-customElements.define('notification-component', Notification);
 customElements.define('movies-component', Movies);
 customElements.define('movie-card', MovieCard);
 customElements.define('movie-details-component', MovieDetails);
 customElements.define('create-movie-component', CreateMovie);
+customElements.define('edit-movie-component', EditMovie);
+
 
 
 const rootElement = document.getElementById('root');
@@ -69,5 +72,9 @@ router.setRoutes([
     {
         path: '/details/:movieKey',
         component: 'movie-details-component'
+    },
+    {
+        path: '/edit/:movieKey',
+        component: 'edit-movie-component'
     }
 ]);
