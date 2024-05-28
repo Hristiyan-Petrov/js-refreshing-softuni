@@ -37,10 +37,17 @@ const template = (context) => html`
                             <a class="btn btn-warning" href="#">Edit</a>
                         `   
                         : html`
-                            ${isLiked(context.likes, context.user.uid)
+                            <!-- ${isLiked(context.likes, context.user.uid)
                                 ? html`<span class="enrolled-span">Liked ${Object.keys(context.likes).length}</span>`
                                 : html`<a class="btn btn-primary" @click=${context.onLike}>Like</a>`
-                            }                            
+                            }     -->
+                            ${isLiked(context.likes, context.user.uid)
+                                ? html`<span class="enrolled-span">
+                                            Liked ${Object.keys(context.likes).length}
+                                            <span class="tooltip-text">${context.getLastFiveLikes(Object.values(context.likes))}</span>
+                                        </span>`
+                                : html`<a class="btn btn-primary" @click=${context.onLike}>Like</a>`
+}                        
                         `
                     }
                 </div>
@@ -73,8 +80,13 @@ export default class MovieDetails extends HTMLElement {
         likeMovie(this.location.params.movieKey, this.user.uid)
             .then(res => {
                 console.log(res);
-                dispatchNotificationEvent('Liked', 'success')
+                dispatchNotificationEvent('Liked', 'success');
                 this.connectedCallback();
             })
+    }
+
+    getLastFiveLikes(likesArray) {
+        // Reverse the order so the most recent likes are first, take the last 5, and join them with a line break
+        return 'Last 5 likes:\n' + likesArray.reverse().slice(0, 5).join('\n');
     }
 }

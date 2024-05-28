@@ -41,3 +41,34 @@
     text-decoration: underline;
     box-shadow: 0 5px 10px #cccccc;
 }
+
+.enrolled-span {
+    position: relative;
+    display: inline-block;
+}
+
+.enrolled-span .tooltip-text {
+    visibility: hidden;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    padding: 15px;
+    border-radius: 6px;
+    line-height: 20px; /* adjust this to change the line spacing */
+
+    /* Position the tooltip text - see position property */
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+
+    /* Fade in tooltip - takes 1 second to go from 0% to 100% opacity */
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+.enrolled-span:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
