@@ -4,6 +4,7 @@ import { html, render } from 'https://esm.run/lit-html@1';
 // Named import
 import { register } from '../services/authServices.js'
 import { Router } from 'https://unpkg.com/@vaadin/router';
+import { dispatchNotificationEvent } from '../services/notificationService.js';
 
 
 // Tagged function
@@ -47,7 +48,7 @@ export default class Register extends HTMLElement {
         let repeatPassword = formData.get('repeatPassword');
 
         if (password.length < 6) {
-            this.dispatchNotificationEvent('Password must be greater that 6 characters!', 'error');
+            dispatchNotificationEvent('Password must be greater that 6 characters!', 'error');
             return;
         }
 
@@ -58,12 +59,12 @@ export default class Register extends HTMLElement {
 
         register(email, password)
             .then(res => {
-                this.dispatchNotificationEvent('Successfully registered!', 'success');
+                dispatchNotificationEvent('Successfully registered!', 'success');
                 // TO DO: redirect home
                 Router.go('/');
             })
             .catch(err => {
-                this.dispatchNotificationEvent(err, 'error');
+                dispatchNotificationEvent(err, 'error');
             });
     }
 
@@ -71,16 +72,5 @@ export default class Register extends HTMLElement {
     // Implemented the `dispatchNotificationEvent` method in the `Register` component to create and dispatch the custom event on the `NotificationComponent` instance, ensuring proper event propagation.
 
     // This method creates a custom event 'showNotification' with the provided message and type, and dispatches it on the NotificationComponent instance to trigger the notification display
-    dispatchNotificationEvent(message, type) {
-        const notificationComponent = this.getRootNode().querySelector('notification-component');
-        const notificationEvent = new CustomEvent('showNotification', {
-            detail: {
-                message,
-                type
-            },
-            bubbles: true, // Add this option to allow event bubbling
-            composed: true // Add this option to allow event propagation across Shadow DOM boundaries
-        });
-        notificationComponent.dispatchEvent(notificationEvent);
-    }
+    
 }
