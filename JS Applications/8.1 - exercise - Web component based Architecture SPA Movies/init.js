@@ -3,6 +3,8 @@
 import { Router } from 'https://unpkg.com/@vaadin/router';
 
 import { logout } from './services/authServices.js';
+import { dispatchNotificationEvent } from '../services/notificationService.js';
+
 
 // Import components
 import Home from './components/home.js';
@@ -43,7 +45,15 @@ router.setRoutes([
         action: () => {
             logout();
             // TO DO: redirect
-        }
+            // return commands.redirect('/');
+
+            let homeComponent = document.querySelector('home-component');
+            if (homeComponent) {
+                homeComponent.connectedCallback();
+                dispatchNotificationEvent('Successfully logged out!', 'success')
+            }
+        },
+        component: 'home-component'
     },
     {
         path: '/details/:movieKey',
