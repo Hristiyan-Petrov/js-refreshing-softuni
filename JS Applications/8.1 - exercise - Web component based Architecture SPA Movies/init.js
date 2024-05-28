@@ -7,6 +7,7 @@ import { dispatchNotificationEvent } from '../services/notificationService.js';
 
 
 // Import components
+import Navigation from './components/navigation.js';
 import Home from './components/home.js';
 import Register from './components/register.js';
 import Login from './components/login.js';
@@ -17,6 +18,7 @@ import MovieDetails from './components/movie-details.js';
 import CreateMovie from './components/create-movie.js';
 
 // Register components
+customElements.define('navigation-component', Navigation);
 customElements.define('home-component', Home);
 customElements.define('register-component', Register);
 customElements.define('login-component', Login);
