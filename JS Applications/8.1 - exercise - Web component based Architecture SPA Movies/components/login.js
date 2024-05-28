@@ -48,7 +48,7 @@ export default class Login extends HTMLElement {
 
         login(email, password)
             .then(res => {
-                dispatchNotificationEvent('Log in successful!', 'success');
+                dispatchNotificationEvent('Logged in!', 'success');
                 // TO DO: redirect home
                 Router.go('/');
             })

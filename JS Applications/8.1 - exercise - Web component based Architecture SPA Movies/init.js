@@ -52,8 +52,8 @@ router.setRoutes([
 
             let homeComponent = document.querySelector('home-component');
             if (homeComponent) {
-                homeComponent.connectedCallback();
                 dispatchNotificationEvent('Logged out!', 'success')
+                homeComponent.connectedCallback();
             }
         },
         component: 'home-component'
