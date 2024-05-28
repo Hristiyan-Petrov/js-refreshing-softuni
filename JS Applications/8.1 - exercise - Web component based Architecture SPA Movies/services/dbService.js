@@ -1,20 +1,28 @@
 import { getUserData } from './authServices.js';
 import { request } from './requestServices.js'
-const dataBaseUrl = 'https://movies-dd028.firebaseio.com';
+const dataBaseUrl = 'https://movies-dd028.firebaseio.com/movies';
 
+// Helper function to generate movie URL
+function movieUrl(id) {
+    return `${dataBaseUrl}/${id}.json`;
+}
+
+// API URLs
 const apiUrls = {
-    allMovies: `${dataBaseUrl}/movies.json`,
-    oneMovie: `${dataBaseUrl}/movies/`
+    allMovies: `${dataBaseUrl}.json`,
+    oneMovie: movieUrl
 };
 
 export const getAllMovies = async (searchText) => {
     let res = await request(apiUrls.allMovies, 'GET');
-    return Object.keys(res).map(key => ({ key, ...res[key] })).filter(x => !searchText || searchText === x.title);
+    return Object.keys(res)
+        .map(key => ({ key, ...res[key] }))
+        .filter(x => !searchText || searchText === x.title);
     // Set the movie key into the object from associative array response and filter them
 }
 
 export const getOneMovie = async (key) => {
-    let res = await request(apiUrls.oneMovie + key + '.json', 'GET');
+    let res = await request(apiUrls.oneMovie(key), 'GET');
 
     return res;
 
@@ -32,7 +40,7 @@ export const addMovie = async (body) => {
 }
 
 export const editMovie = async (key, body) => {
-    return await request(apiUrls.oneMovie + key + '.json', 'PATCH', body);
+    return await request(apiUrls.oneMovie(key), 'PATCH', body);
 }
 
 export const likeMovie = async (key, uid) => {
