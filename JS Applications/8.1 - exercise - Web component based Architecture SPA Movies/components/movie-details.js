@@ -2,16 +2,19 @@ import { html, render, directive } from 'https://esm.run/lit-html@1';
 import { getOneMovie, likeMovie } from '../services/dbService.js';
 import { getUserData } from '../services/authServices.js';
 import { likeDirective } from '../directives/likeDirective.js';
+import { dispatchNotificationEvent } from '../services/notificationService.js';
 
 // const likeDirective = directive(() => (part) => { part.setValue('Like') });
 // Directives are very complicated
 
 const isLiked = (likes, currUid) => {
-    return Object
-        .values(likes)
-        .some(uid => uid === currUid);
-}
+    return likes 
+        ? Object
+            .values(likes)
+            .some(uid => uid === currUid) 
+        : [];
 
+}
 
 // Tagged function
 const template = (context) => html`
@@ -70,8 +73,8 @@ export default class MovieDetails extends HTMLElement {
         likeMovie(this.location.params.movieKey, this.user.uid)
             .then(res => {
                 console.log(res);
-                this.render();
+                dispatchNotificationEvent('Liked', 'success')
+                this.connectedCallback();
             })
     }
-
 }
