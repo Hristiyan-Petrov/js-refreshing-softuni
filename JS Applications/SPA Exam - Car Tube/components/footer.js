@@ -8,6 +8,10 @@ const template = (context) => html`
                     Applications</a>
             </div>
         </footer>
+
+        <footer>
+            <p>&copy; All rights reserved</p>
+        </footer>
     `;
 
 export default class Footer extends HTMLElement {
