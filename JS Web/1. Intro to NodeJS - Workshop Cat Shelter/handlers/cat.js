@@ -17,6 +17,7 @@ module.exports = (req, res) => {
 
         let filePath = path.normalize(path.join(__dirname, '../views/addCat.html'));
 
+
         fs.readFile(filePath, (err, data) => {
             if (err) {
                 console.log(err);
@@ -29,10 +30,13 @@ module.exports = (req, res) => {
                 return;
             }
 
+            let catBreedPlaceholder = breeds.map(breed => `<option value="${breed}">${breed}</option>`);
+            let modifiedData = data.toString().replace('{{catBreeds}}', catBreedPlaceholder);
+
             res.writeHead(200, {
                 'Content-Type': 'text/html'
             });
-            res.write(data);
+            res.write(modifiedData);
             res.end();
         });
 
@@ -91,16 +95,25 @@ module.exports = (req, res) => {
                 let updatedBreedsData = JSON.stringify(breeds);
 
                 // 4.	Update the breeds.json file
-                fs.writeFile('./data/breeds.json', updatedBreedsData, 'utf-8', () => console.log('The breed was uploaded sucessfully'));
-                
-                // 5.	Redirect to the home page ('/') and end the response
-            });
-            
-            res.statusCode = 302;
-            res.setHeader('Location', '/');
-            res.end();
-        });
+                fs.writeFile('./data/breeds.json', updatedBreedsData, 'utf-8', (err) => {
 
+                    if (err) {
+                        console.log('Error writing breeds.json');
+                        throw err;
+                    }
+
+                    // Clear the module cache for breeds.json
+                    // delete require.cache[require.resolve('./data/breeds.json')];
+
+                    // 5.	Redirect to the home page ('/') and end the response
+                    res.statusCode = 302;
+                    res.setHeader('Location', '/');
+                    res.end();
+
+                    console.log('The breed was uploaded sucessfully');
+                });
+            });
+        });
 
     } else {
         return true;
