@@ -9,24 +9,26 @@ const cats = require('../data/cats.json');
 module.exports = (req, res) => {
     const pathname = req.url;
 
+    // GET METHODS
+
     if (pathname === '/cats/add-cat' && req.method === 'GET') {
 
-         // Logic for showing the html view
+        // Logic for showing the html view
 
-         let filePath = path.normalize(path.join(__dirname, '../views/addCat.html'));
+        let filePath = path.normalize(path.join(__dirname, '../views/addCat.html'));
 
-         fs.readFile(filePath, (err, data) => {
+        fs.readFile(filePath, (err, data) => {
             if (err) {
                 console.log(err);
                 res.writeHead(404, {
                     'Content-Type': 'text/plain'
                 });
-        
+
                 res.write('Error was found!');
                 res.end();
                 return;
             }
-        
+
             res.writeHead(200, {
                 'Content-Type': 'text/html'
             });
@@ -38,24 +40,68 @@ module.exports = (req, res) => {
 
         let filePath = path.normalize(path.join(__dirname, '../views/addBreed.html'));
 
-         fs.readFile(filePath, (err, data) => {
+        fs.readFile(filePath, (err, data) => {
             if (err) {
                 console.log(err);
                 res.writeHead(404, {
                     'Content-Type': 'text/plain'
                 });
-        
+
                 res.write('Error was found!');
                 res.end();
                 return;
             }
-        
+
             res.writeHead(200, {
                 'Content-Type': 'text/html'
             });
             res.write(data);
             res.end();
-        } );
+        });
+
+        // POST METHODS
+
+    } else if (pathname === '/cats/add-cat' && req.method === 'POST') {
+
+    } else if (pathname === '/cats/add-breed' && req.method === 'POST') {
+
+        // TO DO:
+
+        // 1.	Parse the incoming data from the form
+        let formData = '';
+
+        req.on('data', data => {
+            formData += data;
+        });
+
+        req.on('end', () => {
+            let body = qs.parse(formData);
+
+            // 2.	Read the breeds.json file
+            fs.readFile('./data/breeds.json', (err, data) => {
+                if (err) {
+                    console.log('Error has occured');
+                    throw err;
+                    // return res.end('Error reading breeds.json');
+                }
+
+                let breeds = JSON.parse(data);
+                // 3.	Modify the breeds.json file
+                breeds.push(body.breed);
+                let updatedBreedsData = JSON.stringify(breeds);
+
+                // 4.	Update the breeds.json file
+                fs.writeFile('./data/breeds.json', updatedBreedsData, 'utf-8', () => console.log('The breed was uploaded sucessfully'));
+                
+                // 5.	Redirect to the home page ('/') and end the response
+            });
+            
+            res.statusCode = 302;
+            res.setHeader('Location', '/');
+            res.end();
+        });
+
+
     } else {
         return true;
     }
