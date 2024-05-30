@@ -1,1 +1,15 @@
-[]
+[
+    {
+        "id": 1,
+        "name": [
+            "bibi"
+        ],
+        "description": [
+            "habibi"
+        ],
+        "breed": [
+            "Kuchka"
+        ],
+        "image": "stefkaCat.jpg"
+    }
+]

@@ -2,7 +2,7 @@ const url = require('url');
 const fs = require('fs');
 const path = require('path');
 const qs = require('querystring');
-// const formidable = require('formidable');
+const formidable = require('formidable');
 const breeds = require('../data/breeds.json');
 const cats = require('../data/cats.json');
 
@@ -66,6 +66,36 @@ module.exports = (req, res) => {
         // POST METHODS
 
     } else if (pathname === '/cats/add-cat' && req.method === 'POST') {
+
+        let form = new formidable.IncomingForm();
+
+        form.parse(req, (err, fields, files) => {
+            if (err) throw err;
+
+            let oldPath = files.upload[0].filepath;
+            let newPath = path.normalize(path.join(__dirname, '../content/images/' + files.upload[0].originalFilename));
+
+            // Use rename() function to change the location on the uploaded file.
+            fs.rename(oldPath, newPath, (err) => {
+                if (err) throw err;
+                console.log('Files was uploaded successfully!');
+            });
+
+            // Get all cats inside json.file, modify them and write them back
+            fs.readFile('./data/cats.json', 'utf-8', (err, data) => {
+                if (err) throw err;
+
+                let allCats = JSON.parse(data);
+                allCats.push({ id: JSON.parse(data).length + 1, ...fields, image: files.upload[0].originalFilename });
+                let modifiedCats = JSON.stringify(allCats);
+
+                fs.writeFile('./data/cats.json', modifiedCats, () => {
+                    res.statusCode = 302;
+                    res.setHeader('Location', '/');
+                    res.end();
+                });
+            });
+        });
 
     } else if (pathname === '/cats/add-breed' && req.method === 'POST') {
 
