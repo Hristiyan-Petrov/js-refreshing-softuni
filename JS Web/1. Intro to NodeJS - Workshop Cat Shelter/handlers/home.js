@@ -20,7 +20,7 @@ module.exports = (req, res) => {
 
             if (err) {
                 console.log(err);
-                res.writeHead(200, {
+                res.writeHead(404, {
                     'Content-Type': 'text/plain'
                 });
 
