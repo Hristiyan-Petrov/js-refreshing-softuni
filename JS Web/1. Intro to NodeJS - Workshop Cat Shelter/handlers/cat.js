@@ -72,13 +72,14 @@ module.exports = (req, res) => {
         form.parse(req, (err, fields, files) => {
             if (err) throw err;
 
-            let oldPath = files.upload[0].filepath;
-            let newPath = path.normalize(path.join(__dirname, '../content/images/' + files.upload[0].originalFilename));
+            // Image logic. Save locally at project
+            let originalFilename = files.upload[0].originalFilename.replaceAll(' ', '-');   // Replace all spaces as they break the rules
+            let newPath = path.normalize(path.join(__dirname, '../content/images/' + originalFilename));
 
             // Use rename() function to change the location on the uploaded file.
             fs.rename(oldPath, newPath, (err) => {
                 if (err) throw err;
-                console.log('Files was uploaded successfully!');
+                console.log('Image file was uploaded successfully!');
             });
 
             // Get all cats inside json.file, modify them and write them back
@@ -86,10 +87,13 @@ module.exports = (req, res) => {
                 if (err) throw err;
 
                 let allCats = JSON.parse(data);
-                allCats.push({ id: JSON.parse(data).length + 1, ...fields, image: files.upload[0].originalFilename });
+                allCats.push({ id: JSON.parse(data).length + 1, ...fields, image: originalFilename });
                 let modifiedCats = JSON.stringify(allCats);
 
-                fs.writeFile('./data/cats.json', modifiedCats, () => {
+                fs.writeFile('./data/cats.json', modifiedCats, (err) => {
+                    if (err) throw err;
+
+                    // Use 302 code to be able to redirect
                     res.statusCode = 302;
                     res.setHeader('Location', '/');
                     res.end();

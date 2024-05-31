@@ -1,6 +1,7 @@
 const url = require('url');
 const fs = require('fs');
 const path = require('path');
+const formidable = require('formidable');
 const cats = require('../data/cats.json');
 const breeds = require('../data/breeds.json');
 
@@ -71,13 +72,13 @@ module.exports = (req, res) => {
 
             let currentCatId = pathname.slice(pathname.lastIndexOf('/') + 1);
             let currentCat = cats.find(cat => cat.id === Number(currentCatId));
-            
+
             let modifiedData = data.toString().replace('{{name}}', currentCat.name);
             modifiedData = modifiedData.replace('{{id}}', currentCat.id);
             modifiedData = modifiedData.replace('{{description}}', currentCat.description);
 
-            let catBreedsHtml = breeds.map(breed => breed === currentCat.breed 
-                ? `<option selected value="${breed}">${breed}</option>` 
+            let catBreedsHtml = breeds.map(breed => breed === currentCat.breed
+                ? `<option selected value="${breed}">${breed}</option>`
                 : `<option value="${breed}">${breed}</option>`);
             modifiedData = modifiedData.replace('{{catBreeds}}', catBreedsHtml.join(''));
 
@@ -88,7 +89,7 @@ module.exports = (req, res) => {
             res.end();
         });
 
-    } else if (pathname.includes('/cats-find-new-home')  && req.method === 'GET') {
+    } else if (pathname.includes('/cats-find-new-home') && req.method === 'GET') {
         let filePath = path.normalize(path.join(__dirname, '../views/catShelter.html'));
 
         fs.readFile(filePath, (err, data) => {
@@ -105,12 +106,12 @@ module.exports = (req, res) => {
 
             let currentCatId = pathname.slice(pathname.lastIndexOf('/') + 1);
             let currentCat = cats.find(cat => cat.id === Number(currentCatId));
-            
+
             let modifiedData = data.toString().replace('{{name}}', currentCat.name);
             modifiedData = modifiedData.replace('{{description}}', currentCat.description);
 
-            let catBreedsHtml = breeds.map(breed => breed === currentCat.breed 
-                ? `<option selected value="${breed}">${breed}</option>` 
+            let catBreedsHtml = breeds.map(breed => breed === currentCat.breed
+                ? `<option selected value="${breed}">${breed}</option>`
                 : `<option value="${breed}">${breed}</option>`);
             modifiedData = modifiedData.replace('{{catBreeds}}', catBreedsHtml.join(''));
 
@@ -125,6 +126,42 @@ module.exports = (req, res) => {
         });
 
     } else if (pathname.includes('/cats-edit/') && req.method === 'POST') {
+
+        let form = new formidable.IncomingForm();
+
+        form.parse(req, (err, fields, files) => {
+            if (err) throw err;
+
+            // let allCatsData = JSON.parse(cats);
+            let currentCatId = pathname.slice(pathname.lastIndexOf('/') + 1);
+            let currentCat = cats.find(cat => cat.id === Number(currentCatId));
+
+            // Image logic. Save locally at project
+            let oldPath = files.upload[0].filepath;
+            let originalFilename = files.upload[0].originalFilename.replaceAll(' ', '-');   // Replace all spaces as they break the rules
+            let newPath = path.normalize(path.join(__dirname, '../content/images/' + originalFilename));
+
+            // Use rename() function to change the location on the uploaded file.
+            fs.rename(oldPath, newPath, (err) => {
+                if (err) throw err;
+                console.log('Image file was updated successfully!');
+            });
+
+            // Update current cat properties
+            currentCat.name = fields.name;
+            currentCat.description = fields.description;
+            currentCat.breed = fields.breed;
+            currentCat.image = originalFilename;
+
+            fs.writeFile('./data/cats.json', JSON.stringify(cats), err => {
+                if (err) throw err;
+
+                // Use 302 code to be able to redirect
+                res.statusCode = 302;
+                res.setHeader('Location', '/');
+                res.end();
+            });
+        });
 
 
     } else if (pathname.includes('/cats-find-new-home') && req.method === 'POST') {
