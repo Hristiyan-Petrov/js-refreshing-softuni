@@ -108,6 +108,7 @@ module.exports = (req, res) => {
             let currentCat = cats.find(cat => cat.id === Number(currentCatId));
 
             let modifiedData = data.toString().replace('{{name}}', currentCat.name);
+            modifiedData = modifiedData.replace('{{id}}', currentCat.id);
             modifiedData = modifiedData.replace('{{description}}', currentCat.description);
 
             let catBreedsHtml = breeds.map(breed => breed === currentCat.breed
@@ -132,9 +133,6 @@ module.exports = (req, res) => {
         form.parse(req, (err, fields, files) => {
             if (err) throw err;
 
-            // let allCatsData = JSON.parse(cats);
-            let currentCatId = pathname.slice(pathname.lastIndexOf('/') + 1);
-            let currentCat = cats.find(cat => cat.id === Number(currentCatId));
 
             // Image logic. Save locally at project
             let oldPath = files.upload[0].filepath;
@@ -166,6 +164,18 @@ module.exports = (req, res) => {
 
     } else if (pathname.includes('/cats-find-new-home') && req.method === 'POST') {
 
+        // Basically deleting cat (adopting it and remove from storage)
+        let catId = pathname.slice(pathname.lastIndexOf('/') + 1);
+        cats.splice(Number(catId) - 1, 1);
+        
+        fs.writeFile('./data/cats.json', JSON.stringify(cats), err => {
+            if (err) throw err;
+
+            // Use 302 code to be able to redirect
+            res.statusCode = 302;
+            res.setHeader('Location', '/');
+            res.end();
+        });
 
     } else {
         // If we could not handle the current request,
