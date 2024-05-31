@@ -73,7 +73,40 @@ module.exports = (req, res) => {
             let currentCat = cats.find(cat => cat.id === Number(currentCatId));
             
             let modifiedData = data.toString().replace('{{name}}', currentCat.name);
-            // modifiedData.replace('{{name}}', currentCat.name);
+            modifiedData = modifiedData.replace('{{id}}', currentCat.id);
+            modifiedData = modifiedData.replace('{{description}}', currentCat.description);
+
+            let catBreedsHtml = breeds.map(breed => breed === currentCat.breed 
+                ? `<option selected value="${breed}">${breed}</option>` 
+                : `<option value="${breed}">${breed}</option>`);
+            modifiedData = modifiedData.replace('{{catBreeds}}', catBreedsHtml.join(''));
+
+            res.writeHead(200, {
+                'Content-Type': 'text/html'
+            });
+            res.write(modifiedData);
+            res.end();
+        });
+
+    } else if (pathname.includes('/cats-find-new-home')  && req.method === 'GET') {
+        let filePath = path.normalize(path.join(__dirname, '../views/catShelter.html'));
+
+        fs.readFile(filePath, (err, data) => {
+            if (err) {
+                console.log(err);
+                res.writeHead(404, {
+                    'Content-Type': 'text/plain'
+                });
+
+                res.write('File not found!');
+                res.end();
+                return;
+            }
+
+            let currentCatId = pathname.slice(pathname.lastIndexOf('/') + 1);
+            let currentCat = cats.find(cat => cat.id === Number(currentCatId));
+            
+            let modifiedData = data.toString().replace('{{name}}', currentCat.name);
             modifiedData = modifiedData.replace('{{description}}', currentCat.description);
 
             let catBreedsHtml = breeds.map(breed => breed === currentCat.breed 
@@ -82,22 +115,19 @@ module.exports = (req, res) => {
             modifiedData = modifiedData.replace('{{catBreeds}}', catBreedsHtml.join(''));
 
             modifiedData = modifiedData.replace('{{breed}}', currentCat.breed);
+            modifiedData = modifiedData.replace('{{imageSrc}}', path.join('../content/images/' + currentCat.image));
 
-            // res.writeHead(200, {
-            //     'Content-Type': 'text/html'
-            // });
-
+            res.writeHead(200, {
+                'Content-Type': 'text/html'
+            });
             res.write(modifiedData);
             res.end();
         });
 
-    } else if (pathname.includes('/cats/find-new-home') && req.method === 'GET') {
-
-
     } else if (pathname.includes('/cats-edit/') && req.method === 'POST') {
 
 
-    } else if (pathname.includes('/cats/find-new-home') && req.method === 'POST') {
+    } else if (pathname.includes('/cats-find-new-home') && req.method === 'POST') {
 
 
     } else {
