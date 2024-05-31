@@ -10,7 +10,7 @@ module.exports = (req, res) => {
     const url = new URL(req.url, `http://${req.headers.host}`);
     const pathname = url.pathname;
 
-    if (pathname === '/' && req.method === 'GET') {
+    if (pathname === '/' || pathname === '/search' && req.method === 'GET') {
 
         // Logic for showing the home html view
 
@@ -32,8 +32,18 @@ module.exports = (req, res) => {
             }
 
             // In case of success
+            let catsToShow = cats;
 
-            let catsHtml = cats.map(cat => `<li>
+            // If search filter is applied should filter the cats
+            if (pathname === '/search') {
+                const parsedUrl = new URL(req.url, `http://${req.headers.host}`);
+                const searchString = parsedUrl.searchParams.get('searchString');
+                catsToShow = catsToShow.filter(c => Array.isArray(c.name)   // Do this beacause of different test cat format saving
+                    ? c.name[0].toLowerCase().includes(searchString.toLowerCase())  
+                    : c.name.toLowerCase().includes(searchString.toLowerCase()))
+            }
+
+            let catsHtml = catsToShow.map(cat => `<li>
             <img src="${path.join('./content/images/' + cat.image)}" alt="${cat.name}">
             <h3>${cat.name}</h3>
             <p><span>Breed: </span>Bombay Cat</p>
@@ -133,7 +143,6 @@ module.exports = (req, res) => {
         form.parse(req, (err, fields, files) => {
             if (err) throw err;
 
-
             // Image logic. Save locally at project
             let oldPath = files.upload[0].filepath;
             let originalFilename = files.upload[0].originalFilename.replaceAll(' ', '-');   // Replace all spaces as they break the rules
@@ -167,7 +176,7 @@ module.exports = (req, res) => {
         // Basically deleting cat (adopting it and remove from storage)
         let catId = pathname.slice(pathname.lastIndexOf('/') + 1);
         cats.splice(Number(catId) - 1, 1);
-        
+
         fs.writeFile('./data/cats.json', JSON.stringify(cats), err => {
             if (err) throw err;
 
