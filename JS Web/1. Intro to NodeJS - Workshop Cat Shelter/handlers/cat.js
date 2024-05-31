@@ -30,8 +30,8 @@ module.exports = (req, res) => {
                 return;
             }
 
-            let catBreedPlaceholder = breeds.map(breed => `<option value="${breed}">${breed}</option>`);
-            let modifiedData = data.toString().replace('{{catBreeds}}', catBreedPlaceholder);
+            let catBreedsHtml = breeds.map(breed => `<option value="${breed}">${breed}</option>`);
+            let modifiedData = data.toString().replace('{{catBreeds}}', catBreedsHtml);
 
             res.writeHead(200, {
                 'Content-Type': 'text/html'
@@ -86,7 +86,13 @@ module.exports = (req, res) => {
                 if (err) throw err;
 
                 let allCats = JSON.parse(data);
-                allCats.push({ id: JSON.parse(data).length + 1, ...fields, image: files.upload[0].originalFilename });
+                allCats.push({
+                    id: JSON.parse(data).length + 1,
+                    name: fields.name[0],
+                    description: fields.description[0],
+                    breed: fields.breed[0],
+                    image: files.upload[0].originalFilename
+                });
                 let modifiedCats = JSON.stringify(allCats);
 
                 fs.writeFile('./data/cats.json', modifiedCats, () => {

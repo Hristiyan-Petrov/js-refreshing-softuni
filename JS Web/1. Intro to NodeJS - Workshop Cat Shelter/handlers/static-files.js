@@ -13,6 +13,8 @@ function getContentType(url) {
         return 'text/javascript'
     } else if (url.endsWith('ico')) {
         return 'image/vnd.microsoft.icon'
+    } else if (url.endsWith('jpg') || url.endsWith('jpeg')) {
+        return 'image/jpeg'
     }
 }
 
@@ -22,29 +24,53 @@ module.exports = (req, res) => {
 
     if (pathname.startsWith('/content') && req.method === 'GET') {
 
-        fs.readFile(`./${pathname}`, 'utf-8', (err, data) => {
-            if (err) {
-                console.log(err);
-
-                res.writeHead(404, {
-                    'Content-Type': 'text/plain'
+        if (pathname.endsWith('jpg') || pathname.endsWith('jpgeg') || pathname.endsWith('ico') && req.method === 'GET') {
+            fs.readFile(`./${pathname}`, (err, data) => {
+                if (err) {
+                    console.log(err);
+    
+                    res.writeHead(404, {
+                        'Content-Type': 'text/plain'
+                    });
+    
+                    res.write('Error was found!');
+                    res.end();
+                    return;
+                }
+    
+                console.log('pathname: ' + pathname);
+                res.writeHead(
+                    200, {
+                    'Content-Type': getContentType(pathname)
                 });
-
-                res.write('Error was found!');
+    
+                res.write(data);
                 res.end();
-                return;
-            }
-
-            console.log('pathname: ' + pathname);
-            res.writeHead(
-                200, {
-                'Content-Type': getContentType(pathname)
             });
-
-            res.write(data);
-            res.end();
-        })
-
+        } else {
+            fs.readFile(`./${pathname}`, 'utf-8', (err, data) => {
+                if (err) {
+                    console.log(err);
+    
+                    res.writeHead(404, {
+                        'Content-Type': 'text/plain'
+                    });
+    
+                    res.write('Error was found!');
+                    res.end();
+                    return;
+                }
+    
+                console.log('pathname: ' + pathname);
+                res.writeHead(
+                    200, {
+                    'Content-Type': getContentType(pathname)
+                });
+    
+                res.write(data);
+                res.end();
+            });
+        }
     } else {
         return true;
     }
