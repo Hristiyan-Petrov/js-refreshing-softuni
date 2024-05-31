@@ -103,15 +103,15 @@ module.exports = (req, res) => {
 
     } else if (pathname === '/cats/add-breed' && req.method === 'POST') {
 
-        // TO DO:
-
         // 1.	Parse the incoming data from the form
         let formData = '';
 
+        // When new chunk is available for reading. Subscribe to 'data' event. PubSub, Event Emitter
         req.on('data', data => {
             formData += data;
         });
 
+        // When no there is no more data available. Subscribe to 'end' event. PubSub, Event Emitter
         req.on('end', () => {
             let body = qs.parse(formData);
 
