@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-function handleError(err) {
+export function handleError(err) {
     console.log(err);
     res.writeHead(404, {
         'Contetn-Type': 'text/plain'
