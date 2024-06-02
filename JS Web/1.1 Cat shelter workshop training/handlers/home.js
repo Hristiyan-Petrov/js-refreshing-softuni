@@ -19,7 +19,7 @@ export default (req, res) => {
 
         let homeViewFilePath = path.normalize(path.join(__dirname, '../views/home/index.html'));
 
-        fs.readFile(homeViewFilePath,'utf8', (err, data) => {
+        fs.readFile(homeViewFilePath, 'utf8', (err, data) => {
 
             if (err) handleError(err);
 
@@ -30,6 +30,7 @@ export default (req, res) => {
 
         // let src = fs.createReadStream(homeViewFilePath);
         // src.on('data', chunk => res.write(chunk));
+        // src.on('error', err => handleError(err));
         // src.on('end', () => res.end());
 
 
