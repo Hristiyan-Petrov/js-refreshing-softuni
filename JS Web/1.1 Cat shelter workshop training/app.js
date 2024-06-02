@@ -5,13 +5,6 @@ const port = 5000;
 const server = createServer();
 
 server.on('request', (req, res) => {
-    // res.writeHead(200, {
-    //     'Content-type': 'text/plain'
-    // });
-
-    // res.write('Hello World! Nodemon is here!');
-    // res.end();
-
     for (let handler of handlers) {
         if (!handler(req, res)) {
             break;

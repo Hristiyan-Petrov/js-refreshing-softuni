@@ -1,15 +1,17 @@
-import url from 'url';
+// // import { readFile } from 'node:fs';
 import fs from 'fs';
-// import { readFile } from 'node:fs';
 import path from 'path';
-// import cats from '../data/cats.json';
+import url from 'url';
+import { handleError, writeData } from '../utils.js';
+// import { handleError, writeData } from '../utils.js';
+// // import cats from '../data/cats.json';
 
-// __dirname is a build in varianble in NodeJS. However, it is not defined with Node.js native ESM support.
+// // __dirname is a build in varianble in NodeJS. However, it is not defined with Node.js native ESM support.
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Req is a readable stream
-// Res is a writeable stream
+// // Req is a readable stream
+// // Res is a writeable stream
 export default (req, res) => {
     const pathname = req.url;
 
@@ -19,26 +21,12 @@ export default (req, res) => {
 
         fs.readFile(homeViewFilePath,'utf8', (err, data) => {
 
-            if (err) {
-                console.log(err);
-                res.writeHead(404, {
-                    'Contetn-Type': 'text/plain'
-                });
+            if (err) handleError(err);
 
-                res.write('Not found!')
-                res.end();
-                return;
-            }
-
-            res.writeHead(200, {
-                'Content-Type': 'text/plain'
-            });
-
-            res.write(data);
-            res.end();
+            writeData(res, data, 'text/html');
         });
 
-        // Analogue using read stream, chunks, events
+        // Analogue using read stream, chunks, events (useful if data was very large)
 
         // let src = fs.createReadStream(homeViewFilePath);
         // src.on('data', chunk => res.write(chunk));
@@ -50,3 +38,25 @@ export default (req, res) => {
         return true;
     }
 }
+
+
+// export default (req, res) => {
+
+//     const pathname = req.url;
+
+//     if (pathname === '/' && req.method === 'GET') {
+
+//         // Logic for showing the home html view
+
+//         let filePath = path.normalize(path.join(__dirname, '../views/home/index.html'));
+
+//         fs.readFile(filePath, (err, data) => {
+
+//             if (err) handleError(res, err);
+
+//             writeData(res, data, 'text/html');
+//         });
+//     } else {
+//         return true;
+//     }
+// }

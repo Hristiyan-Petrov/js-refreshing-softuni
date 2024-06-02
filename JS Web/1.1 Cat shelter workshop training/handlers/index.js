@@ -1,4 +1,4 @@
 import homeHandler from '../handlers/home.js';
+import staticFilesHandler from '../handlers/static-files.js';
 
-// Export list
-export default [ homeHandler ];
+export default [ homeHandler, staticFilesHandler ];
