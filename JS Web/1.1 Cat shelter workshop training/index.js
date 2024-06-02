@@ -1,7 +1,7 @@
-const http = require('http');
+import { createServer } from 'http';
 const port = 3000;
 
-http.createServer((req, res) => {
+createServer((req, res) => {
     res.writeHead(200, {
         'Content-type': 'text/plain'
     });
