@@ -2,7 +2,7 @@
 import fs from 'fs';
 import path from 'path';
 import url from 'url';
-import { handleError, writeData } from '../utils.js';
+import { handleGetReq } from '../utils.js';
 // import { handleError, writeData } from '../utils.js';
 // // import cats from '../data/cats.json';
 
@@ -19,12 +19,8 @@ export default (req, res) => {
 
         let homeViewFilePath = path.normalize(path.join(__dirname, '../views/home/index.html'));
 
-        fs.readFile(homeViewFilePath, 'utf8', (err, data) => {
+        handleGetReq(res, homeViewFilePath);
 
-            if (err) handleError(err);
-
-            writeData(res, data, 'text/html');
-        });
 
         // Analogue using read stream, chunks, events (useful if data was very large)
 
