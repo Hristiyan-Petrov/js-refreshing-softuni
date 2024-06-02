@@ -1,4 +1,5 @@
 import fs from 'fs';
+import breeds from './data/breeds.json' with { type: 'json' };
 
 export function handleError(err) {
     console.log(err);
@@ -11,7 +12,7 @@ export function handleError(err) {
     return;
 };
 
-function writeData(res, data, contentType) {
+export function writeData(res, data, contentType) {
     res.writeHead(200, {
         'Content-Type': `${contentType}`
     });
@@ -25,7 +26,7 @@ function getContentType(url) {
     // Check if static file
     if (url.startsWith('/content')) {
         url = url.replace('./', '');
-    } 
+    }
 
     if (url.endsWith('css')) {
         return 'text/css';
@@ -45,8 +46,16 @@ function getContentType(url) {
 }
 
 export function handleGetReq(res, viewPath) {
+
     fs.readFile(viewPath, 'utf8', (err, data) => {
         if (err) handleError(err);
+
+        if (viewPath.includes('addCat.html')) {
+            data = data.replace('{{catBreeds}}', catBreedsPlaceholder());
+        }
+
         writeData(res, data, getContentType(viewPath));
     });
 }
+
+const catBreedsPlaceholder = () => breeds.map(b => `<option value="${b}">${b}</option>`);
