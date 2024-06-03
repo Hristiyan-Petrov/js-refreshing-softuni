@@ -1,5 +1,5 @@
 import fs from 'fs';
-import breeds from '../data/breeds.json' with { type: 'json' };
+// import breeds from '../data/breeds.json' with { type: 'json' };
 
 export function handleError(err) {
     console.log(err);
@@ -51,11 +51,18 @@ export function handleGetReq(res, viewPath) {
         if (err) handleError(err);
 
         if (viewPath.includes('addCat.html')) {
-            data = data.replace('{{catBreeds}}', catBreedsPlaceholder());
+            let breedsTemplate = catBreedsPlaceholder();
+            data = data.replace('{{catBreeds}}', breedsTemplate);
         }
 
         writeData(res, data, getContentType(viewPath));
     });
 }
 
-const catBreedsPlaceholder = () => breeds.map(b => `<option value="${b}">${b}</option>`);
+// const catBreedsPlaceholder = () => breeds.map(b => `<option value="${b}">${b}</option>`);
+
+const catBreedsPlaceholder = () => {
+    let array = fs.readFileSync('./data/breeds.json');
+    let breeds = JSON.parse(array);
+    return breeds.map(b => `<option value="${b}">${b}</option>`);
+}
