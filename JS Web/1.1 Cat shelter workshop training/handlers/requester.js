@@ -1,5 +1,5 @@
 import fs from 'fs';
-import breeds from './data/breeds.json' with { type: 'json' };
+import breeds from '../data/breeds.json' with { type: 'json' };
 
 export function handleError(err) {
     console.log(err);

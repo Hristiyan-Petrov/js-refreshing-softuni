@@ -2,7 +2,7 @@
 import fs from 'fs';
 import path from 'path';
 import url from 'url';
-import { handleGetReq } from '../utils.js';
+import { handleGetReq } from './requester.js';
 // // import cats from '../data/cats.json';
 
 // // __dirname is a build in varianble in NodeJS. However, it is not defined with Node.js native ESM support.

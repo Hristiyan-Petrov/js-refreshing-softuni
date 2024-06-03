@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { handleGetReq } from '../utils.js';
+import { handleGetReq } from './requester.js';
 
 function getContentType(url) {
     if (url.endsWith('css')) {
