@@ -28,31 +28,28 @@ export default (req, res) => {
         // src.on('error', err => handleError(err));
         // src.on('end', () => res.end());
 
+    } else if (pathname.includes('/cats-edit') && req.method === 'GET') {
+
+        let currentCatId = pathname.slice(pathname.lastIndexOf('/') + 1);
+
+        let viewPath = path.normalize(path.join(__dirname, '../views/editCat.html'));
+
+        handleGetReq(res, viewPath, currentCatId);
+
+    } else if (pathname.includes('/cats-find-new-home') && req.method === 'GET') {
+
+        let currentCatId = pathname.slice(pathname.lastIndexOf('/') + 1);
+
+        let viewPath = path.normalize(path.join(__dirname, '../views/catShelter.html'));
+
+        handleGetReq(res, viewPath, currentCatId);
+
+    } else if (pathname.includes('/cats-edit') && req.method === 'POST') {
+
+    } else if (pathname === '/cats-edit' && req.method === 'POST') {
 
     } else {
         // If the url is not part of this module (home.js handler) return to the index js looping through other handlers
         return true;
     }
 }
-
-
-// export default (req, res) => {
-
-//     const pathname = req.url;
-
-//     if (pathname === '/' && req.method === 'GET') {
-
-//         // Logic for showing the home html view
-
-//         let filePath = path.normalize(path.join(__dirname, '../views/home/index.html'));
-
-//         fs.readFile(filePath, (err, data) => {
-
-//             if (err) handleError(res, err);
-
-//             writeData(res, data, 'text/html');
-//         });
-//     } else {
-//         return true;
-//     }
-// }

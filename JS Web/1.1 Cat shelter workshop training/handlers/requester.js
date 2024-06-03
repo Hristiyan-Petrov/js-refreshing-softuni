@@ -48,24 +48,38 @@ function getContentType(url) {
     }
 }
 
-export async function handleGetReq(res, viewPath) {
+export async function handleGetReq(res, viewPath, catId) {
     try {
         let data;
 
         // Check if the requested file is an image
         if (viewPath.endsWith('jpg') || viewPath.endsWith('jpgeg') || viewPath.endsWith('ico')) {
             data = await fspromise.readFile(viewPath);  // Read as binary
-        // Requested file is a text file (html, css, js, etc.)
+            // Requested file is a text file (html, css, js, etc.)
         } else {
             data = await fspromise.readFile(viewPath, 'utf8');  // Read as text (utf8 encoded)
-            
+
             if (viewPath.includes('addCat.html')) {
                 let breedsTemplate = await catBreedsPlaceholder();
                 data = data.replace('{{catBreeds}}', breedsTemplate);
-    
+
             } else if (viewPath.includes('index.html')) {
                 let catsTemplate = await catsPlaceholder();
                 data = data.replace('{{cats}}', catsTemplate)
+            } else if (viewPath.includes('catShelter.html') || viewPath.includes('editCat.html')) {
+
+                let breeds = await getBreeds();
+                let cats = await getCats();
+                let currentCat = cats.find(cat => cat.id === Number(catId));
+
+                data = data.toString().replace('{{name}}', currentCat.name);
+                data = data.replace('{{id}}', currentCat.id);
+                data = data.replace('{{description}}', currentCat.description);
+
+                let catBreedsHtml = breeds.map(breed => breed === currentCat.breed
+                    ? `<option selected value="${breed}">${breed}</option>`
+                    : `<option value="${breed}">${breed}</option>`);
+                data = data.replace('{{catBreeds}}', catBreedsHtml.join(''));
             }
         }
 
@@ -86,8 +100,10 @@ const catBreedsPlaceholder = async () => {
 }
 
 const catsPlaceholder = async () => {
-    const bufferData = await fspromise.readFile('./data/cats.json');
-    const cats = JSON.parse(bufferData);
+    // const bufferData = await fspromise.readFile('./data/cats.json');
+    // const cats = JSON.parse(bufferData);
+
+    let cats = await getCats();
     return cats.map(c => `
             <li>
                 <img src="${path.join('./content/images/' + c.image)}" alt="${c.breed} cat">
@@ -100,4 +116,12 @@ const catsPlaceholder = async () => {
                 </ul>
             </li>
     `);
+}
+
+const getCats = async () => {
+    return JSON.parse(await fspromise.readFile('./data/cats.json'));
+}
+
+const getBreeds = async () => {
+    return JSON.parse(await fspromise.readFile('./data/breeds.json'));
 }
