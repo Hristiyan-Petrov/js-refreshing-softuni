@@ -136,7 +136,7 @@ module.exports = (req, res) => {
             res.end();
         });
 
-    } else if (pathname.includes('/cats-edit/') && req.method === 'POST') {
+    } else if (pathname.includes('/cats-edit/') && req.method === 'PATCH') {
 
         let form = new formidable.IncomingForm();
 

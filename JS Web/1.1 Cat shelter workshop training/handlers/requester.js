@@ -204,7 +204,7 @@ const templates = {
             <select id="group" name="breed">
                 {{catBreeds}}
             </select>
-        <button>Edit Cat</button>
+        <button type="submit">Edit Cat</button>
     </form>
     `,
     'catShelter': cat => `
@@ -219,9 +219,9 @@ const templates = {
         <select id="group" disabled>
             {{catBreeds}}
         </select>
-            <button>SHELTER THE CAT</button>
+            <button type="submit">SHELTER THE CAT</button>
         </form>
     `
 };
 
-const getJson = async (db) => JSON.parse(await fspromise.readFile(`./data/${db}.json`));
+export const getJson = async (db) => JSON.parse(await fspromise.readFile(`./data/${db}.json`));
