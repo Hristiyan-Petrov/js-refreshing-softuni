@@ -1,5 +1,7 @@
 import fs from 'fs';
+import fspromise from 'fs/promises';
 // import breeds from '../data/breeds.json' with { type: 'json' };
+// import breeds from "../data/breeds.json";
 
 export function handleError(err) {
     console.log(err.message);
@@ -9,7 +11,7 @@ export function handleError(err) {
 
     res.write('Not found!')
     res.end();
-    return;
+    throw err;
 };
 
 export function writeData(res, data, contentType) {
@@ -45,24 +47,26 @@ function getContentType(url) {
     }
 }
 
-export function handleGetReq(res, viewPath) {
-
-    fs.readFile(viewPath, 'utf8', (err, data) => {
-        if (err) handleError(err);
+export async function handleGetReq(res, viewPath) {
+    try {
+        let data = await fspromise.readFile(viewPath, 'utf8');
 
         if (viewPath.includes('addCat.html')) {
-            let breedsTemplate = catBreedsPlaceholder();
+            let breedsTemplate = await catBreedsPlaceholder();
             data = data.replace('{{catBreeds}}', breedsTemplate);
         }
 
         writeData(res, data, getContentType(viewPath));
-    });
+        
+    } catch (err) {
+        handleError(err);
+    }
 }
 
 // const catBreedsPlaceholder = () => breeds.map(b => `<option value="${b}">${b}</option>`);
 
-const catBreedsPlaceholder = () => {
-    let buffer = fs.readFileSync('./data/breeds.json');
-    let breeds = JSON.parse(buffer);
+const catBreedsPlaceholder = async () => {
+    const bufferData = await fspromise.readFile('./data/breeds.json');
+    const breeds = JSON.parse(bufferData);
     return breeds.map(b => `<option value="${b}">${b}</option>`);
 }
