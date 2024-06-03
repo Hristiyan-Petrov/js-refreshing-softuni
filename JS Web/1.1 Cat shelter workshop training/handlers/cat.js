@@ -60,8 +60,6 @@ export default (req, res) => {
             if (err) handleError(err);
             
             let oldPath = files.upload[0].filepath;
-            // let newPath = path.normalize(path.join(__dirname, '../content/images/' + files.upload[0].originalFilename));
-
             let originalFilename = files.upload[0].originalFilename.replaceAll(' ', '-');   // Replace all spaces as they break the rules
             let newPath = path.normalize(path.join(__dirname, '../content/images/' + originalFilename));
 

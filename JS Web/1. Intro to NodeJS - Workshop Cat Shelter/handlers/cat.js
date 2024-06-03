@@ -73,6 +73,7 @@ module.exports = (req, res) => {
             if (err) throw err;
 
             // Image logic. Save locally at project
+            let oldPath = files.upload[0].filepath;
             let originalFilename = files.upload[0].originalFilename.replaceAll(' ', '-');   // Replace all spaces as they break the rules
             let newPath = path.normalize(path.join(__dirname, '../content/images/' + originalFilename));
 

@@ -1,4 +1,3 @@
-import fs from 'fs';
 import { handleGetReq } from './requester.js';
 
 function getContentType(url) {
@@ -22,6 +21,7 @@ export default (req, res) => {
     const pathname = req.url;
 
     if (pathname.startsWith('/content') && req.method === 'GET') {
+
         handleGetReq(res, `./${pathname}`);
     } else {
         return true;
