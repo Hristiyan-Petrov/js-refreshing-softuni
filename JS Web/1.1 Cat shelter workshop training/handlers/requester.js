@@ -208,7 +208,7 @@ const templates = {
     </form>
     `,
     'catShelter': cat => `
-        <form action="/cats-find-new-home" method="post" class="cat-form">
+        <form action="/cats-find-new-home/${cat.id}" method="post" class="cat-form">
         <h2>Shelter the cat</h2>
         <img src="${path.join('../content/images/' + cat.image)}" alt="${cat.breed} cat">
         <label for="name">Name</label>

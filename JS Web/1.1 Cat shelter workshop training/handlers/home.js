@@ -11,7 +11,7 @@ const __dirname = path.dirname(__filename);
 
 // // Req is a readable stream
 // // Res is a writeable stream
-export default (req, res) => {
+export default async (req, res) => {
     const pathname = req.url;
 
     if (pathname === '/' && req.method === 'GET') {
@@ -55,8 +55,8 @@ export default (req, res) => {
             if (err) handleError(res, err);
 
             let allCats = await getJson('cats');
-            let currentCatId = pathname.slice(pathname.lastIndexOf('/') + 1);
-            let currentCat = allCats.find(cat => cat.id === Number(currentCatId));
+            let catId = pathname.slice(pathname.lastIndexOf('/') + 1);
+            let currentCat = allCats.find(cat => cat.id === Number(catId));
 
             let originalFilename;
 
@@ -90,7 +90,24 @@ export default (req, res) => {
 
         });
 
-    } else if (pathname.includes('/cats-edit') && req.method === 'POST') {
+    } else if (pathname.includes('/cats-find-new-home') && req.method === 'POST') {
+        // Delete cat (adopt it and remove from website)
+
+        let allCats = await getJson('cats');
+        let catId = pathname.slice(pathname.lastIndexOf('/') + 1);
+        allCats.splice(Number(catId) - 1, 1);
+
+        fs.writeFile('./data/cats.json', JSON.stringify(allCats), err => {
+            if (err) handleError(res, err);
+
+            console.log('Cat adopted!');
+            
+            // Use 302 code to be able to redirect
+            res.statusCode = 302;
+            res.setHeader('Location', '/');
+            res.end();
+        });
+
 
     } else {
         // If the url is not part of this module (home.js handler) return to the index js looping through other handlers
