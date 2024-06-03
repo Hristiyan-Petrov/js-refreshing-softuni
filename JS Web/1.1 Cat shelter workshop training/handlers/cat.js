@@ -2,6 +2,10 @@ import qs from 'querystring';
 import path from 'path';
 import url from 'url';
 import fs from 'fs';
+// import formidable from 'formidable';
+import { IncomingForm } from 'formidable';
+
+
 // import cats from '../data/cats.json' assert { type: 'json' };;
 import { handleError, handleGetReq, writeData } from './requester.js';
 
@@ -49,10 +53,38 @@ export default (req, res) => {
             res.writeHead(302, { location: '/' });
             res.end();
         });
-    } else if (pathname === '/cats/add-breed' && req.method === 'POST') {
-        let viewPath = path.normalize(path.join(__dirname, '../views/addBreed.html'));
+    } else if (pathname === '/cats/add-cat' && req.method === 'POST') {
+        let form = new IncomingForm();
 
-        handleGetReq(res, viewPath);
+        form.parse(req, (err, fields, files) => {
+            if (err) handleError(err);
+            
+            let oldPath = files.upload[0].filepath;
+            // let newPath = path.normalize(path.join(__dirname, '../content/images/' + files.upload[0].originalFilename));
+
+            let originalFilename = files.upload[0].originalFilename.replaceAll(' ', '-');   // Replace all spaces as they break the rules
+            let newPath = path.normalize(path.join(__dirname, '../content/images/' + originalFilename));
+
+            fs.rename(oldPath, newPath, (err) => {
+                if (err) handleError(err);
+                console.log('Image file was uploaded successfully!');
+            });
+
+            fs.readFile('./data/cats.json', 'utf-8', (err, data) => {
+                if (err) handleError(err);
+
+                let allCats = JSON.parse(data);
+                allCats.push({ id: allCats.length + 1, ...fields, image: originalFilename });
+                let updatedCats = JSON.stringify(allCats);
+
+                fs.writeFile('./data/cats.json', updatedCats, (err) => {
+                    if (err) handleError(err);
+
+                    res.writeHead(302, { location: '/' });
+                    res.end();
+                })
+            });
+        });
 
     } else {
         return true;

@@ -2,7 +2,7 @@ import fs from 'fs';
 // import breeds from '../data/breeds.json' with { type: 'json' };
 
 export function handleError(err) {
-    console.log(err);
+    console.log(err.message);
     res.writeHead(404, {
         'Contetn-Type': 'text/plain'
     });
@@ -62,7 +62,7 @@ export function handleGetReq(res, viewPath) {
 // const catBreedsPlaceholder = () => breeds.map(b => `<option value="${b}">${b}</option>`);
 
 const catBreedsPlaceholder = () => {
-    let array = fs.readFileSync('./data/breeds.json');
-    let breeds = JSON.parse(array);
+    let buffer = fs.readFileSync('./data/breeds.json');
+    let breeds = JSON.parse(buffer);
     return breeds.map(b => `<option value="${b}">${b}</option>`);
 }
