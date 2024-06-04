@@ -14,12 +14,18 @@ const __dirname = path.dirname(__filename);
 export default async (req, res) => {
     const pathname = req.url;
 
-    if (pathname === '/' && req.method === 'GET') {
+    if (pathname === '/' || pathname.includes('/search') && req.method === 'GET') {
 
         let homeViewFilePath = path.normalize(path.join(__dirname, '../views/home/index.html'));
 
-        handleGetReq(res, homeViewFilePath);
+        if (pathname.includes('/search')) {
+            const parsedUrl = new URL(req.url, `http://${req.headers.host}`);
+            const searchString = parsedUrl.searchParams.get('searchString');
+            handleGetReq(res, homeViewFilePath, null, searchString);
+            return;
+        }
 
+        handleGetReq(res, homeViewFilePath);
 
         // Analogue using read stream, chunks, events (useful if data was very large)
 
@@ -94,14 +100,15 @@ export default async (req, res) => {
         // Delete cat (adopt it and remove from website)
 
         let allCats = await getJson('cats');
-        let catId = pathname.slice(pathname.lastIndexOf('/') + 1);
-        allCats.splice(Number(catId) - 1, 1);
+        let deleteCatId = Number(pathname.slice(pathname.lastIndexOf('/') + 1));
+        allCats.splice(deleteCatId - 1, 1)   // Delete current cat
+        allCats = allCats.map(c => c.id > deleteCatId ? ({...c, id: c.id - 1}) : c);
 
         fs.writeFile('./data/cats.json', JSON.stringify(allCats), err => {
             if (err) handleError(res, err);
 
             console.log('Cat adopted!');
-            
+
             // Use 302 code to be able to redirect
             res.statusCode = 302;
             res.setHeader('Location', '/');

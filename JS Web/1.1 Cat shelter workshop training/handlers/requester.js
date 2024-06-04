@@ -45,7 +45,7 @@ function getContentType(url) {
     }
 }
 
-export async function handleGetReq(res, viewPath, catId) {
+export async function handleGetReq(res, viewPath, catId, searchString) {
     try {
         let data;
 
@@ -90,7 +90,7 @@ export async function handleGetReq(res, viewPath, catId) {
                 if (viewPath.includes(key)) {
                     const template = viewPaths[key];
                     try {
-                        const replacement = await template.fetch(key, catId); // passing key as template
+                        const replacement = await template.fetch(key, catId, searchString); // passing key as template
                         data = data.replace('{{' + template.placeholder + '}}', replacement);
                     } catch (err) {
                         console.error(`Error fetching template for viewPath ${key}: ${err}`);
@@ -119,42 +119,48 @@ const viewPaths = {
     },
     'index.html': {
         placeholder: 'cats',
-        fetch: async (template) => {
+        fetch: async (template, cadId, searchString) => {
             let cats = await getJson('cats');
+            if (searchString) {
+                cats = cats.filter(cat =>
+                    cat.name[0].toLowerCase().includes(searchString.toLowerCase()) ||
+                    cat.description[0].toLowerCase().includes(searchString.toLowerCase()));
+            }
+
             return placeholder('cats', cats);
         }
     },
     'catShelter.html': {
-    placeholder: 'catShelter',
-    fetch: async (template, catId) => {
-        let cats = await getJson('cats');
-        let currentCat = cats.find(cat => cat.id === Number(catId));
-        if (!currentCat) {
-            throw new Error(`Cat with id ${catId} not found.`);
+        placeholder: 'catShelter',
+        fetch: async (template, catId) => {
+            let cats = await getJson('cats');
+            let currentCat = cats.find(cat => cat.id === Number(catId));
+            if (!currentCat) {
+                throw new Error(`Cat with id ${catId} not found.`);
+            }
+            return placeholder('catShelter', [currentCat]);
         }
-        return placeholder('catShelter', [currentCat]);
-    }
-},
-'editCat.html': {
-    placeholder: 'editCat',
-    fetch: async (template, catId) => {
-        let cats = await getJson('cats');
-        let currentCat = cats.find(cat => cat.id === Number(catId));
-        if (!currentCat) {
-            throw new Error(`Cat with id ${catId} not found.`);
+    },
+    'editCat.html': {
+        placeholder: 'editCat',
+        fetch: async (template, catId) => {
+            let cats = await getJson('cats');
+            let currentCat = cats.find(cat => cat.id === Number(catId));
+            if (!currentCat) {
+                throw new Error(`Cat with id ${catId} not found.`);
+            }
+            return placeholder('editCat', [currentCat]);
         }
-        return placeholder('editCat', [currentCat]);
     }
-}
 };
 
 async function placeholder(type, data) {
     let templateFunc = templates[type];
-    let breedOptions = await generateBreedOptions();
+    let breedOptionsHtml = await generateBreedOptions();
     return data.map(item => {
         let itemHtml = templateFunc(item);
         // Replace {{catBreeds}} placeholder with breedOptions 
-        return itemHtml.replace('{{catBreeds}}', breedOptions);
+        return itemHtml.replace('{{catBreeds}}', breedOptionsHtml);
     }).join('');
 }
 
