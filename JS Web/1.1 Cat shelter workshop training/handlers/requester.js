@@ -54,34 +54,6 @@ export async function handleGetReq(res, viewPath, catId, searchString) {
             data = await fspromise.readFile(viewPath);  // Read as binary
 
             // Requested file is a text file (html, css, js, etc.)
-            // Very simple template engine
-            // } else {
-            //     data = await fspromise.readFile(viewPath, 'utf8');  // Read as text (utf8 encoded)
-
-            //     if (viewPath.includes('addCat.html')) {
-            //         let breedsTemplate = await placeholder('breeds');
-            //         data = data.replace('{{catBreeds}}', breedsTemplate);
-
-            //     } else if (viewPath.includes('index.html')) {
-            //         let catsTemplate = await placeholder('cats');
-            //         data = data.replace('{{cats}}', catsTemplate)
-            //     } else if (viewPath.includes('catShelter.html') || viewPath.includes('editCat.html')) {
-
-            //         let breeds = await getJson('breeds');
-            //         let cats = await getJson('cats');
-            //         let currentCat = cats.find(cat => cat.id === Number(catId));
-
-            //         data = data.toString().replace('{{name}}', currentCat.name);
-            //         data = data.replace('{{id}}', currentCat.id);
-            //         data = data.replace('{{description}}', currentCat.description);
-
-            //         let catBreedsHtml = breeds.map(breed => breed === currentCat.breed
-            //             ? `<option selected value="${breed}">${breed}</option>`
-            //             : `<option value="${breed}">${breed}</option>`);
-            //         data = data.replace('{{catBreeds}}', catBreedsHtml.join(''));
-            //     }
-            // }
-
         } else {
             data = await fspromise.readFile(viewPath, 'utf8');
 
@@ -177,12 +149,6 @@ function renderBreedOptions(breedsData) {
     let templateFunc = templates['breeds'];
     return breedsData.map(breed => renderTemplate(templateFunc(breed), breed)).join('');
 }
-
-// placeholder function for the simple template engine
-// const placeholder = async (template) => {
-//     let data = await getJson(template);
-//     return data.map(templates[template]);
-// }
 
 const templates = {
     'breeds': breed => `<option value="${breed}">${breed}</option>`,
