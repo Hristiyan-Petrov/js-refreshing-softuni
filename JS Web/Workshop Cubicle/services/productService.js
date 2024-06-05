@@ -3,31 +3,30 @@
 import Cube from '../models/Cube.js';
 import uniqid from 'uniqid';
 import productData from '../data/productData.js';
-import productsDB from '../config/productsDB.json' assert { type: 'json' };
 
 export default {
 
     getAll(query) {
-        let result = productsDB;
+        let products = productData.getAll();
 
         // Searching logic
         if (query.search) {
-            result = result.filter(x => x.name.toLowerCase().includes(query.search.toLowerCase()));
+            products = products.filter(x => x.name.toLowerCase().includes(query.search.toLowerCase()));
         }
 
         if (query.from) {
-            result = result.filter(x => Number(x.difficultyLevel) >= Number(query.from));
+            products = products.filter(x => Number(x.difficultyLevel) >= Number(query.from));
         }
 
         if (query.to) {
-            result = result.filter(x => Number(x.difficultyLevel) <= Number(query.to));
+            products = products.filter(x => Number(x.difficultyLevel) <= Number(query.to));
         }
 
-        return result;
+        return products;
     },
 
     getOne(id) {
-        return productsDB.find(x => x.id === id);
+        return productData.getOne(id)
     },
 
     create(data, callback) {
