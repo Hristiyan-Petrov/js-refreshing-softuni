@@ -2,8 +2,8 @@
 
 import Cube from '../models/Cube.js';
 import uniqid from 'uniqid';
-import fs from 'fs/promises';
-import productsDB from '../config/productsDB.json' assert { type: 'json' };;
+import productData from '../data/productData.js';
+import productsDB from '../config/productsDB.json' assert { type: 'json' };
 
 export default {
 
@@ -41,21 +41,7 @@ export default {
             data.difficultyLevel
         );
 
-        // This should be taken out of this file. Seperation of concerns
-
-        productsDB.push(cube);
-
-        return fs.writeFile(
-            './config/productsDB.json',
-            JSON.stringify(productsDB)
-        );
-
-        // Same but old school with callback
-        // fs.writeFile(
-        //     './config/productsDB.json',
-        //     JSON.stringify(productsDB),
-        //     callback
-        // );
+        return productData.create(cube);
     }
 
 } 
