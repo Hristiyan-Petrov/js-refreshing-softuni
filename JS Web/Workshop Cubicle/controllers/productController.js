@@ -3,20 +3,21 @@
 
 import { Router } from 'express';
 import productService from '../services/productService.js';
+import { validateProduct } from './helpers/productHelpers.js';
 
 const router = Router();
 
 // If the whole route is: '/products' load this. It is like '/products/'
 router.get('/', (req, res) => {
-    res.render('home', { title: 'Cubicle',  products: productService.getAll() });
+    res.render('home', { title: 'Cubicle', products: productService.getAll() });
 });
 
 // Route is '/products/create'
-router.get('/create', (req, res) => {
+router.get('/create', (req, res) => {      
     res.render('create', { title: 'Create Cube' });
 });
 
-router.post('/create', (req, res) => {
+router.post('/create', validateProduct, (req, res) => {     // Middlewares are passed in between params
 
     // TO DO: Validate inputs!!!
 
