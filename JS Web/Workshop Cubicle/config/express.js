@@ -18,7 +18,5 @@ export default (app) => {
     app.use(bodyParser.urlencoded({ extended: false }));
 
     // Set up the statuc files
-    // Assuming the static files are in a 'public' folder
-    app.use(express.static('public'));
-
+    app.use(express.static('static'));  // Assuming the static files are in a 'static' folder
 }
