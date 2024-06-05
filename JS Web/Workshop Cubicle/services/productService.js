@@ -2,7 +2,7 @@
 
 import Cube from '../models/Cube.js';
 import uniqid from 'uniqid';
-import fs from 'fs';
+import fs from 'fs/promises';
 import productsDB from '../config/productsDB.json' assert { type: 'json' };;
 
 export default {
@@ -30,11 +30,17 @@ export default {
 
         productsDB.push(cube);
 
-        fs.writeFile(
+        return fs.writeFile(
             './config/productsDB.json',
-            JSON.stringify(productsDB),
-            callback
+            JSON.stringify(productsDB)
         );
+
+        // Same but old school with callback
+        // fs.writeFile(
+        //     './config/productsDB.json',
+        //     JSON.stringify(productsDB),
+        //     callback
+        // );
     }
 
 } 

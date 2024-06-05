@@ -13,16 +13,25 @@ router.get('/', (req, res) => {
 });
 
 // Route is '/products/create'
-router.get('/create', (req, res) => {      
+router.get('/create', (req, res) => {
     res.render('create', { title: 'Create Cube' });
 });
 
 router.post('/create', validateProduct, (req, res) => {     // Middlewares are passed in between params
-    productService.create(req.body, (err) => {
-        if (err) return res.status(500).send('Error at /create post');
+    // Old school way with callback
 
-        res.redirect('/products');
-    });
+    // productService.create(req.body, (err) => {
+    // if (err) return res.status(500).send('Error at /create post');
+    // res.redirect('/products');
+    // });
+
+    productService.create(req.body)
+        .then(() => {
+            res.redirect('/products')
+        })
+        .catch(err => {
+            return res.status(500).send('Error at /create post', err);
+        })
 });
 
 // Last check
