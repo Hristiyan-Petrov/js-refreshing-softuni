@@ -11,6 +11,10 @@ router.get('/create', (req, res) => {
     res.render('create', { title: 'Create Cube' });
 });
 
+router.post('/create', (req, res) => {
+    console.log(req.body);
+});
+
 // Last check
 router.get('/:productId', (req, res) => {
     console.log(req.params.productId);

@@ -12,7 +12,7 @@ export default (app) => {
     app.set('views', './views');
 
     // Set up body parser
-    app.use(bodyParser.urlencoded({ extended: false }));
+    app.use(express.urlencoded({ extended: true }));
 
     // Set up the static files
     app.use(express.static('static'));  // Assuming the static files are in a 'static' folder
