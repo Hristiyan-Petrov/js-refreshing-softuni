@@ -1,60 +1,18 @@
+// THIS IS THE MAIN ROUTER
+// The app is using MODULAR ROUTER
+// It allows using separation of concerns espacially for the routes. The architecture is like nested routers.
+// There is one main Router which checks the beggining of each route and delegate it to corresponfing controller
+
 import { Router } from 'express';
-import uniqid from 'uniqid';
-import { addCube } from './config/database.js';
+
+import productController from './controllers/productController.js'; 
+import aboutController from './controllers/aboutController.js'; 
 
 const router = Router();
 
-// GET routes
-
-router.get('/', (req, res) => {
-    res.status(200);
-    res.render('index');    // Express-handlebars out of the box searches for file with that name in folder dir/views
-});
-
-router.get('/about', (req, res) => {
-    res.status(200);
-    res.render('about');
-});
-
-router.get('/create', (req, res) => {
-    res.status(200);
-    res.render('create');
-});
-
-router.get('/details/:id', (req, res) => {
-    console.log(req.params.id);
-    res.status(200);
-    res.render('details');
-});
-
-
-// POST routes
-
-router.post('/create', (req, res) => {
-
-    const cube = {
-        id: uniqid(),
-        name: req.body.name,
-        description: req.body.description,
-        imageUrl: req.body.imageUrl,
-        difficultyLevel: req.body.difficultyLevel
-    }
-
-    addCube(cube, (error) => {
-        if (error) {
-            res.status(500).render('error', { message: 'Failed to add cube' });
-        } else {
-            res.redirect('/');  // Redirect to home page after successful creation
-        }
-    });
-
-    res.send(`Sucessfully added ${req.body.name}`);
-});
-
-// Middleware for handling 404 - Not Found
-// MUST BE AT THE END !!!
-router.use((req, res, next) => {
-    res.status(404).render('404');
-});
+// If route starts with '/products', it is delegated to productController. Like nested routers.
+// router.use('/products', productController);     // See valuable examples in the controller in comments. They refer to the case when it is '/products'
+router.use('/', productController);     // Cannot change '/' to 'products' because of assignment. But logic is the same
+router.use('/about', aboutController);
 
 export default router;

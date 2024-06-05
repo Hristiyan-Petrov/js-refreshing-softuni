@@ -9,6 +9,7 @@ const app = express();
 
 setupExpress(app);
 
+// Use router as middleware
 app.use(router);
 
 app.listen(appConfig.port, () => {
