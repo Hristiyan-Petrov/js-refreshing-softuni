@@ -18,12 +18,11 @@ router.get('/create', (req, res) => {
 });
 
 router.post('/create', validateProduct, (req, res) => {     // Middlewares are passed in between params
+    productService.create(req.body, (err) => {
+        if (err) return res.status(500).send('Error at /create post');
 
-    // TO DO: Validate inputs!!!
-
-    productService.create(req.body);
-
-    res.redirect('/products');
+        res.redirect('/products');
+    });
 });
 
 // Last check

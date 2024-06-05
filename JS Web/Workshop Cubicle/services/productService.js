@@ -9,13 +9,13 @@ export default {
 
     getAll() {
         return productsDB;
-    }, 
+    },
 
     getOne(id) {
         return productsDB.find(x => x.id === id);
     },
 
-    create(data) {
+    create(data, callback) {
 
         // Create model
         let cube = new Cube(
@@ -29,12 +29,12 @@ export default {
         // This should be taken out of this file. Seperation of concerns
 
         productsDB.push(cube);
-        
-        fs.writeFile('./config/productsDB.json', JSON.stringify(productsDB), (err) => {
-            if (err) return console.log(err);
 
-            
-        });
+        fs.writeFile(
+            './config/productsDB.json',
+            JSON.stringify(productsDB),
+            callback
+        );
     }
 
 } 
