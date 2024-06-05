@@ -7,8 +7,23 @@ import productsDB from '../config/productsDB.json' assert { type: 'json' };;
 
 export default {
 
-    getAll() {
-        return productsDB;
+    getAll(query) {
+        let result = productsDB;
+
+        // Searching logic
+        if (query.search) {
+            result = result.filter(x => x.name.toLowerCase().includes(query.search.toLowerCase()));
+        }
+
+        if (query.from) {
+            result = result.filter(x => Number(x.difficultyLevel) >= Number(query.from));
+        }
+
+        if (query.to) {
+            result = result.filter(x => Number(x.difficultyLevel) <= Number(query.to));
+        }
+
+        return result;
     },
 
     getOne(id) {

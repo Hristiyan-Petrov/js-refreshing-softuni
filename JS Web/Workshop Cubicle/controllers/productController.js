@@ -9,7 +9,8 @@ const router = Router();
 
 // If the whole route is: '/products' load this. It is like '/products/'
 router.get('/', (req, res) => {
-    res.render('home', { title: 'Cubicle', products: productService.getAll() });
+
+    res.render('home', { title: 'Cubicle', products: productService.getAll(req.query) });
 });
 
 // Route is '/products/create'
