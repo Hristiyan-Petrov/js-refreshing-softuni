@@ -11,6 +11,10 @@ export default {
         return productsDB;
     }, 
 
+    getOne(id) {
+        return productsDB.find(x => x.id === id);
+    },
+
     create(data) {
 
         // Create model

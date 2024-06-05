@@ -26,9 +26,9 @@ router.post('/create', (req, res) => {
 });
 
 // Last check
-router.get('/:productId', (req, res) => {
-    console.log(req.params.productId);
-    res.render('details', { title: 'Product details' });
+router.get('/details/:productId', (req, res) => {
+    console.log(productService.getOne(req.params.productId));
+    res.render('details', { title: 'Product details', product: productService.getOne(req.params.productId) });
 });
 
 export default router;
