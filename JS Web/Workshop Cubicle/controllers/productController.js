@@ -1,4 +1,9 @@
+// Service is the place for business logic. Not for the controllers.
+// Controllers should only handle requests, responses and validation (part from handling req) 
+
 import { Router } from 'express';
+import productService from '../services/productService.js';
+
 const router = Router();
 
 // If the whole route is: '/products' load this. It is like '/products/'
@@ -12,7 +17,12 @@ router.get('/create', (req, res) => {
 });
 
 router.post('/create', (req, res) => {
-    console.log(req.body);
+
+    // TO DO: Validate inputs!!!
+
+    productService.create(req.body);
+
+    res.redirect('/products');
 });
 
 // Last check
