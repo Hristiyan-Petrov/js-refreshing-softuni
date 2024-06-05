@@ -1,7 +1,7 @@
 // THIS IS THE MAIN ROUTER
 // The app is using MODULAR ROUTER
 // It allows using separation of concerns espacially for the routes. The architecture is like nested routers.
-// There is one main Router which checks the beggining of each route and delegate it to corresponfing controller
+// There is one main Router which checks the beggining of each route and delegate it to corresponding controller
 
 import { Router } from 'express';
 
@@ -13,6 +13,12 @@ const router = Router();
 // If route starts with '/products', it is delegated to productController. Like nested routers.
 // router.use('/products', productController);     // See valuable examples in the controller in comments. They refer to the case when it is '/products'
 router.use('/', productController);     // Cannot change '/' to 'products' because of assignment. But logic is the same
+
 router.use('/about', aboutController);
+
+// If the website's route doesn't match any of the routes
+router.get('*', (req, res) => {
+    res.status(404).render('404');
+})
 
 export default router;
