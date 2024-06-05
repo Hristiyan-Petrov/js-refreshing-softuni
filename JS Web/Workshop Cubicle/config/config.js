@@ -1,11 +1,4 @@
-// module.exports = {
-//     development: {
-//         port: process.env.port || 5000
-//     },
-//     production: {}
-// }
-
-export const config = {
+export default {
     development: {
         port: process.env.port || 5000
     },

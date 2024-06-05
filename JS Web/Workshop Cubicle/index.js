@@ -1,5 +1,5 @@
 import express from 'express';
-import { config } from './config/config.js';  // Import named export
+import config from './config/config.js';  // Import named export
 import setupExpress from './config/express.js';
 import setupRoutes from './config/routes.js';
 
