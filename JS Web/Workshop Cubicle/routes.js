@@ -6,15 +6,17 @@
 import { Router } from 'express';
 
 import productController from './controllers/productController.js'; 
-import aboutController from './controllers/aboutController.js'; 
+import homeController from './controllers/homeController.js'; 
 
 const router = Router();
 
-// If route starts with '/products', it is delegated to productController. Like nested routers.
-// router.use('/products', productController);     // See valuable examples in the controller in comments. They refer to the case when it is '/products'
-router.use('/', productController);     // Cannot change '/' to 'products' because of assignment. But logic is the same
+// If route starts with '/', it is delegated to homeController. Like nested routers.
+// If there is no match in homeController routes, the cheking countinues to next router IN LINE. If there is a MATCH, the execution STOPS.
+router.use('/', homeController);
 
-router.use('/about', aboutController);
+// If route starts with '/products', it is delegated to productController. Like nested routers.
+router.use('/products', productController);    // See valuable examples in the controller in comments. They refer to the case when it is '/products'
+
 
 // If the website's route doesn't match any of the routes
 router.get('*', (req, res) => {
