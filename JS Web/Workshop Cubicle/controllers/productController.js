@@ -8,7 +8,7 @@ const router = Router();
 
 // If the whole route is: '/products' load this. It is like '/products/'
 router.get('/', (req, res) => {
-    res.render('home', { title: 'Cubicle' });
+    res.render('home', { title: 'Cubicle',  products: productService.getAll() });
 });
 
 // Route is '/products/create'

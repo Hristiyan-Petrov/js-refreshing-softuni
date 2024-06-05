@@ -8,10 +8,12 @@ import productsDB from '../config/productsDB.json' assert { type: 'json' };;
 export default {
 
     getAll() {
-        fs.readFile('../')
+        return productsDB;
     }, 
 
     create(data) {
+
+        // Create model
         let cube = new Cube(
             uniqid(),
             data.name,
@@ -19,6 +21,8 @@ export default {
             data.imageUrl,
             data.difficultyLevel
         );
+
+        // This should be taken out of this file. Seperation of concerns
 
         productsDB.push(cube);
         
