@@ -36,7 +36,7 @@ export default {
     create(data, callback) {
 
         // TO DO: Create validatation middleware or validate incoming data in action
-        
+
         let cube = new Cube(data);
 
         // return cubeData.create(cube);     // Data layer
@@ -46,10 +46,16 @@ export default {
 
     async attachAccessory(cubeId, accessoryId) {
         let cube = await Cube.findById(cubeId);
-        let accessory = await Accessory.findById(accessoryId);
+        let accessory = await Accessory.findById(accessoryId).select();      // DB Projection
 
         cube.accessories.push(accessory);
         return cube.save();
-    }
+    },
 
+    getOneWithAccessories(cubeId) {
+        return Cube
+            .findById(cubeId)
+            .populate('accessories')
+            .lean();
+    }
 } 

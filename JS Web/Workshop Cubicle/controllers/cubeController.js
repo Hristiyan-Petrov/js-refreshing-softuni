@@ -35,10 +35,12 @@ router.post('/create', validateCube, (req, res) => {     // Middlewares are pass
 });
 
 router.get('/details/:cubeId', (req, res) => {
-    cubeService.getOne(req.params.cubeId)
+    cubeService.getOneWithAccessories(req.params.cubeId)
         .then(cube => {
-            res.render('details', { title: 'cube details', cube });
+            const accessories = cube.accessories;
+            res.render('details', { title: 'cube details', cube, accessories });
         })
+        .catch(err => console.log(err));
 });
 
 router.get('/:cubeId/attach', async (req, res) => {
