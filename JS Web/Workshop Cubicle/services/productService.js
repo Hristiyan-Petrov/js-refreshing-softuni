@@ -1,6 +1,6 @@
 // Service is the place for business logic. Not for the controllers.
 
-// import Cube from '../models/Cube.js';
+import Cube from '../models/Cube.js';
 import uniqid from 'uniqid';
 // import productData from '../data/productData.js';
 

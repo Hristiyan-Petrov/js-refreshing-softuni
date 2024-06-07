@@ -1,31 +1,31 @@
-import DataBaseModel from './DataBaseModel.js';
+// import DataBaseModel from './DataBaseModel.js';      // When using Data layer
 import productsDB from '../config/productsDB.json' assert { type: 'json' };
 
 import mongoose from 'mongoose';
 
 const cubeSchema = new mongoose.Schema({
     name: {
-        name: String,
+        type: String,
         required: true,
     },
     description: {
-        name: String,
+        type: String,
         required: true,
         maxlength: [20, 'Description must be 50 characters or less']
     },
     imageUrl: {
-        name: String,
+        type: String,
         required: true,
         match: [/^https?/, 'Please use a valid Image Url']
     },
     difficultyLevel: {
-        name: Number,
+        type: Number,
         required: true,
         enum: [[1, 2, 3, 4, 5, 6], 'Diffuculty must be between 1 and 6'],
         // min: [0, 'Difficulty level be at least 1'],
         // max: [6, 'Difficulty level cannot be a greater than 6']
     },
-    // Relation to accessories. Many accessories. Array of objects
+    // Relation to accessories. One cube to many accessories. Array of objects
     accessories: [
         {
             type: mongoose.Types.ObjectId,

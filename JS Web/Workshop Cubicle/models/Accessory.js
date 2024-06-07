@@ -2,16 +2,16 @@ import mongoose from 'mongoose';
 
 const accessorySchema = new mongoose.Schema({
     name: {
-        name: String,
+        type: String,
         required: true,
     },
     description: {
-        name: String,
+        type: String,
         required: true,
         maxlength: [20, 'Description must be 50 characters or less']
     },
     imageUrl: {
-        name: String,
+        type: String,
         required: true,
         match: [/^https?/, 'Please use a valid Image Url']
     }
