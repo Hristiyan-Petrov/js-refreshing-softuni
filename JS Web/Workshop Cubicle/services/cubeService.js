@@ -1,5 +1,6 @@
 // Service is the place for business logic. Not for the controllers.
 
+import Accessory from '../models/Accessory.js';
 import Cube from '../models/Cube.js';
 // import cubeData from '../data/cubeData.js';    // Data layer
 
@@ -41,6 +42,14 @@ export default {
         // return cubeData.create(cube);     // Data layer
 
         return cube.save();     // mongoose method. Save into db
+    },
+
+    async attachAccessory(cubeId, accessoryId) {
+        let cube = await Cube.findById(cubeId);
+        let accessory = await Accessory.findById(accessoryId);
+
+        cube.accessories.push(accessory);
+        return cube.save();
     }
 
 } 

@@ -3,6 +3,7 @@
 
 import { Router } from 'express';
 import cubeService from '../services/cubeService.js';
+import accessoryService from '../services/accessoryService.js';
 import { validateCube } from './helpers/cubeHelpers.js';
 
 const router = Router();
@@ -33,15 +34,29 @@ router.post('/create', validateCube, (req, res) => {     // Middlewares are pass
         .catch(err => res.send(500, err));
 });
 
-// Last check
 router.get('/details/:cubeId', (req, res) => {
-    // console.log(cubeService.getOne(req.params.cubeId));
-    
-
     cubeService.getOne(req.params.cubeId)
         .then(cube => {
             res.render('details', { title: 'cube details', cube });
         })
+});
+
+router.get('/:cubeId/attach', async (req, res) => {
+
+    let cube = await cubeService.getOne(req.params.cubeId);
+    let accessories = await accessoryService.getAll();
+
+    res.render('attachAccessory', { cube, accessories });
+});
+
+router.post('/:cubeId/attach', (req, res) => {
+    let cubeId = req.params.cubeId;
+    cubeService.attachAccessory(cubeId, req.body.accessory)
+        .then(() => {
+            res.redirect(`/cubes/details/${cubeId}`);
+        })
+        .catch(err => res.send(500, err));
+
 });
 
 export default router;

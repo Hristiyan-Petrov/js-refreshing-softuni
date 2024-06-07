@@ -6,5 +6,12 @@ export default {
     create(data) {
         let cube = new Accessory(data);
         return cube.save();
+    },
+
+    getAll() {
+         return Accessory
+            .find({})
+            .select('name')     // DB projection. Opizmizing when when working with DB. Get only the needed data
+            .lean();      // .lean() returns cleaner raw js object
     }
 }
