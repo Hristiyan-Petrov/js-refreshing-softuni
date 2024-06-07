@@ -5,7 +5,7 @@
 
 import { Router } from 'express';
 
-import productController from './controllers/productController.js'; 
+import cubeController from './controllers/cubeController.js'; 
 import homeController from './controllers/homeController.js'; 
 
 const router = Router();
@@ -14,8 +14,8 @@ const router = Router();
 // If there is no match in homeController routes, the cheking countinues to next router IN LINE. If there is a MATCH, the execution STOPS.
 router.use('/', homeController);
 
-// If route starts with '/products', it is delegated to productController. Like nested routers.
-router.use('/products', productController);    // See valuable examples in the controller in comments. They refer to the case when it is '/products'
+// If route starts with '/cubes', it is delegated to cubeController. Like nested routers.
+router.use('/cubes', cubeController);    // See valuable examples in the controller in comments. They refer to the case when it is '/cubes'
 
 
 // If the website's route doesn't match any of the routes

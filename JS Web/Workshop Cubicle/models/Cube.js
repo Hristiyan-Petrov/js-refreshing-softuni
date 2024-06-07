@@ -1,5 +1,5 @@
 // import DataBaseModel from './DataBaseModel.js';      // When using Data layer
-import productsDB from '../config/productsDB.json' assert { type: 'json' };
+import cubesDB from '../config/cubesDB.json' assert { type: 'json' };
 
 import mongoose from 'mongoose';
 
@@ -55,10 +55,10 @@ export default mongoose.model('Cube', cubeSchema);
 
 //     // statis method
 //     static getAll() {
-//         return productsDB;
+//         return cubesDB;
 //     }
 
 //     static getOne(id) {
-//         return productsDB.find(x => x.id === id);
+//         return cubesDB.find(x => x.id === id);
 //     }
 // }

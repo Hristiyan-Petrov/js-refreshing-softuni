@@ -2,7 +2,7 @@ import { Router } from 'express';
 const router = Router();
 
 router.get('/', (req, res) =>{ 
-    res.redirect('/products');
+    res.redirect('/cubes');
 });
 
 router.get('/about', (req, res) => {

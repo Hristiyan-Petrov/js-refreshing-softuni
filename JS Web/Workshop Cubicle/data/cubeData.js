@@ -2,30 +2,30 @@
 // In order to relief Service module from that work.
 
 import fs from 'fs/promises';
-import productsDB from '../config/productsDB.json' assert { type: 'json' };
+import cubesDB from '../config/cubesDB.json' assert { type: 'json' };
 
 export default {
 
     getAll() {
-        return productsDB;
+        return cubesDB;
     },
 
     getOne(id) {
-        return productsDB.find(x => x.id === id)
+        return cubesDB.find(x => x.id === id)
     },
 
-    create(product) {
-        productsDB.push(product);
+    create(cube) {
+        cubesDB.push(cube);
 
         return fs.writeFile(
-            './config/productsDB.json',
-            JSON.stringify(productsDB)
+            './config/cubesDB.json',
+            JSON.stringify(cubesDB)
         );
 
         // Same but old school with callback 
         // fs.writeFile(
-        //     './config/productsDB.json',
-        //     JSON.stringify(productsDB),
+        //     './config/cubesDB.json',
+        //     JSON.stringify(cubesDB),
         //     callback
         // );
     }

@@ -1,4 +1,4 @@
-export const validateProduct = (req, res, next) => {
+export const validateCube = (req, res, next) => {
     
     // TO DO: Better Error handling
     

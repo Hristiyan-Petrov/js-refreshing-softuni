@@ -2,11 +2,11 @@ import fs from 'fs/promises';
 
 export default class DataBaseModel {
     save() {
-        productsDB.push(this);
+        cubesDB.push(this);
 
         return fs.writeFile(
-            './config/productsDB.json',
-            JSON.stringify(productsDB)
+            './config/cubesDB.json',
+            JSON.stringify(cubesDB)
         );
     }
 }
