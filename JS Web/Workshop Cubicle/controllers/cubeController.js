@@ -46,9 +46,9 @@ router.get('/details/:cubeId', (req, res) => {
 router.get('/:cubeId/attach', async (req, res) => {
 
     let cube = await cubeService.getOne(req.params.cubeId);
-    let accessories = await accessoryService.getAll();
+    let notAttachedAccessories = await accessoryService.getAllNotAttached(cube.accessories);
 
-    res.render('attachAccessory', { cube, accessories });
+    res.render('attachAccessory', { cube, notAttachedAccessories });
 });
 
 router.post('/:cubeId/attach', (req, res) => {
