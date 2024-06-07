@@ -25,7 +25,7 @@ const cubeSchema = new mongoose.Schema({
         // min: [0, 'Difficulty level be at least 1'],
         // max: [6, 'Difficulty level cannot be a greater than 6']
     },
-    // Many accessories. Array of objects
+    // Relation to accessories. Many accessories. Array of objects
     accessories: [
         {
             type: mongoose.Types.ObjectId,
