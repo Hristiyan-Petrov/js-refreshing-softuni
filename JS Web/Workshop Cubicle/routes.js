@@ -7,6 +7,7 @@ import { Router } from 'express';
 
 import cubeController from './controllers/cubeController.js'; 
 import homeController from './controllers/homeController.js'; 
+import accessoryController from './controllers/accessoryController.js'; 
 
 const router = Router();
 
@@ -16,6 +17,8 @@ router.use('/', homeController);
 
 // If route starts with '/cubes', it is delegated to cubeController. Like nested routers.
 router.use('/cubes', cubeController);    // See valuable examples in the controller in comments. They refer to the case when it is '/cubes'
+
+router.use('/accessories', accessoryController);
 
 
 // If the website's route doesn't match any of the routes

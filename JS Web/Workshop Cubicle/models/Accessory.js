@@ -8,12 +8,12 @@ const accessorySchema = new mongoose.Schema({
     description: {
         type: String,
         required: true,
-        maxlength: [20, 'Description must be 50 characters or less']
+        maxlength: [50, 'Description must be 50 characters or less']
     },
     imageUrl: {
         type: String,
         required: true,
-        match: [/^https?/, 'Please use a valid Image Url']
+        // match: [/^https?/, 'Please use a valid Image Url']
     }
 });
 

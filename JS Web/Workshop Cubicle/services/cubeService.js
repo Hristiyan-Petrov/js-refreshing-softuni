@@ -29,12 +29,13 @@ export default {
     getOne(id) {
         // return Cube.getOne(id);
         // return cubeData.getOne(id);
-        return Cube.findById(id).lean(); 
+        return Cube.findById(id).lean();
     },
 
     create(data, callback) {
 
-        // Create model
+        // TO DO: Create validatation middleware or validate incoming data in action
+        
         let cube = new Cube(data);
 
         // return cubeData.create(cube);     // Data layer

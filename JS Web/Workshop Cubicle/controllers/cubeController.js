@@ -23,7 +23,6 @@ router.get('/create', (req, res) => {
 
 router.post('/create', validateCube, (req, res) => {     // Middlewares are passed in between params
     // Old school way with callback
-
     // cubeService.create(req.body, (err) => {
     // if (err) return res.status(500).send('Error at /create post');
     // res.redirect('/cubes');
