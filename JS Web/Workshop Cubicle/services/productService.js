@@ -1,15 +1,14 @@
 // Service is the place for business logic. Not for the controllers.
 
 import Cube from '../models/Cube.js';
-import uniqid from 'uniqid';
-// import productData from '../data/productData.js';
+import productData from '../data/productData.js';
 
 export default {
 
     getAll(query) {
-        // let products = productData.getAll();     Data layer
+        let products = productData.getAll();     // Data layer
+        // let products = Cube.getAll();
         
-        let products = Cube.getAll();
 
         // Searching logic
         if (query.search) {
@@ -28,23 +27,18 @@ export default {
     },
 
     getOne(id) {
-        return Cube.getOne(id);
+        // return Cube.getOne(id);
+        return productData.getOne(id);
     },
 
     create(data, callback) {
 
         // Create model
-        let cube = new Cube(
-            uniqid(),
-            data.name,
-            data.description,
-            data.imageUrl,
-            data.difficultyLevel
-        );
+        let cube = new Cube(data);
 
         // return productData.create(cube);     // Data layer
 
-        return cube.save();
+        return cube.save();     // mongoose method. Save into db
     }
 
 } 
