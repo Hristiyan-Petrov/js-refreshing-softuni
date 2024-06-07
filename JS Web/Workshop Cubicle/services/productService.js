@@ -1,14 +1,14 @@
 // Service is the place for business logic. Not for the controllers.
 
 import Cube from '../models/Cube.js';
-import productData from '../data/productData.js';
+// import productData from '../data/productData.js';    // Data layer
 
 export default {
 
-    getAll(query) {
-        let products = productData.getAll();     // Data layer
+    async getAll(query) {
+        // let products = productData.getAll();     // Data layer
         // let products = Cube.getAll();
-        
+        let products = await Cube.find({}).lean();
 
         // Searching logic
         if (query.search) {
@@ -28,7 +28,8 @@ export default {
 
     getOne(id) {
         // return Cube.getOne(id);
-        return productData.getOne(id);
+        // return productData.getOne(id);
+        return Cube.findById(id).lean();
     },
 
     create(data, callback) {

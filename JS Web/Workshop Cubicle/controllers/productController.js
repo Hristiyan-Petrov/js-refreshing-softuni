@@ -9,8 +9,11 @@ const router = Router();
 
 // If the whole route is: '/products' load this. It is like '/products/'
 router.get('/', (req, res) => {
-
-    res.render('home', { title: 'Cubicle', products: productService.getAll(req.query) });
+    productService.getAll(req.query)
+        .then(products => {
+            res.render('home', { title: 'Cubicle', products });
+        })
+        .catch(err => res.status(500).end());
 });
 
 // Route is '/products/create'
@@ -33,8 +36,13 @@ router.post('/create', validateProduct, (req, res) => {     // Middlewares are p
 
 // Last check
 router.get('/details/:productId', (req, res) => {
-    console.log(productService.getOne(req.params.productId));
-    res.render('details', { title: 'Product details', product: productService.getOne(req.params.productId) });
+    // console.log(productService.getOne(req.params.productId));
+    
+
+    productService.getOne(req.params.productId)
+        .then(product => {
+            res.render('details', { title: 'Product details', product });
+        })
 });
 
 export default router;
