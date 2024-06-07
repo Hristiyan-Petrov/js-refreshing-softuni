@@ -27,12 +27,8 @@ router.post('/create', validateProduct, (req, res) => {     // Middlewares are p
     // });
 
     productService.create(req.body)
-        .then(() => {
-            res.redirect('/products')
-        })
-        .catch(err => {
-            return res.status(500).send('Error at /create post', err);
-        })
+        .then(() => { res.redirect('/products') })
+        .catch(err => res.status(500).send('Error at /create post', err));
 });
 
 // Last check

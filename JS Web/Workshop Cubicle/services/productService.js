@@ -2,12 +2,14 @@
 
 import Cube from '../models/Cube.js';
 import uniqid from 'uniqid';
-import productData from '../data/productData.js';
+// import productData from '../data/productData.js';
 
 export default {
 
     getAll(query) {
-        let products = productData.getAll();
+        // let products = productData.getAll();     Data layer
+        
+        let products = Cube.getAll();
 
         // Searching logic
         if (query.search) {
@@ -26,7 +28,7 @@ export default {
     },
 
     getOne(id) {
-        return productData.getOne(id)
+        return Cube.getOne(id);
     },
 
     create(data, callback) {
@@ -40,7 +42,9 @@ export default {
             data.difficultyLevel
         );
 
-        return productData.create(cube);
+        // return productData.create(cube);     // Data layer
+
+        return cube.save();
     }
 
 } 
