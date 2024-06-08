@@ -33,18 +33,21 @@ export default {
             }
         }
 
-        if (query.sorting) {
-            if (query.sorting === 'name') {
-                sortingExpression = { name: 'asc' }
-            } else {
-                sortingExpression = { difficultyLevel: 1 }
-            }
-        }
-
         return Cube
             .find(searchExpression)
             .sort(sortingExpression)
             .lean();    // .lean() returns cleaner raw js object
+    },
+
+    order(ids, attr, order) {
+        return Cube
+            .find({ '_id': { $in: ids } }) // Finds cubes with IDs in the array
+            .sort({
+                [attr]: order === 'asc'
+                ? 1
+                : -1
+            })
+            .lean();
     },
 
     getOne(id) {

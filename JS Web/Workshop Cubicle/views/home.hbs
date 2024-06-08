@@ -5,20 +5,38 @@
     <span>-</span>
     <input type="number" name="to" class="difficulty" min="1" max="6" placeholder="Difficulty to...">
 
-    <select id="sorting" name="sorting" style="width: 15%">
-        <option value="" disabled selected>Sort By:</option>
-        <option value="name">Name</option>
-        <option value="difficulty">Difficulty</option>
-    </select>
+
 
     <input type="submit" value="search">
 
 </form>
 
-{{#each cubes}}
-{{> cubeHomeItem}}
+<form action="/cubes/order">
 
-{{else}}
-<h3 class="italic">Not cubes were found...</h3>
+    <label for="order">Sort By</label>
+    <select id="sortingAttribute" name="sortingAttribute" style="width: 15%">
+        <option value="" disabled selected>Sort By:</option>
+        <option value="name">Name</option>
+        <option value="difficultyLevel">Difficulty</option>
+    </select>
 
-{{/each}}
+    <label for="order">Order By</label>
+    <select id="sortingDirection" name="sortingDirection" style="width: 15%">
+        <option value="" disabled selected>Order By:</option>
+        <option value="asc">Ascending</option>
+        <option value="desc">Descending</option>
+    </select>
+
+        <input type="submit" value="order" style="width: 15%">
+
+    <div class="container">
+
+        {{#each cubes}}
+        {{> cubeHomeItem}}
+
+        {{else}}
+        <h3 class="italic">Not cubes were found...</h3>
+
+        {{/each}}
+    </div>
+</form>

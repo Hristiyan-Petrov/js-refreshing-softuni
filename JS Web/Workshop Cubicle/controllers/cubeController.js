@@ -12,11 +12,23 @@ const router = Router();
 router.get('/', (req, res) => {
     cubeService.getAll(req.query)
         .then(cubes => {
+            req.session.cubeIds = cubes.map(cube => cube._id);   // A session is a place to store data that you want access to across requests
             res.render('home', { title: 'Cubicle', cubes });
         })
-        .catch(err => {
-            console.log(err);
-        });
+        .catch(err => console.log(err));
+});
+
+router.get('/order', (req, res) => {
+    if (!req.query.sortingAttribute || !req.query.sortingDirection) {
+        res.render('home', { title: 'Cubicle', cubes: req.session.cubes || [] });
+        return;
+    }
+
+    cubeService.order(req.session.cubeIds, req.query.sortingAttribute, req.query.sortingDirection)  // Use cubes stored in session
+        .then(cubes => {
+            res.render('home', { title: 'Cubicle', cubes });
+        })
+        .catch(err => console.log(err));
 });
 
 // Route is '/cubes/create'

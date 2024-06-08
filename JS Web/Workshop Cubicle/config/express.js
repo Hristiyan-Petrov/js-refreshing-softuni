@@ -1,6 +1,8 @@
 import express from 'express';
 import { engine } from 'express-handlebars';
 
+import session from 'express-session';
+
 export default (app) => {
 
     // Set up the view engine
@@ -15,4 +17,11 @@ export default (app) => {
 
     // Set up the static files
     app.use(express.static('static'));  // Assuming the static files are in a 'static' folder
+
+    // Set up express session
+    app.use(session({
+        secret: 'your_secret_key',
+        resave: false,
+        saveUninitialized: true
+    }));
 }
