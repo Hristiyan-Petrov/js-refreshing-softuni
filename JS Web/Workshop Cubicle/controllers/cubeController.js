@@ -14,7 +14,9 @@ router.get('/', (req, res) => {
         .then(cubes => {
             res.render('home', { title: 'Cubicle', cubes });
         })
-        .catch(err => res.status(500).end());
+        .catch(err => {
+            console.log(err);
+        });
 });
 
 // Route is '/cubes/create'

@@ -8,23 +8,26 @@ export default {
 
     async getAll(query) {
         // let cubes = cubeData.getAll();     // Data layer
-        // let cubes = Cube.getAll();
-        let cubes = await Cube.find({}).lean();      // .lean() returns cleaner raw js object
+
+        let searchExpression = {};
 
         // Searching logic
         if (query.search) {
-            cubes = cubes.filter(x => x.name.toLowerCase().includes(query.search.toLowerCase()));
+            Object.assign(searchExpression, { name: new RegExp(query.search, 'i') });
         }
 
-        if (query.from) {
-            cubes = cubes.filter(x => Number(x.difficultyLevel) >= Number(query.from));
+        if (query.from && query.to) {
+            Object.assign(searchExpression, { difficultyLevel: { $gte: Number(query.from), $lte: Number(query.to) } });
+        } else if (query.from) {
+            Object.assign(searchExpression, { difficultyLevel: { $gte: Number(query.from) } });
+        } else if (query.to) {
+            Object.assign(searchExpression, { difficultyLevel: { $lte: Number(query.to) } });
         }
 
-        if (query.to) {
-            cubes = cubes.filter(x => Number(x.difficultyLevel) <= Number(query.to));
-        }
-
-        return cubes;
+        return Cube
+            .find(searchExpression)
+            .sort({ difficultyLevel: 1 })
+            .lean();    // .lean() returns cleaner raw js object
     },
 
     getOne(id) {

@@ -13,6 +13,8 @@ export default {
             .find({
                 '_id': { $nin: accessoriesObjectIdsArray }   // Finds accessories not in the array
             })
+            // .where('_id')
+            // .nin(accessoriesObjectIdsArray)  
             .select('name')     // DB projection. Opizmizing when when working with DB. Get only the needed data
             .lean();      // .lean() returns cleaner raw js object
     }
