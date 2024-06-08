@@ -10,6 +10,7 @@ export default {
         // let cubes = cubeData.getAll();     // Data layer
 
         let searchExpression = {};
+        let sortingExpression = {};
 
         // Searching logic
         if (query.search) {
@@ -24,9 +25,25 @@ export default {
             Object.assign(searchExpression, { difficultyLevel: { $lte: Number(query.to) } });
         }
 
+        if (query.sorting) {
+            if (query.sorting === 'name') {
+                sortingExpression = { name: 'asc' }
+            } else {
+                sortingExpression = { difficultyLevel: 1 }
+            }
+        }
+
+        if (query.sorting) {
+            if (query.sorting === 'name') {
+                sortingExpression = { name: 'asc' }
+            } else {
+                sortingExpression = { difficultyLevel: 1 }
+            }
+        }
+
         return Cube
             .find(searchExpression)
-            .sort({ difficultyLevel: 1 })
+            .sort(sortingExpression)
             .lean();    // .lean() returns cleaner raw js object
     },
 

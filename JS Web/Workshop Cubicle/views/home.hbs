@@ -4,13 +4,21 @@
     <input type="number" name="from" class="difficulty" min="1" max="6" placeholder="Difficulty from...">
     <span>-</span>
     <input type="number" name="to" class="difficulty" min="1" max="6" placeholder="Difficulty to...">
+
+    <select id="sorting" name="sorting" style="width: 15%">
+        <option value="" disabled selected>Sort By:</option>
+        <option value="name">Name</option>
+        <option value="difficulty">Difficulty</option>
+    </select>
+
     <input type="submit" value="search">
+
 </form>
 
 {{#each cubes}}
-    {{> cubeHomeItem}}
-    	
-    {{else}}
-    <h3 class="italic">Not cubes were found...</h3>
+{{> cubeHomeItem}}
+
+{{else}}
+<h3 class="italic">Not cubes were found...</h3>
 
 {{/each}}
