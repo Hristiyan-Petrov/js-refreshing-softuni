@@ -32,4 +32,22 @@ class BinarySearchTree {
             return searchTree(node);
         }
     }
+
+    find(data) {
+        if (this.root === null) return false;
+
+        let node = this.root;
+        let found = false;
+
+        while (node && !found) {
+            if (data < node.value) {
+                node = node.left;
+            } else if (data > node.value) {
+                node = node.left;
+            } else {
+                found = node;
+            }
+        }
+        return found;
+    }
 }
