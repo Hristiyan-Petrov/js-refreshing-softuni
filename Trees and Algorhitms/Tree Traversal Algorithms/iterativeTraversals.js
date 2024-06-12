@@ -51,6 +51,8 @@ class BinarySearchTree {
         return found;
     }
 
+    // BFS
+
     breadthFirstSearch() {
 
         if (!this.root) return console.log('Cannot traverse emprty tree.');
@@ -77,6 +79,57 @@ class BinarySearchTree {
         console.log(result);
     }
 
+    // DFS Recursion
+
+    inorder(node = this.root) {
+
+        let result = [];
+
+        const traverse = (node) => {
+            if (node !== null) {
+                traverse(node.left);
+                result.push(node.value);
+                traverse(node.right);
+            }
+        }
+        traverse(node);
+
+        console.log(result);
+    }
+
+
+    preorder(node = this.root) {
+        let result = [];
+
+        const traverse = (node) => {
+            if (node !== null) {
+                result.push(node.value);
+                traverse(node.left);
+                traverse(node.right);
+            }
+        }
+        traverse(node);
+
+        console.log(result);
+    }
+
+    postorder(node = this.root) {
+        let result = [];
+
+        const traverse = (node) => {
+            if (node !== null) {
+                traverse(node.left);
+                traverse(node.right);
+                result.push(node.value);
+            }
+        }
+        traverse(node);
+
+        console.log(result);
+    }
+
+    // DFS Iterative
+
     dfsPreorderIterative() {
         let stack = [this.root];
         let traversed = [];
@@ -98,42 +151,42 @@ class BinarySearchTree {
 
     dfsInOrderIterative() {
         const stack = [],
-        traversed = [];
+            traversed = [];
         let curr = this.root;
-    
-        while(stack.length || curr){
-            while(curr) {
+
+        while (stack.length || curr) {
+            while (curr) {
                 stack.push(curr);
                 curr = curr.left;
             }
             curr = stack.pop()
             traversed.push(curr.value)
-            curr = curr.right;        
+            curr = curr.right;
         }
-    
+
         console.log(traversed);
     }
 
-    dfsPostorderIterative() {  
+    dfsPostorderIterative() {
         const s1 = [this.root],
-        s2 = [],
-        traversed = [];
+            s2 = [],
+            traversed = [];
         let curr;
-   
+
         while (s1.length) {
             curr = s1.pop();
             if (curr.left) s1.push(curr.left);
             if (curr.right) s1.push(curr.right);
             s2.push(curr);
         }
-   
+
         while (s2.length) {
             curr = s2.pop();
             traversed.push(curr.value);
         }
-   
+
         console.log(traversed);
-   }
+    }
 }
 
 const bst = new BinarySearchTree();
@@ -144,6 +197,12 @@ bst.insert(19);
 bst.insert(35);
 bst.insert(31);
 bst.insert(42);
+
 bst.dfsPreorderIterative();
+bst.preorder();
+
 bst.dfsInOrderIterative();
+bst.inorder();
+
 bst.dfsPostorderIterative();
+bst.postorder();
