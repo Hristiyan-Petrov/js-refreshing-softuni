@@ -91,7 +91,7 @@ class BinarySearchTree {
             }
 
             // deleting node with TWO children
-            // minimum node of the right subtree is stored in aux
+            // minimum node of the rigth subtree is stored in aux
             let aux = this.findMinNode(node.rigth);
             node.value = aux.value;
 
@@ -112,17 +112,42 @@ class BinarySearchTree {
     preorder(node) {
         if (node !== null) {
             console.log(node.value);
-            this.inorder(node.left);
-            this.inorder(node.rigth);
+            this.preorder(node.left);
+            this.preorder(node.rigth);
         }
     }
 
     postorder(node) {
         if (node !== null) {
-            this.inorder(node.left);
-            this.inorder(node.rigth);
+            this.postorder(node.left);
+            this.postorder(node.rigth);
             console.log(node.value);
         }
+    }
+
+    breadthFirstSearch() {
+        if (!this.root) return console.log('Cannot traverse emprty tree.');
+
+        let queue = [];
+        let result = [];
+        let currentNode;
+
+        queue.push(this.root);
+
+        while (queue.length) {
+
+            // dequeue a node from the queue 
+            currentNode = queue.shift();
+
+            // push the visited node into the result
+            result.push(currentNode.value);
+
+            // push children to the queue
+            if (currentNode.left) queue.push(currentNode.left);
+            if (currentNode.rigth) queue.push(currentNode.rigth);
+        }
+
+        console.log(result);
     }
 
     // Helper Methods
@@ -161,14 +186,28 @@ class BinarySearchTree {
 
 }
 
+// create an object for the BinarySearchTree
+var BST = new BinarySearchTree();
 
-let bst = new BinarySearchTree();
-bst.insert(27);
-bst.insert(14);
-bst.insert(10);
-bst.insert(19);
-bst.insert(35);
-bst.insert(31);
-bst.insert(42);
-let root = bst.getRootNode();
-bst.preorder(root)
+// Inserting nodes to the BinarySearchTree
+BST.insert(15);
+BST.insert(25);
+BST.insert(10);
+BST.insert(7);
+BST.insert(22);
+BST.insert(17);
+BST.insert(13);
+BST.insert(5);
+BST.insert(9);
+BST.insert(27);
+
+//          15
+//         /  \
+//        10   25
+//       / \   / \
+//      7  13 22  27
+//     / \    /
+//    5   9  17 
+
+// BST.inorder(BST.root);
+BST.breadthFirstSearch();
