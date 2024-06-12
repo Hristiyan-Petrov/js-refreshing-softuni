@@ -42,7 +42,7 @@ class BinarySearchTree {
             }
 
 
-        // if the child value is MORE than the parent value move RIGTH of the tree
+            // if the child value is MORE than the parent value move RIGTH of the tree
         } else {
 
             if (parent.rigth === null) {
@@ -124,4 +124,36 @@ class BinarySearchTree {
             console.log(node.value);
         }
     }
+
+    // Helper Methods
+
+    //  finds the minimum node in tree. Searching starts from given node
+    findMinNode(node) {
+        // if left of a node is null then it must be minimum node
+        if (node.left === null) {
+            return node;
+        } else {
+            return this.findMinNode(node.left);
+        }
+    }
+
+
+    // search for a node with given value
+    search(node, value) {
+        if (node === null) {
+            return null;
+
+        } else if (value < node.value) {
+            return this.search(node.left, value);
+        
+        } else if (value > node.value) {
+            return this.search(node.rigth, value);
+        
+         // if data is equal to the node data return node
+        } else {
+            return node;
+        }
+    }
+
+
 }
