@@ -99,17 +99,29 @@ class BinarySearchTree {
             return node;
         }
     }
-}
 
- // function to be implemented
-    // insert(data)
-    // remove(data)
-                 
- 
-    // Helper function
-    // findMinNode()
-    // getRootNode()
-    // inorder(node)
-    // preorder(node)               
-    // postorder(node)
-    // search(node, data)
+    // Traversals
+    inorder(node) {
+        if (node !== null) {
+            this.inorder(node.left);
+            console.log(node.value);
+            this.inorder(node.rigth);
+        }
+    }
+
+    preorder(node) {
+        if (node !== null) {
+            console.log(node.value);
+            this.inorder(node.left);
+            this.inorder(node.rigth);
+        }
+    }
+
+    postorder(node) {
+        if (node !== null) {
+            this.inorder(node.left);
+            this.inorder(node.rigth);
+            console.log(node.value);
+        }
+    }
+}
