@@ -31,7 +31,7 @@ class BinarySearchTree {
     insertNode(parent, child) {
 
         // if the child value is LESS than the parent value move LEFT of the tree
-        if (parent.value < child.value) {
+        if (child.value < parent.value) {
 
             // if left is null insert node here
             if (parent.left === null) {
@@ -145,15 +145,81 @@ class BinarySearchTree {
 
         } else if (value < node.value) {
             return this.search(node.left, value);
-        
+
         } else if (value > node.value) {
             return this.search(node.rigth, value);
-        
-         // if data is equal to the node data return node
+
+            // if value is equal to the node value return node
         } else {
             return node;
         }
     }
 
+    getRootNode() {
+        return this.root;
+    }
 
 }
+
+// create an object for the BinarySearchTree
+var BST = new BinarySearchTree();
+
+// Inserting nodes to the BinarySearchTree
+BST.insert(15);
+BST.insert(25);
+BST.insert(10);
+BST.insert(7);
+BST.insert(22);
+BST.insert(17);
+BST.insert(13);
+BST.insert(5);
+BST.insert(9);
+BST.insert(27);
+
+//          15
+//         /  \
+//        10   25
+//       / \   / \
+//      7  13 22  27
+//     / \    /
+//    5   9  17 
+
+var root = BST.getRootNode();
+
+
+// prints 5 7 9 10 13 15 17 22 25 27
+// BST.inorder(root);
+
+
+// Removing node with no children 
+BST.remove(5);
+
+//          15
+//         /  \
+//        10   25
+//       / \   / \
+//      7  13 22  27
+//       \    /
+//        9  17 
+
+// prints 7 9 10 13 15 17 22 25 27
+
+// Removing node with one child 
+BST.remove(7);
+
+//          15
+//         /  \
+//        10   25
+//       / \   / \
+//      9  13 22  27
+//            /
+//           17 
+
+// prints 9 10 13 15 17 22 25 27
+
+BST.inorder(root);
+
+console.log("postorder traversal");
+BST.postorder(root);
+console.log("preorder traversal");
+BST.preorder(root);
