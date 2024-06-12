@@ -20,7 +20,7 @@ class BinarySearchTree {
             this.root = newNode;
         } else {
             // find the correct position in the tree and add the node
-            TreeNode.insertNode(this.root, newNode);
+            this.insertNode(this.root, newNode);
         }
     }
 
@@ -50,6 +50,53 @@ class BinarySearchTree {
             } else {
                 this.insertNode(parent.rigth, child);
             }
+        }
+    }
+
+    remove(value) {
+        this.root = this.removeNode(this.root, value);
+    }
+
+    removeNode(node, removeValue) {
+        if (node === null) {
+            return null;
+
+            // if value to be delete is LESS than roots value then move to LEFT subtree
+        } else if (removeValue < node.value) {
+            node.left = this.removeNode(node.left, removeValue);
+            return node;
+
+            // if value to be delete is MORE than roots value then move to RIGTH subtree
+        } else if (removeValue > node.value) {
+            node.rigth = this.removeNode(node.rigth, removeValue);
+            return node;
+
+            // if value is similar to the root's value then delete this node
+        } else {
+
+            // deleting node with NO children
+            if (!node.left && !node.rigth) {
+                node = null;
+                return node;
+            }
+
+            // deleting node with ONE children
+            if (!node.left) {
+                node = node.rigth;
+                return node;
+
+            } else if (!node.rigth) {
+                node = node.left;
+                return node;
+            }
+
+            // deleting node with TWO children
+            // minimum node of the right subtree is stored in aux
+            let aux = this.findMinNode(node.rigth);
+            node.value = aux.value;
+
+            node.rigth = this.removeNode(node.rigth, aux.value);
+            return node;
         }
     }
 }
