@@ -1,3 +1,7 @@
+// There are usually always better options than Bubble Sort.
+//  For small arrays, or almost sorted arrays, Insertion Sort is usually better. 
+// For large arrays, Merge Sort or Quick Sort will be much better.
+
 function bubbleSort(arr) {
 
     for (let i = 0; i < arr.length; i++) {
