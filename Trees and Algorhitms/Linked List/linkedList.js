@@ -221,19 +221,63 @@ class LinkedList {
     // Finds the last node that contains the specified value.
 
     // Contains(T)
+
+
+    toArray() {
+
+        // Create an array of the 
+        // required length 
+        let arr = new Array(this.count);
+
+        let index = 0;
+        var curr = this.head;
+
+        // Traverse the Linked List and add the 
+        // elements to the array one by one 
+        while (curr != null) {
+            arr[index++] = curr.data;
+            curr = curr.next;
+        }
+
+        // Print the created array 
+        console.log(arr);
+    }
 }
 
+function arrayToList(arr) {
+    let list = new LinkedList();
+    var root;
 
-const ll = new LinkedList();
-ll.add(10);
-// adding more elements to the list
-ll.add(20);
-ll.add(30);
-ll.add(40);
-ll.toString();
+    for (let i = 0; i < arr.length; i++) {
+        list.add(arr[i]);
+    }
 
-ll.removeLast();
-ll.toString();
+    return list.toString();
+}
+
+function arrayToListRversed(arr) {
+    let list = new LinkedList();
+
+    for (let i = arr.length - 1; i >= 0; i--) {
+        list.add(arr[i]);
+    }
+    return list.toString();
+}
+
+arrayToList([1, 2, 3, 4, 5]);
+arrayToList2([1, 2, 3, 4, 5]);
+
+// const ll = new LinkedList();
+// ll.add(10);
+// // adding more elements to the list
+// ll.add(20);
+// ll.add(30);
+// ll.add(40);
+// ll.toString();
+
+// ll.removeLast();
+// ll.toString();
+// ll.convertArr();
 
 
 // add elements to the linkedlist
