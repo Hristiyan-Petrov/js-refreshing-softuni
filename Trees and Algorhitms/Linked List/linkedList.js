@@ -265,7 +265,7 @@ function arrayToListRversed(arr) {
 }
 
 arrayToList([1, 2, 3, 4, 5]);
-arrayToList2([1, 2, 3, 4, 5]);
+arrayToListRversed([1, 2, 3, 4, 5]);
 
 // const ll = new LinkedList();
 // ll.add(10);
