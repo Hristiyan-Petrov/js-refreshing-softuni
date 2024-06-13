@@ -59,8 +59,15 @@ function quickSort2(arr, start = 0, end = arr.length - 1) {
     // Base case
     if (start >= end) return;
 
+
+    // 1. Call the partition helper function on the array.
     let pivotIndex = partition(arr, start, end = arr.length - 1);
 
+
+
+    // 2. When the helper returns the updated pivot index, recursively call the pivot helper on the subarray to the left of that index,
+    //  and the subarray to the right of that index.
+    
     // Left
     quickSort(arr, start, pivotIndex - 1);
 
