@@ -1,4 +1,4 @@
-// election Sort is simple, but inefficient. 
+// Selection Sort is simple, but inefficient. 
 // It can outperform efficient algorithms like Merge Sort and Quick Sort for small arrays (<20 elements),
 //  but Insertion Sort is usually more effective in these cases.
 
