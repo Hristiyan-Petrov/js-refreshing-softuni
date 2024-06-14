@@ -69,11 +69,11 @@ class BinarySearchTree {
             currentNode = queue.shift();
 
             // push the visited node into the result
-            result.push(currentNode);
+            result.push(currentNode.value);
 
             // push children to the queue
-            if (node.left) queue.push(node.left);
-            if (node.right) queue.push(node.right);
+            if (currentNode.left) queue.push(currentNode.left);
+            if (currentNode.right) queue.push(currentNode.right);
         }
 
         console.log(result);
@@ -206,3 +206,5 @@ bst.inorder();
 
 bst.dfsPostorderIterative();
 bst.postorder();
+
+bst.breadthFirstSearch();
