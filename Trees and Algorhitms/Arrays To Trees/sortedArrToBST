@@ -8,8 +8,6 @@ class TreeNode {
     }
 }
 
-var root = null;
-
 function sortedArrayToBSTRecur(list, start, end) {
     if (start > end) return null;
 
@@ -62,9 +60,8 @@ function bfs(root) {
 }
 
 
-var arr = [-10, -3, 0, 5, 9];
-var n = arr.length;
+let arr = [-10, -3, 0, 5, 9];
 root = sortedArrayToBST(arr, 0, arr.length - 1);
-console.log("Preorder traversal of constructed BST<br>");
+console.log("traversal of constructed BST");
 bfs(root);
 
