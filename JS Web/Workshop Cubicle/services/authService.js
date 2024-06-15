@@ -34,7 +34,7 @@ export default {
         // it contains sensitive data, available on client
         // must be compact also
         // best practice to put minimal data in it
-        let token = jwt.sign({ _id: user._id }, config.development.SECRET_KEY);
+        let token = jwt.sign({ _id: user._id, roles: ['admin'] }, config.development.SECRET_KEY);
         return token;
     }
 }

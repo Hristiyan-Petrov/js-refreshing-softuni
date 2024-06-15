@@ -2,6 +2,9 @@ import express from 'express';
 import { engine } from 'express-handlebars';
 
 import session from 'express-session';
+import cookieParser from 'cookie-parser';
+
+import auth from '../middlewares/auth.js';
 
 export default (app) => {
 
@@ -24,4 +27,10 @@ export default (app) => {
         resave: false,
         saveUninitialized: true
     }));
+
+    // Set up cookie parser
+    app.use(cookieParser());
+
+    // Set up auth middleware
+    app.use(auth());
 }
