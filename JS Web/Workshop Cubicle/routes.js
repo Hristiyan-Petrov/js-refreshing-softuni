@@ -5,10 +5,14 @@
 
 import { Router } from 'express';
 
-import cubeController from './controllers/cubeController.js'; 
-import homeController from './controllers/homeController.js'; 
-import authController from './controllers/authController.js'; 
-import accessoryController from './controllers/accessoryController.js'; 
+// Route Guards
+import isAuthenticated from './middlewares/isAuthenticated.js';     // Not logged user cannot go to route with this middleware
+import isGuest from './middlewares/isGuest.js';
+
+import cubeController from './controllers/cubeController.js';
+import homeController from './controllers/homeController.js';
+import authController from './controllers/authController.js';
+import accessoryController from './controllers/accessoryController.js';
 
 const router = Router();
 
@@ -16,7 +20,7 @@ const router = Router();
 // If there is no match in homeController routes, the cheking countinues to next router IN LINE. If there is a MATCH, the execution STOPS.
 router.use('/', homeController);
 
-router.use('/auth', authController);
+router.use('/auth', isGuest, authController);
 
 // If route starts with '/cubes', it is delegated to cubeController. Like nested routers.
 router.use('/cubes', cubeController);    // See valuable examples in the controller in comments. They refer to the case when it is '/cubes'

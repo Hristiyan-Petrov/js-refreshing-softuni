@@ -2,6 +2,11 @@
 // Controllers should only handle requests, responses and validation (part from handling req) 
 
 import { Router } from 'express';
+
+// Route Guards
+import isAuthenticated from '../middlewares/isAuthenticated.js';    // Not logged user cannot go to route with this middleware
+import isGuest from '../middlewares/isGuest.js';
+
 import cubeService from '../services/cubeService.js';
 import accessoryService from '../services/accessoryService.js';
 import { validateCube } from './helpers/cubeHelpers.js';
@@ -32,11 +37,11 @@ router.get('/order', (req, res) => {
 });
 
 // Route is '/cubes/create'
-router.get('/create', (req, res) => {
+router.get('/create', isAuthenticated, (req, res) => {
     res.render('create', { title: 'Create Cube' });
 });
 
-router.post('/create', validateCube, (req, res) => {     // Middlewares are passed in between params
+router.post('/create', validateCube, isAuthenticated, (req, res) => {     // Middlewares are passed in between params
     // Old school way with callback
     // cubeService.create(req.body, (err) => {
     // if (err) return res.status(500).send('Error at /create post');
@@ -57,7 +62,7 @@ router.get('/details/:cubeId', (req, res) => {
         .catch(err => console.log(err));
 });
 
-router.get('/:cubeId/attach', async (req, res) => {
+router.get('/:cubeId/attach', isAuthenticated, async (req, res) => {
 
     let cube = await cubeService.getOne(req.params.cubeId);
     let notAttachedAccessories = await accessoryService.getAllNotAttached(cube.accessories);
@@ -65,7 +70,7 @@ router.get('/:cubeId/attach', async (req, res) => {
     res.render('attachAccessory', { cube, notAttachedAccessories });
 });
 
-router.post('/:cubeId/attach', (req, res) => {
+router.post('/:cubeId/attach', isAuthenticated, (req, res) => {
     let cubeId = req.params.cubeId;
     cubeService.attachAccessory(cubeId, req.body.accessory)
         .then(() => {
