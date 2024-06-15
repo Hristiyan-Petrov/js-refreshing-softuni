@@ -7,6 +7,7 @@ import { Router } from 'express';
 
 import cubeController from './controllers/cubeController.js'; 
 import homeController from './controllers/homeController.js'; 
+import authController from './controllers/authController.js'; 
 import accessoryController from './controllers/accessoryController.js'; 
 
 const router = Router();
@@ -14,6 +15,8 @@ const router = Router();
 // If route starts with '/', it is delegated to homeController. Like nested routers.
 // If there is no match in homeController routes, the cheking countinues to next router IN LINE. If there is a MATCH, the execution STOPS.
 router.use('/', homeController);
+
+router.use('/auth', authController);
 
 // If route starts with '/cubes', it is delegated to cubeController. Like nested routers.
 router.use('/cubes', cubeController);    // See valuable examples in the controller in comments. They refer to the case when it is '/cubes'
