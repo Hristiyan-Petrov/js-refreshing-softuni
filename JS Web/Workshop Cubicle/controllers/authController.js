@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import authService from '../services/authService.js';
+import config from '../config/config.js';
 const router = Router();
 
 router.get('/login', (req, res) => {
@@ -13,7 +14,7 @@ router.post('/login', async (req, res) => {
     try {
         let token = await authService.login({ username, password });
 
-        res.cookie('USER_SESSION', token);  // Good practice to be some abstact name (for security)
+        res.cookie(config.JWT_COOKIE_NAME, token);  // Good practice to be some abstact name (for security)
         res.redirect('/cubes');
 
     } catch (error) {
