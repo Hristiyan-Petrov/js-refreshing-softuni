@@ -6,6 +6,21 @@ router.get('/login', (req, res) => {
     res.render('loginPage');
 });
 
+router.post('/login', async (req, res) => {
+    const { username, password } = req.body;
+
+    try {
+        let token = await authService.login(req.body);
+        
+        res.cookie('USER_SESSION', token);  // Good practice to be some abstact name (for security)
+        res.redirect('/cubes');
+
+    } catch (error) {
+        console.log(error);
+        res.render('loginPage', { error })
+    }
+});
+
 router.get('/register', (req, res) => {
     res.render('registerPage');
 });
@@ -15,16 +30,13 @@ router.post('/register', async (req, res) => {
 
     const { username, password, repeatPassword } = req.body;
 
-    if (password !== repeatPassword) {
-        res.render('registerPage', { message: 'Passwords must match!' });
-        return;
-    }
-
     try {
-        await authService.register({ username, password });
+        let user = await authService.register({ username, password, repeatPassword });
         res.redirect('/auth/login');
+
     } catch (error) {
         console.log(error);
+        res.render('registerPage', { error });
     }
 });
 
