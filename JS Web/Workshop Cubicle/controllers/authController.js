@@ -8,10 +8,11 @@ router.get('/login', (req, res) => {
 
 router.post('/login', async (req, res) => {
     const { username, password } = req.body;
+    username = username.toLowerCase();
 
     try {
-        let token = await authService.login(req.body);
-        
+        let token = await authService.login({ username, password });
+
         res.cookie('USER_SESSION', token);  // Good practice to be some abstact name (for security)
         res.redirect('/cubes');
 
@@ -29,6 +30,7 @@ router.post('/register', async (req, res) => {
     // When async func, always use try catch
 
     const { username, password, repeatPassword } = req.body;
+    username = username.toLowerCase();
 
     try {
         let user = await authService.register({ username, password, repeatPassword });

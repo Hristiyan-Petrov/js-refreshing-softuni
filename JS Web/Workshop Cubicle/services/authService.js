@@ -6,7 +6,8 @@ import config from '../config/config.js';
 export default {
     async register({ username, password, repeatPassword }) {
 
-        // TO DO: Check if username is available - db.find  // Show User exists
+        let isUsernameAvailable = !await User.findOne({ username });
+        if (!isUsernameAvailable) throw { message: 'Username is taken!' };
 
         if (password !== repeatPassword) throw { message: 'Passwords must match!' }
 
