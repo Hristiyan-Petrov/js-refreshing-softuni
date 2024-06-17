@@ -6,7 +6,7 @@ import Cube from '../models/Cube.js';
 
 export default {
 
-    async getAll(query) {
+    getAll(query) {
         // let cubes = cubeData.getAll();     // Data layer
 
         let searchExpression = {};
@@ -86,11 +86,12 @@ export default {
         return Cube.findByIdAndUpdate(id, body).lean();
 
         // OR
-        // return Cube
-        //     .findOneAndUpdate(
-        //         { _id: id },
-        //         body
-        //     )
-        //     .lean()
+        // return Cube.findOneAndUpdate({ _id: id }, body).lean()
+    },
+
+    deleteOne(id) {
+        return Cube.findByIdAndDelete(id);
+        // return Cube.deleteOne({ _id: id });
+        // return Cube.findOneAndDelete({ _id: id });
     }
 } 
