@@ -20,12 +20,12 @@ const router = Router();
 // If there is no match in homeController routes, the cheking countinues to next router IN LINE. If there is a MATCH, the execution STOPS.
 router.use('/', homeController);
 
-router.use('/auth', isGuest, authController);
+router.use('/auth', authController);
 
 // If route starts with '/cubes', it is delegated to cubeController. Like nested routers.
 router.use('/cubes', cubeController);    // See valuable examples in the controller in comments. They refer to the case when it is '/cubes'
 
-router.use('/accessories', accessoryController);
+router.use('/accessories', isAuthenticated, accessoryController);
 
 
 // If the website's route doesn't match any of the routes

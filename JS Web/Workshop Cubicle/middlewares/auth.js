@@ -16,8 +16,6 @@ export default function () {
                     return;
                 }
 
-                console.log(decoded);
-
                 // Access it after that from req.user in controllers 
                 req.user = decoded;     // { _id: '666db15d17433a6abacfe69b',roles: [ 'admin' ], iat: 1718464923 }     
             });
