@@ -12,7 +12,7 @@ export default (app) => {
     const hbs = engine({
         extname: '.hbs',
         helpers: {
-            equals: (a, b) => a === b
+            equals: (a, b) => a == b
         }
     })
 

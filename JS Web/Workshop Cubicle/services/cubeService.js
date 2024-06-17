@@ -53,14 +53,17 @@ export default {
     getOne(id) {
         // return Cube.getOne(id);
         // return cubeData.getOne(id);
-        return Cube.findById(id).lean();
+        return Cube
+            .findById(id)
+            // .populate('creator', 'creatorId')    // replace the specified paths in the document with the entire document data from the referenced collection
+            .lean();
     },
 
-    create(data, callback) {
+    create(data, userId) {
 
         // TO DO: Create validatation middleware or validate incoming data in action
 
-        let cube = new Cube(data);
+        let cube = new Cube({ ...data, creator: userId });
 
         // return cubeData.create(cube);     // Data layer
 
@@ -83,9 +86,8 @@ export default {
     },
 
     editOne(id, body) {
-        return Cube.findByIdAndUpdate(id, body).lean();
-
-        // OR
+        // return Cube.findByIdAndUpdate(id, body).lean();
+        return Cube.updateOne({ _id: id, body });
         // return Cube.findOneAndUpdate({ _id: id }, body).lean()
     },
 

@@ -18,7 +18,6 @@ export default function () {
                 req.user = decoded;     // { _id: '666db15d17433a6abacfe69b',roles: [ 'admin' ], iat: 1718464923 }    
 
                 res.locals.user = decoded;  // property to set variables accessible in templates rendered with res.render
-                res.locals.isAuthenticated = true;
             });
         }
 

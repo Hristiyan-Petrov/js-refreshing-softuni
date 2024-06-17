@@ -48,7 +48,7 @@ router.post('/create', validateCube, isAuthenticated, (req, res) => {     // Mid
     // res.redirect('/cubes');
     // });
 
-    cubeService.create(req.body)
+    cubeService.create(req.body, req.user._id)
         .then(() => { res.redirect('/cubes') })
         .catch(err => res.send(500, err));
 });
@@ -57,7 +57,8 @@ router.get('/details/:cubeId', (req, res) => {
     cubeService.getOneWithAccessories(req.params.cubeId)
         .then(cube => {
             const accessories = cube.accessories;
-            res.render('details', { title: 'Cube Details', cube, accessories });
+            const isAuthorized = cube.creator == req.user._id;
+            res.render('details', { title: 'Cube Details', cube, accessories, isAuthorized });
         })
         .catch(err => console.log(err));
 });
@@ -83,14 +84,20 @@ router.post('/:cubeId/attach', isAuthenticated, (req, res) => {
 router.get('/:cubeId/edit', isAuthenticated, (req, res) => {
     cubeService.getOne(req.params.cubeId)
         .then(cube => {
+            if (cube.creator != req.user._id) return res.redirect('/cubes');
+
             res.render('editCube', { title: 'Edit Cube', cube });
         })
         .catch(err => console.log(err));
 });
 
-router.post('/:cubeId/edit', isAuthenticated, (req, res) => {
+router.post('/:cubeId/edit', isAuthenticated, validateCube, (req, res) => {
 
-    cubeService.editOne(req.params.cubeId, req.body)
+    cubeService.getOne(req.params.cubeId)
+        .then(cube => {
+            if (cube.creator != req.user._id) return res.redirect('/cubes');
+            return cubeService.editOne(req.params.cubeId, req.body);
+        })
         .then(updatedCube => {
             res.redirect(`/cubes/details/${updatedCube._id}`);
         })
@@ -100,13 +107,21 @@ router.post('/:cubeId/edit', isAuthenticated, (req, res) => {
 router.get('/:cubeId/delete', isAuthenticated, (req, res) => {
     cubeService.getOne(req.params.cubeId)
         .then(cube => {
+            if (cube.creator != req.user._id) return res.redirect('/cubes');
+
             res.render('delete', { title: 'Delete cube', cube });
         })
         .catch(err => console.log(err));
 });
 
-router.post('/:cubeId/delete', (req, res) => {
-    cubeService.deleteOne(req.params.cubeId)
+router.post('/:cubeId/delete', isAuthenticated, (req, res) => {
+
+    cubeService.getOne(req.params.cubeId)
+        .then(cube => {
+            if (cube.creator != req.user._id) return res.redirect('/cubes');
+
+            return cubeService.deleteOne(req.params.cubeId);
+        })
         .then(() => {
             res.redirect('/cubes');
         })
