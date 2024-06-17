@@ -12,12 +12,13 @@ export default function () {
                 if (err) {
                     // TO DO: Handle invalid token
                     res.clearCookie(config.development.JWT_COOKIE_NAME);
-                    console.log(err);
-                    return;
                 }
 
                 // Access it after that from req.user in controllers 
-                req.user = decoded;     // { _id: '666db15d17433a6abacfe69b',roles: [ 'admin' ], iat: 1718464923 }     
+                req.user = decoded;     // { _id: '666db15d17433a6abacfe69b',roles: [ 'admin' ], iat: 1718464923 }    
+
+                res.locals.user = decoded;  // property to set variables accessible in templates rendered with res.render
+                res.locals.isAuthenticated = true;
             });
         }
 
