@@ -19,7 +19,10 @@ router.post('/login', isGuest, async (req, res) => {
     try {
         let token = await authService.login({ username, password });
 
-        res.cookie(config.development.JWT_COOKIE_NAME, token);  // Good practice to be some abstact name (for security)
+        res.cookie(config.development.JWT_COOKIE_NAME, token, {  // Good practice to be some abstact name (for security)
+            expires: new Date(Date.now() + 8 * 3600000), // cookie will be removed after 8 hours
+            httpOnly: true
+        });
         res.redirect('/cubes');
 
     } catch (error) {
