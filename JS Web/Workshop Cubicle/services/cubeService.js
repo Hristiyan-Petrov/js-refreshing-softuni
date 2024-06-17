@@ -44,8 +44,8 @@ export default {
             .find({ '_id': { $in: ids } }) // Finds cubes with IDs in the array
             .sort({
                 [attr]: order === 'asc'
-                ? 1
-                : -1
+                    ? 1
+                    : -1
             })
             .lean();
     },
@@ -80,5 +80,17 @@ export default {
             .findById(cubeId)
             .populate('accessories')
             .lean();
+    },
+
+    editOne(id, body) {
+        return Cube.findByIdAndUpdate(id, body).lean();
+
+        // OR
+        // return Cube
+        //     .findOneAndUpdate(
+        //         { _id: id },
+        //         body
+        //     )
+        //     .lean()
     }
 } 

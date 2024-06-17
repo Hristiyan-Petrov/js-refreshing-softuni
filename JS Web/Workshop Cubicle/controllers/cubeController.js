@@ -57,7 +57,7 @@ router.get('/details/:cubeId', (req, res) => {
     cubeService.getOneWithAccessories(req.params.cubeId)
         .then(cube => {
             const accessories = cube.accessories;
-            res.render('details', { title: 'cube details', cube, accessories });
+            res.render('details', { title: 'Cube Details', cube, accessories });
         })
         .catch(err => console.log(err));
 });
@@ -79,5 +79,26 @@ router.post('/:cubeId/attach', isAuthenticated, (req, res) => {
         .catch(err => res.send(500, err));
 
 });
+
+router.get('/:cubeId/edit', (req, res) => {
+    cubeService.getOne(req.params.cubeId)
+        .then(cube => {
+            res.render('editCube', { title: 'Edit Cube', cube });
+        })
+        .catch(err => console.log(err));
+});
+
+router.post('/:cubeId/edit', (req, res) => {
+
+    cubeService.editOne(req.params.cubeId, req.body)
+        .then(updatedCube => {
+            res.redirect(`/cubes/details/${updatedCube._id}`);
+        })
+        .catch(err => console.log(err));
+});
+
+// router.get(':cubeId/delete', isAuthenticated, (req, res) => {
+
+// });
 
 export default router;
