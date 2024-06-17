@@ -9,9 +9,14 @@ import auth from '../middlewares/auth.js';
 export default (app) => {
 
     // Set up the view engine
-    app.engine('.hbs', engine({
-        extname: '.hbs'
-    }));
+    const hbs = engine({
+        extname: '.hbs',
+        helpers: {
+            equals: (a, b) => a == b
+        }
+    })
+
+    app.engine('.hbs', hbs);
     app.set('view engine', 'hbs');
     app.set('views', './views');
 

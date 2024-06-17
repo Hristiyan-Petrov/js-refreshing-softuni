@@ -1,13 +1,18 @@
 import { Router } from 'express';
 import authService from '../services/authService.js';
 import config from '../config/config.js';
+
+// Route Guards
+import isAuthenticated from '../middlewares/isAuthenticated.js';     // Not logged user cannot go to route with this middleware
+import isGuest from '../middlewares/isGuest.js';
+
 const router = Router();
 
-router.get('/login', (req, res) => {
+router.get('/login', isGuest, (req, res) => {
     res.render('loginPage');
 });
 
-router.post('/login', async (req, res) => {
+router.post('/login', isGuest, async (req, res) => {
     let { username, password } = req.body;
     username = username.toLowerCase();
 
@@ -23,11 +28,11 @@ router.post('/login', async (req, res) => {
     }
 });
 
-router.get('/register', (req, res) => {
+router.get('/register', isGuest, (req, res) => {
     res.render('registerPage');
 });
 
-router.post('/register', async (req, res) => {
+router.post('/register', isGuest, async (req, res) => {
     // When async func, always use try catch
 
     let { username, password, repeatPassword } = req.body;
@@ -41,6 +46,11 @@ router.post('/register', async (req, res) => {
         console.log(error);
         res.render('registerPage', { error });
     }
+});
+
+router.get('/logout', isAuthenticated, (req, res) => {
+    res.clearCookie(config.development.JWT_COOKIE_NAME);
+    res.redirect('/cubes');
 });
 
 export default router;

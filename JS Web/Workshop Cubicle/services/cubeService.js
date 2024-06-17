@@ -6,7 +6,7 @@ import Cube from '../models/Cube.js';
 
 export default {
 
-    async getAll(query) {
+    getAll(query) {
         // let cubes = cubeData.getAll();     // Data layer
 
         let searchExpression = {};
@@ -44,8 +44,8 @@ export default {
             .find({ '_id': { $in: ids } }) // Finds cubes with IDs in the array
             .sort({
                 [attr]: order === 'asc'
-                ? 1
-                : -1
+                    ? 1
+                    : -1
             })
             .lean();
     },
@@ -53,14 +53,17 @@ export default {
     getOne(id) {
         // return Cube.getOne(id);
         // return cubeData.getOne(id);
-        return Cube.findById(id).lean();
+        return Cube
+            .findById(id)
+            // .populate('creator', 'creatorId')    // replace the specified paths in the document with the entire document data from the referenced collection
+            .lean();
     },
 
-    create(data, callback) {
+    create(data, userId) {
 
         // TO DO: Create validatation middleware or validate incoming data in action
 
-        let cube = new Cube(data);
+        let cube = new Cube({ ...data, creator: userId });
 
         // return cubeData.create(cube);     // Data layer
 
@@ -80,5 +83,17 @@ export default {
             .findById(cubeId)
             .populate('accessories')
             .lean();
+    },
+
+    editOne(id, body) {
+        // return Cube.findByIdAndUpdate(id, body).lean();
+        return Cube.updateOne({ _id: id, body });
+        // return Cube.findOneAndUpdate({ _id: id }, body).lean()
+    },
+
+    deleteOne(id) {
+        return Cube.findByIdAndDelete(id);
+        // return Cube.deleteOne({ _id: id });
+        // return Cube.findOneAndDelete({ _id: id });
     }
 } 
