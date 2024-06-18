@@ -75,20 +75,28 @@ router.post('/register',
     async (req, res) => {
         // When async func, always use try catch
 
-        const errors = validationResult(req).errors;
+        // const errors = validationResult(req).errors;     // using express-validator
 
         try {
-            if (errors.length > 0) throw errors;
+            // if (errors.length > 0) throw errors;     
 
-            const { username, password, repeatPassword } = req.body;
-            let user = await authService.register({ username, password, repeatPassword });
+            const { username, password } = req.body;
+            let user = await authService.register({ username, password });
             res.redirect('/auth/login');
 
         } catch (errors) {
+
+            // express-validator
+            // res.render('registerPage', {
+            //     usernameErrors: errors.filter(e => e.path === 'username'),
+            //     passwordErrors: errors.filter(e => e.path === 'password'),
+            //     repeatPasswordErrors: errors.filter(e => e.path === 'repeatPassword'),
+            // });
+
+            // mongoose-validator
             res.render('registerPage', {
-                usernameErrors: errors.filter(e => e.path === 'username'),
-                passwordErrors: errors.filter(e => e.path === 'password'),
-                repeatPasswordErrors: errors.filter(e => e.path === 'repeatPassword'),
+                usernameErrors: errors.errors?.username ? [{ msg: errors.errors.username.message }] : null,
+                passwordErrors: errors.errors?.password ? [{ msg: errors.errors.password.message }] : null,
             });
         }
     });

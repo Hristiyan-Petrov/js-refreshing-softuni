@@ -4,12 +4,12 @@ import jwt from "jsonwebtoken";
 import config from '../config/config.js';
 
 export default {
-    async register({ username, password, repeatPassword }) {
+    async register({ username, password }) {
 
-        const salt = await bcrypt.genSalt(config.development.SALT_ROUNDS);
-        const hash = await bcrypt.hash(password, salt);
+        // const salt = await bcrypt.genSalt(config.development.SALT_ROUNDS);
+        // const hash = await bcrypt.hash(password, salt);
 
-        const user = new User({ username, password: hash });
+        const user = new User({ username, password });
         return await user.save();
     },
 
