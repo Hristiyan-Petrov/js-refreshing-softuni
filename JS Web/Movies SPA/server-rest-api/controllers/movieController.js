@@ -1,15 +1,24 @@
 const Movie = require('../models/Movie');
+const { isAuth } = require('../middlewares/auth');
 
 const router = require('express').Router();
 
-router.post('/', (req, res) => {
-    console.log(req.body);
+router.get('/', (req, res) => {
+    Movie.find()
+        .then(movies => {
+            res.json(movies);
+        })
+        .catch(err => {
+            console.log(err);
+        })
 
+});
+
+router.post('/', isAuth, (req, res) => {
     const movie = new Movie(req.body);
 
     movie.save()
         .then(createdMovie => {
-            console.log(createdMovie);
             res.status(201).json({
                 _id: createdMovie._id
             });

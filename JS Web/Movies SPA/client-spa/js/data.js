@@ -107,7 +107,7 @@ export async function getMovies(search, page) {
     const token = localStorage.getItem('userToken');
 
     let result;
-    const pagingQuery = `pageSize=9&offset=${(page-1)*9}`;
+    const pagingQuery = `pageSize=9&offset=${(page - 1) * 9}`;
 
     if (!search) {
         result = (await fetch(host(endpoints.MOVIES + '?' + pagingQuery), {
@@ -151,14 +151,14 @@ export async function createMovie(movie) {
 
     const token = localStorage.getItem('userToken');
 
-    const result = (await fetch(host(endpoints.MOVIES), {
+    const result = await fetch(host(endpoints.MOVIES), {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`      // Common naming
         },
         body: JSON.stringify(movie)
-    })).json();
+    }).json();
 
     endRequest();
 
@@ -214,7 +214,7 @@ export async function getMovieByOwner() {
     const result = (await fetch(host(endpoints.MOVIES + `?where=ownerId%3D%27${ownerId}%27`), {
         headers: {
             'Content-Type': 'application/json',
-            'user-token': token
+            'Authorization': `Bearer ${token}`      // Common naming
         }
     })).json();
 
