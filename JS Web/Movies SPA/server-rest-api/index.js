@@ -2,6 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const mongooseConnector = require('./mongoose');
 const { auth } = require('./middlewares/auth');
+const errorHandler = require('./middlewares/errorHandler');
+
 const routes = require('./routes');
 
 const app = express();
@@ -19,5 +21,8 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api', routes);
+
+// Impoertant to be after routes
+app.use(errorHandler);      
 
 app.listen(5000, console.log.bind(console, 'Server listening on port 5000...'));
