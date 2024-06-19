@@ -1,21 +1,53 @@
 const router = require('express').Router();
 const User = require('../models/User');
+const jwt = require('jsonwebtoken');
 
 router.post('/register', (req, res) => {
 
-    // check if user exists
+    // TODO check if username/email is taken
 
-    // register user
-
-    console.log(req.body);
-
+    // Hash password
+    
     let user = new User(req.body);  // Good to be taken out in service
-    user.save()
+
+    user.save()     // Or User.create...
         .then(createdUser => {
             console.log(user);
             res.status(201).json({ _id: createdUser._id });
         })
+        .catch(err => {
+            console.log(err);
+        });
+});
 
-})
+router.post('/login', (req, res) => {
+    // TODO: Check if user exist
+    // Check if pass is correct
+
+    User.findOne({ username: req.body.login, password: req.body.password })
+        .then(user => {
+            console.log(user);
+
+            // Generate jwt
+
+            const token = jwt.sign(
+                {
+                    _id: user._id,
+                    username: user.username,
+                },
+                'SUPERSECRET',      // Take out in config file
+                { expiresIn: '1h' }
+            );
+
+            res.status(200).json({
+                _id: user._id,
+                username: user.username,
+                token
+            });
+        })
+        .catch(err => {
+            console.log(err);
+        });
+});
 
 module.exports = router;
