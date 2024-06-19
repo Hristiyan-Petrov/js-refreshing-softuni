@@ -10,28 +10,28 @@ const userSchema = new mongoose.Schema({
         required: true,
         unique: true,
         minlength: 5,
-        validate: {
-            validator: value => {
-                return ENGLISH_ALPHANUMERIC_PATTERN.test(value);
-            },
-            message: props => {
-                return 'Use only English letters and digits';
-            }
-        },
+        // validate: {
+        //     validator: value => {
+        //         return ENGLISH_ALPHANUMERIC_PATTERN.test(value);
+        //     },
+        //     message: props => {
+        //         return 'Use only English letters and digits';
+        //     }
+        // },
     },
 
     password: {
         type: String,
         required: true,
         minlength: 8,
-        validate: {
-            validator: value => {
-                return ENGLISH_ALPHANUMERIC_PATTERN.test(value);
-            },
-            message: props => {
-                return 'Use only English letters and digits';
-            }
-        }
+        // validate: {
+        //     validator: value => {
+        //         return ENGLISH_ALPHANUMERIC_PATTERN.test(value);
+        //     },
+        //     message: props => {
+        //         return 'Use only English letters and digits';
+        //     }
+        // }
     }
 });
 
@@ -52,12 +52,12 @@ userSchema.pre('save', function (next) {
 
 const User = mongoose.model('User', userSchema);
 
-userSchema.path('username').validate({
-    validator: async function (value) {
-        const existingUser = await User.findOne({ username: value });
-        return !existingUser;
-    },
-    message: 'username taken'
-});
+// userSchema.path('username').validate({       // mongoose validation. If you want to use it, disable express-validator functionality
+//     validator: async function (value) {
+//         const existingUser = await User.findOne({ username: value });
+//         return !existingUser;
+//     },
+//     message: 'username taken'
+// });
 
 export default User;
