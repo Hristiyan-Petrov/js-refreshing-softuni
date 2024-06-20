@@ -1,7 +1,7 @@
 const config = {
     development: {
         port: process.env.port || 5000,
-        DB_CONNECTION: 'mongodb://localhost/cubicle',
+        DB_CONNECTION: 'mongodb://localhost/softwiki-rest-api',
         SALT_ROUNDS: 10,
         SECRET_KEY: 'navuhodonosor',
     },
@@ -12,4 +12,5 @@ const config = {
     }
 };
 
-module.exports = config[process.env.NODE_ENV.trim()];
+const env = process.env.NODE_ENV || 'development'; // default to 'development' if NODE_ENV is not set
+module.exports = config[env.trim()];
