@@ -23,6 +23,9 @@ const request = async (method, url, headers, body) => {
         return response;
     }
 
+
+    if (!response.ok) throw await response.json();
+
     return await response.json();
 }
 

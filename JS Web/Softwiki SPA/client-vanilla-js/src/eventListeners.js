@@ -25,22 +25,26 @@ export const onRegisterSubmit = e => {
     let password = formdata.get('password');
     let rePassword = formdata.get('rep-pass');
 
-    if (password !== rePassword) {
-        console.log('passwords must match!');
-        return;
-    }
+    // if (password !== rePassword) {
+    //     console.log('passwords must match!');
+    //     return;
+    // }
 
-    authService.register(email, password)
+    authService.register(email, password, rePassword)
         .then(userData => {
             console.log(userData);
             console.log('registered');
 
-            return authService.login(userData.email, password)
+            // return authService.login(userData.email, password);
+            router('/login');
         })
-        .then(userData => {
-            saveUserCredentials(userData['user-token'], userData.email, userData.objectId);
-            router('/');
-        })
+        .catch(errors => {
+            console.log(errors);
+        });
+    // .then(userData => {
+    //     saveUserCredentials(userData['user-token'], userData.email, userData.objectId);
+    //     router('/');
+    // })
 };
 
 export const onLogout = e => {
@@ -100,10 +104,10 @@ export const onArticleEditSubmit = e => {
         category,
         content
     })
-    .then(article => {
-        console.log('edited');
-        router('/');
-    })
+        .then(article => {
+            console.log('edited');
+            router('/');
+        })
 };
 
 export const onBackClick = (e) => {

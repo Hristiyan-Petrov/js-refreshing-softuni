@@ -1,7 +1,9 @@
 import request from "./request.js";
 
-const subdomain = 'willingyak-eu.backendless.app';
-const authEndpointBase = `https://${subdomain}/api/users`;
+// const subdomain = 'willingyak-eu.backendless.app';
+// const authEndpointBase = `https://${subdomain}/api/users`;
+
+const authEndpointBase = 'http://localhost:5000/api/auth'
 
 const endpoints = {
     login: `${authEndpointBase}/login`,
@@ -21,10 +23,11 @@ export default {
         });
     },
 
-    async register(email, password) {
+    async register(email, password, rePassword) {
         return await request.post(endpoints.register, applicationJsonHeaders, {
             email,
             password,
+            rePassword
         });
     },
 
