@@ -1,0 +1,57 @@
+// import { html, render } from 'lit-html';  // For webpack
+import { html, render } from 'lit-html';
+
+import articleItem from '../views/article-item.js';
+
+export default ({
+    articles,
+    navigationHandler,  // Comes from: ...props
+}) => html`
+<div class="content">
+        <section class="js">
+            <h2>JavaScript</h2>
+            <div class="articles">
+                <!-- Render all articles; ? -> Optional chaining  -->
+                ${articles?.some(x => x.category === 'js') 
+                    ? articles
+                        .filter(x => x.category === 'js')
+                        .sort((a, b) => b.title.localeCompare(a.title)) 	// Sort by title ascending
+                        .map(x => articleItem({ ...x, navigationHandler })) 
+                    : 'No articles yet.'}
+            </div>
+        </section>
+        <section class="CSharp">
+            <h2>C#</h2>
+            <div class="articles">
+                ${articles?.some(x => x.category === 'csharp') 
+                     ? articles
+                        .filter(x => x.category === 'csharp')
+                        .sort((a, b) => b.title.localeCompare(a.title))
+                        .map(x => articleItem({ ...x, navigationHandler }))  
+                    : 'No articles yet.'}
+            </div>
+        </section>
+        <section class="Java">
+            <h2>Java</h2>
+            <div class="articles">
+                ${articles?.some(x => x.category === 'java') 
+                    ? articles
+                        .filter(x => x.category === 'java')
+                        .sort((a, b) => b.title.localeCompare(a.title))
+                        .map(x => articleItem({ ...x, navigationHandler }))  
+                    : 'No articles yet.'}
+            </div>
+        </section>
+        <section class="Pyton">
+            <h2>Pyton</h2>
+            <div class="articles">
+                ${articles?.some(x => x.category === 'python') 
+                    ? articles
+                        .filter(x => x.category === 'python')
+                        .sort((a, b) => b.title.localeCompare(a.title))
+                        .map(x => articleItem({ ...x, navigationHandler }))  
+                    : 'No articles yet.'}
+            </div>
+        </section>
+    </div>
+`;
