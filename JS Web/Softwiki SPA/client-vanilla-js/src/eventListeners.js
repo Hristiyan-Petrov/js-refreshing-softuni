@@ -67,10 +67,13 @@ export const onArticleCreateSubmit = e => {
         category,
         content
     })
-        .then(articleId => {
-            console.log(articleId);
+        .then(article => {
+            console.log(article);
             router('/');
         })
+        .catch(err => {
+            console.log(err);
+        });
 };
 
 export const onDeleteClick = e => {

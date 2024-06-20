@@ -1,8 +1,10 @@
 import request from "./request.js";
 import authService from './authService.js';
 
-const subdomain = 'willingyak-eu.backendless.app';
-const dataBaseEndpoint = `https://${subdomain}/api/data/Articles`;
+// const subdomain = 'willingyak-eu.backendless.app';
+// const dataBaseEndpoint = `https://${subdomain}/api/data/Articles`;
+
+const dataBaseEndpoint = 'http://localhost:5000/api/articles'
 
 // const applicationJsonHeaders = {
 //     'Content-Type': 'application/json'
@@ -18,15 +20,18 @@ const getUserHeaders = () => ({
 
 export default {
     async create(articleBody) {
-        return await request.post(dataBaseEndpoint, Object.assign(jsonHeaders, getUserHeaders()), articleBody);
+        return await request.post(dataBaseEndpoint, jsonHeaders, articleBody);
+        // return await request.post(dataBaseEndpoint, Object.assign(jsonHeaders, getUserHeaders()), articleBody);     // Backendless 
     },
 
     async getAll() {
-        return await request.get(dataBaseEndpoint, Object.assign(jsonHeaders, getUserHeaders()));
+        return await request.get(dataBaseEndpoint, Object.assign(jsonHeaders));
+        // return await request.get(dataBaseEndpoint, Object.assign(jsonHeaders, getUserHeaders()));
     },
 
     async getOne(id) {
-        return await request.get(`${dataBaseEndpoint}/${id}`, Object.assign(jsonHeaders, getUserHeaders()));
+        return await request.get(`${dataBaseEndpoint}/${id}`, Object.assign(jsonHeaders));
+        // return await request.get(`${dataBaseEndpoint}/${id}`, Object.assign(jsonHeaders, getUserHeaders()));
     },
 
     async edit(id, articleBody) {

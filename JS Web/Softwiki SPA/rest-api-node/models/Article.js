@@ -1,14 +1,17 @@
 const mongoose = require('mongoose');
 
 const articleSchema = new mongoose.Schema({
-    name: {
+    title: {
         type: String,
         required: true
     },
     category: {
         type: String,
         required: true,
-        enum: [[''], 'Choose only from dropdown categories']
+        enum: {
+            values: ['js', 'csharp', 'python', 'java'],
+            message: 'Choose only from dropdown categories'
+        }
     },
     content: {
         type: String,

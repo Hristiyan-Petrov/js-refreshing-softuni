@@ -1,12 +1,12 @@
 const config = {
     development: {
-        port: process.env.port || 5000,
+        PORT: process.env.port || 5000,
         DB_CONNECTION: 'mongodb://localhost/softwiki-rest-api',
         SALT_ROUNDS: 10,
         SECRET_KEY: 'navuhodonosor',
     },
     production: {
-        port: 80,
+        PORT: 80,
         DB_CONNECTION: 'insert for example mongodb atlas connection',      // Create Atlas Cloud Mongo DB 
         SECRET_KEY: 'navuhodonosor',
     }

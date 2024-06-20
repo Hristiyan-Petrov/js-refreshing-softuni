@@ -2,7 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const mongooseConnector = require('./config/mongoose');
 
-// const routes = require('./routes');
+const routes = require('./routes');
+const config = require('./config');
 
 const app = express();
 
@@ -12,4 +13,4 @@ mongooseConnector(app);
 
 app.use('/api', routes);
 
-app.listen(5000, console.log.bind(console, 'Server listening on port 5000...'));
+app.listen(config.PORT, console.log.bind(console, `Server listening on port ${config.PORT}...`));
