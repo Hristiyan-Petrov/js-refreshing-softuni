@@ -1,0 +1,35 @@
+.container-404 {
+    background-color: rgba(12, 14, 12, 0.575);
+    color: white;
+    height: calc(100vh - 120px); /* Adjust according to your header/footer */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.container-404 h1 {
+    font-size: 5em;
+    margin-bottom: 1em;
+}
+
+.container-404 p {
+    font-size: 1.5em;
+    max-width: 80%;
+    margin: 1em auto;
+}
+
+.container-404 a {
+    text-decoration: none;
+    color: white;
+    border: 2px solid white;
+    border-radius: 2em;
+    padding: 0.5em 2em;
+    transition: all 0.3s ease-out;
+}
+
+.container-404 a:hover {
+    background: white;
+    color: darkslategray;
+}

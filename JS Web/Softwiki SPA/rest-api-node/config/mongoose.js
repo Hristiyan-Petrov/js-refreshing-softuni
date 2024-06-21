@@ -1,11 +1,12 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
+const config = require('./index');
 
-export default (app) => {
+module.exports = (app) => {
 
     // Set up mongoose ODM (Object Document Mapping) library
 
     async function main() {
-        await mongoose.connect('mongodb://127.0.0.1:27017/cubicle');
+        await mongoose.connect(config.DB_CONNECTION);
     }
 
     mongoose.connection.on('connected', () => console.log('MongoDB connected'));
