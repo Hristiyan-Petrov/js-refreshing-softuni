@@ -16,9 +16,9 @@ const applicationJsonHeaders = {
 }
 
 export default {
-    async login(login, password) {
+    async login(email, password) {
         return await request.post(endpoints.login, applicationJsonHeaders, {
-            login,
+            email,
             password
         });
     },

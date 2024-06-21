@@ -2,7 +2,7 @@
 import { html, render } from 'lit-html';
 
 const loggedInLinks = (email, onLogout) => html`
-    <a>Hello ${email}</a>
+    <a>Hello, ${email.slice(0, email.indexOf('@'))}</a>
     <a href="/create">Create</a>
     <a @click=${onLogout}>Logout</a>
 `;

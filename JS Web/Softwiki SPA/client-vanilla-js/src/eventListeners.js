@@ -6,15 +6,21 @@ export const onLoginSubmit = (e) => {
     e.preventDefault();
 
     let formdata = new FormData(e.target);
-    let login = formdata.get('email');
+    let email = formdata.get('email');
     let password = formdata.get('password');
 
-    authService.login(login, password)
+    authService.login(email, password)
         .then(userData => {
             console.log('logged');
+            console.log(userData);
+
             saveUserCredentials(userData['user-token'], userData.email, userData.objectId);
             router('/');
         })
+        .catch(err => {
+            // TODO
+            console.log(err);
+        });
 };
 
 export const onRegisterSubmit = e => {
