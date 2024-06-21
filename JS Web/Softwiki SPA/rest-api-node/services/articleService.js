@@ -15,7 +15,12 @@ const getAll = () => {
         });
 };
 
-const create = body => Article.create(body);
+const create = ({ title, category, content }, ownerId) => Article.create({
+    title,
+    category,
+    content,
+    ownerId
+});
 
 const getOneById = id => Article.findById(id);
 // console.log({...article, objectId: article._id});

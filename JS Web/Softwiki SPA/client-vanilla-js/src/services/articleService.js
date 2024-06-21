@@ -15,27 +15,25 @@ const jsonHeaders = {
 }
 
 const getUserHeaders = () => ({
-    'user-token': authService.getData()['user-token']
-})
+    // 'user-token': authService.getData()['user-token']
+    'Authorization': `Bearer ${authService.getData()['user-token']}`
+});
 
 export default {
     async create(articleBody) {
-        return await request.post(dataBaseEndpoint, jsonHeaders, articleBody);
-        // return await request.post(dataBaseEndpoint, Object.assign(jsonHeaders, getUserHeaders()), articleBody);     // Backendless 
+        return await request.post(dataBaseEndpoint, Object.assign(jsonHeaders, getUserHeaders()), articleBody);
     },
 
     async getAll() {
-        return await request.get(dataBaseEndpoint, Object.assign(jsonHeaders));
-        // return await request.get(dataBaseEndpoint, Object.assign(jsonHeaders, getUserHeaders()));
+        return await request.get(dataBaseEndpoint, Object.assign(jsonHeaders, getUserHeaders()));
     },
 
     async getOne(id) {
-        return await request.get(`${dataBaseEndpoint}/${id}`, Object.assign(jsonHeaders));
-        // return await request.get(`${dataBaseEndpoint}/${id}`, Object.assign(jsonHeaders, getUserHeaders()));
+        return await request.get(`${dataBaseEndpoint}/${id}`, Object.assign(jsonHeaders, getUserHeaders()));
     },
 
     async edit(id, articleBody) {
-        return await request.put(`${dataBaseEndpoint}/${id}`, jsonHeaders, articleBody);
+        return await request.put(`${dataBaseEndpoint}/${id}`, Object.assign(jsonHeaders, getUserHeaders()), articleBody);
     },
 
     async delete(id) {

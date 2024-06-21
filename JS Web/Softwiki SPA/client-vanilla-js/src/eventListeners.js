@@ -55,12 +55,22 @@ export const onRegisterSubmit = e => {
 
 export const onLogout = e => {
     e.preventDefault();
-    authService.logout()
-        .then(() => {
-            localStorage.removeItem('auth');
-            console.log('logged out');
-            router('/login');
-        })
+
+    // Using Bakendless
+    // authService.logout()
+    //     .then(() => {
+    //         localStorage.removeItem('auth');
+    //         console.log('logged out');
+    //         router('/login');
+    //     })
+    //     .catch(err => {
+    //         console.log(err);
+    //         // TODO
+    //     });
+
+    localStorage.removeItem('auth');
+    console.log('logged out');
+    router('/login');
 };
 
 export const onArticleCreateSubmit = e => {

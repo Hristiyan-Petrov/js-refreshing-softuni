@@ -16,7 +16,7 @@ const articleSchema = new mongoose.Schema({
     content: {
         type: String,
         required: true,
-        maxlength: [50, 'Content must be no longer than 50 characters']
+        maxlength: [150, 'Content must be no longer than 50 characters']
     },
     ownerId: {
         type: mongoose.Types.ObjectId,
