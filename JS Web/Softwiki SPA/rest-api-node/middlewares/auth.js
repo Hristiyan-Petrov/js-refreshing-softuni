@@ -5,35 +5,24 @@ module.auth = (req, res, next) => {
     let authHeader = req.get('Authorization');
 
     if (authHeader) {
+        // if token is NOT expired AND provided
         let token = authHeader.split(' ')[1];
 
-        jwt.verify(token, config.SECRET_KEY, (err, decoded) => {
-            if (err) {
-                console.log(err);
-                // DO SOMETHING
-
-                res.json({ success: false, message: err.message });
-            }
-
-            // console.log(decoded);
+        try {
+            let decoded = jwt.verify(token, config.SECRET_KEY);
             req.user = decoded;
-        });
-    } else {
-        console.log('not logged in');
-        return res.status(400).json({ message: 'You need to login.' });
+        } catch (error) {
+            console.log('error from auth.js: ' + error.message);
+        }
     }
-
-    console.log('heree');
     next();
+
 };
 
 module.isAuth = (req, res, next) => {
-    // TODO: check if is auth
-    console.log(req.user);
-
     // If is not logged in
     if (!req.user) {
-        res.status(401).json({ errorData: 'You do not have the rights for this' });
+        return res.status(401).json({ message: 'You need to login into your account to access this page.' });
     }
 
     next();

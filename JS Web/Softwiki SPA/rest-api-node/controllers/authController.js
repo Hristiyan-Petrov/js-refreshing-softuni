@@ -51,11 +51,10 @@ router.post('/register',
 
 router.post('/login',
     body('email')
-        .isEmail().withMessage('Email is not valid')
         .normalizeEmail()
         .custom(async (value, { req }) => {
             let existingUser = await User.findOne({ email: value });
-            let match = await bcrypt.compare(req.body.password, existingUser?.password);
+            let match = req.body.password ? await bcrypt.compare(req.body.password, existingUser?.password) : false;
             if (!existingUser || !match) throw new Error('Incorrect email or password.');
         }),
     (req, res) => {
@@ -71,7 +70,7 @@ router.post('/login',
                 .catch(err => { throw err });
         } catch (error) {
             console.log(error);
-            res.status(err.status || 400).json({ error });
+            res.status(error.status || 400).json({ error });
             // TODO: Maybe redirect to error page if code is 500?
         }
     });

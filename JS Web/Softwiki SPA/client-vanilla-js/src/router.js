@@ -34,6 +34,9 @@ const routes = [
 
             return template(props);
         },
+        context: {
+            onLoginSubmit
+        },
         getData: articleService.getAll    // For rendering all articles from db on homepage
     },
     {
@@ -54,7 +57,8 @@ const routes = [
         path: /^\/create$/i,
         template: createArticle,
         context: {
-            onArticleCreateSubmit
+            onArticleCreateSubmit,
+            onLoginSubmit
         }
     },
     {
@@ -98,15 +102,20 @@ export const router = (path) => {
                 route.getData(params.id)
                     .then(article => {
                         // Double render
-                        render(layout(route.template, { navigationHandler, onLogout, onBackClick ,...userData, ...context, ...article, params }), document.getElementById('app'));
+                        render(layout(route.template, { navigationHandler, onLogout, onBackClick, ...userData, ...context, ...article, params }), document.getElementById('app'));
                     })
+
                 break;
 
             case articleService.getAll:
                 route.getData()
                     .then(articles => {
                         // Double render
-                        render(layout(route.template, { navigationHandler, onLogout, ...userData, ...context, articles, params }), document.getElementById('app'));
+                        render(layout(route.template, { navigationHandler, onLogout, ...userData, articles, ...context }), document.getElementById('app'));
+                    })
+                    .catch(err => {
+                        console.log('err from client router getAllArticles: ' + err.message);
+                        render(layout(route.template, { navigationHandler, ...userData, ...context }), document.getElementById('app'));
                     });
                 break;
 

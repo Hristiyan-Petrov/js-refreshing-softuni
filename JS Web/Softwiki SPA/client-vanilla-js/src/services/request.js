@@ -19,11 +19,6 @@ const request = async (method, url, headers, body) => {
 
     let response = await fetch(url, options);
 
-    if (url.includes('logout')) {
-        return response;
-    }
-
-
     if (!response.ok) throw await response.json();
 
     return await response.json();

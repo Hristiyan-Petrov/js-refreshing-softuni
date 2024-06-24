@@ -19,7 +19,6 @@ router.get('/', (req, res) => {
 });
 
 router.post('/',
-    isAuth,
     body('title').not().isEmpty().withMessage('Please enter title'),
     body('content').isLength({ max: 150 }).withMessage('Content must be shorter'),
     (req, res) => {
@@ -36,6 +35,7 @@ router.post('/',
                     res.status(err.status || 500).json({ message: err.message });
                 });
         } catch (error) {
+            console.log('from article controller:');
             console.log(errors);
 
             let titleErrors = errors.filter(e => e.path === 'title').map(e => ({ message: e.msg }));
@@ -48,6 +48,8 @@ router.post('/',
     });
 
 router.get('/:articleId', (req, res) => {
+
+    console.log(req.params.articleId);
 
     articleService.getOneById(req.params.articleId)
         .then(article => res.json(article))

@@ -9,7 +9,9 @@ const getAll = () => {
             });
         })
         .catch(err => {
+            console.log('err from article service');
             console.log(err);
+
             throw err;
             // TODO
         });

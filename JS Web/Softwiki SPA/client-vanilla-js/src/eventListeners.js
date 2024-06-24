@@ -40,33 +40,15 @@ export const onRegisterSubmit = e => {
         .then(userData => {
             console.log(userData);
             console.log('registered');
-
-            // return authService.login(userData.email, password);
             router('/login');
         })
         .catch(errors => {
             console.log(errors);
         });
-    // .then(userData => {
-    //     saveUserCredentials(userData['user-token'], userData.email, userData.objectId);
-    //     router('/');
-    // })
 };
 
 export const onLogout = e => {
     e.preventDefault();
-
-    // Using Bakendless
-    // authService.logout()
-    //     .then(() => {
-    //         localStorage.removeItem('auth');
-    //         console.log('logged out');
-    //         router('/login');
-    //     })
-    //     .catch(err => {
-    //         console.log(err);
-    //         // TODO
-    //     });
 
     localStorage.removeItem('auth');
     console.log('logged out');

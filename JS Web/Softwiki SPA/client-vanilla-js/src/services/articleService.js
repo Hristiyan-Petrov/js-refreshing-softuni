@@ -25,7 +25,12 @@ export default {
     },
 
     async getAll() {
-        return await request.get(dataBaseEndpoint, Object.assign(jsonHeaders, getUserHeaders()));
+        try {
+            return await request.get(dataBaseEndpoint, Object.assign(jsonHeaders, getUserHeaders()));
+        } catch (error) {
+            console.log('err from artcile service: ' + error);
+            throw error;
+        }
     },
 
     async getOne(id) {
