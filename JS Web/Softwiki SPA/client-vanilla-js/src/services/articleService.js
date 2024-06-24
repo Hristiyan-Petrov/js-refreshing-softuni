@@ -42,6 +42,6 @@ export default {
     },
 
     async delete(id) {
-        return await request.delete(`${dataBaseEndpoint}/${id}`, getUserHeaders());
+        return await request.delete(`${dataBaseEndpoint}/${id}`, Object.assign(jsonHeaders, getUserHeaders()));
     }
 }

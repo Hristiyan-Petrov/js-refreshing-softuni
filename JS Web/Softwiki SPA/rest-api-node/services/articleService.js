@@ -24,12 +24,22 @@ const create = ({ title, category, content }, ownerId) => Article.create({
     ownerId
 });
 
-const getOneById = id => Article.findById(id);
-// console.log({...article, objectId: article._id});
-// res.json({...article, objectId: article._id});
+const getOneById = async id => {
+    const article = await Article.findById(id).lean();
+    return { ...article, objectId: article._id };
+};
+
+const edit = (id, { title, category, content }) => Article.findByIdAndUpdate(id, { title, category, content });
+
+const deleteOne = id => {
+    console.log(id);
+    return Article.findByIdAndDelete(id);
+};
 
 module.exports = {
     getAll,
     create,
-    getOneById
+    getOneById,
+    edit,
+    deleteOne
 }
