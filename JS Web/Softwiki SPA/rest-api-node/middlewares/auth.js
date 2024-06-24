@@ -12,11 +12,11 @@ module.auth = (req, res, next) => {
             let decoded = jwt.verify(token, config.SECRET_KEY);
             req.user = decoded;
         } catch (error) {
-            console.log('error from auth.js: ' + error.message);
+            return res.status(401).json({ message: 'Session over. Please login again.' });
+            // console.log('error from auth.js: ' + error.message);
         }
     }
     next();
-
 };
 
 module.isAuth = (req, res, next) => {

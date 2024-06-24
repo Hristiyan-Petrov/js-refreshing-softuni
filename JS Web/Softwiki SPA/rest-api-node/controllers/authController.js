@@ -65,13 +65,11 @@ router.post('/login',
             authService.login(req.body)
                 .then(userObject => {
                     res.status(200).json(userObject);
-                    console.log('logged from api');
                 })
                 .catch(err => { throw err });
         } catch (error) {
             console.log(error);
             res.status(error.status || 400).json({ error });
-            // TODO: Maybe redirect to error page if code is 500?
         }
     });
 

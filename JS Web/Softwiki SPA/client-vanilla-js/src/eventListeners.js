@@ -48,7 +48,7 @@ export const onRegisterSubmit = e => {
 };
 
 export const onLogout = e => {
-    e.preventDefault();
+    e?.preventDefault();
 
     localStorage.removeItem('auth');
     console.log('logged out');
@@ -74,7 +74,7 @@ export const onArticleCreateSubmit = e => {
             router('/');
         })
         .catch(err => {
-            console.log(err);
+            handleInvalidTokenAction();
         });
 };
 
@@ -86,6 +86,9 @@ export const onDeleteClick = e => {
             console.log(res);
             router('/');
         })
+        .catch(err => {
+            handleInvalidTokenAction();
+        });
 };
 
 export const onArticleEditSubmit = e => {
@@ -106,6 +109,9 @@ export const onArticleEditSubmit = e => {
             console.log('edited');
             router('/');
         })
+        .catch(err => {
+            handleInvalidTokenAction();
+        });
 };
 
 export const onBackClick = (e) => {
@@ -124,4 +130,9 @@ const saveUserCredentials = (userToken, email, uid) => {
         email,
         uid
     }));
+}
+
+const handleInvalidTokenAction = () => {
+    onLogout();
+    router('/login');
 }

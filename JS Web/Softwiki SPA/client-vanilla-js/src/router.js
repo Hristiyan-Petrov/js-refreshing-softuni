@@ -104,6 +104,11 @@ export const router = (path) => {
                         // Double render
                         render(layout(route.template, { navigationHandler, onLogout, onBackClick, ...userData, ...context, ...article, params }), document.getElementById('app'));
                     })
+                    .catch(err => {
+                        // Invalid JWT 
+                        onLogout();
+                        route = routes.find(x => x.path.test('/login'));
+                    });
 
                 break;
 
@@ -114,8 +119,9 @@ export const router = (path) => {
                         render(layout(route.template, { navigationHandler, onLogout, ...userData, articles, ...context }), document.getElementById('app'));
                     })
                     .catch(err => {
-                        console.log('err from client router getAllArticles: ' + err.message);
-                        render(layout(route.template, { navigationHandler, ...userData, ...context }), document.getElementById('app'));
+                        // Invalid JWT 
+                        onLogout();
+                        route = routes.find(x => x.path.test('/login'));
                     });
                 break;
 

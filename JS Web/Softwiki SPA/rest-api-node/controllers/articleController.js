@@ -4,7 +4,6 @@ const { body, validationResult } = require('express-validator');
 const router = require('express').Router();
 
 router.get('/', (req, res) => {
-
     articleService.getAll()
         .then(articles => {
             res.json(articles);

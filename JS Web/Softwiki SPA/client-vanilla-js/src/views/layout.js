@@ -5,7 +5,9 @@ import footer from './footer.js';
 
 export default (temaplateResult, props) => html`    <!-- Pass props to header -->
     ${header(props)}
-    
+
+    <!-- TODO: Notification bar -->
+
     <div id="layout-wrapper">
         ${temaplateResult(props)}
     </div> 
