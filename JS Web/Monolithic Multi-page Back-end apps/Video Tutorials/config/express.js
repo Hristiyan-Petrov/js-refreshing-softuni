@@ -11,7 +11,7 @@ module.exports = app => {
 
     app.engine('.hbs', hbs);
     app.set('view engine', 'hbs');
-    app.set('views', './views');;
+    // app.set('views', './views');;
 
     app.use('/static', express.static('static'));
 
