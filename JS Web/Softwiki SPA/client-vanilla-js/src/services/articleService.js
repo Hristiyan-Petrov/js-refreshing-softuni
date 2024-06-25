@@ -14,19 +14,20 @@ const jsonHeaders = {
     'Content-Type': 'application/json',
 }
 
-const getUserHeaders = () => ({
-    // 'user-token': authService.getData()['user-token']
+const createHeaders = () => ({
+    'Content-Type': 'application/json',
     'Authorization': `Bearer ${authService.getData()['user-token']}`
 });
 
+
 export default {
     async create(articleBody) {
-        return await request.post(dataBaseEndpoint, Object.assign(jsonHeaders, getUserHeaders()), articleBody);
+        return await request.post(dataBaseEndpoint, createHeaders(), articleBody);
     },
 
     async getAll() {
         try {
-            return await request.get(dataBaseEndpoint, Object.assign(jsonHeaders, getUserHeaders()));
+            return await request.get(dataBaseEndpoint, createHeaders());
         } catch (error) {
             console.log('err from artcile service: ' + error);
             throw error;
@@ -34,14 +35,14 @@ export default {
     },
 
     async getOne(id) {
-        return await request.get(`${dataBaseEndpoint}/${id}`, Object.assign(jsonHeaders, getUserHeaders()));
+        return await request.get(`${dataBaseEndpoint}/${id}`, createHeaders());
     },
 
     async edit(id, articleBody) {
-        return await request.put(`${dataBaseEndpoint}/${id}`, Object.assign(jsonHeaders, getUserHeaders()), articleBody);
+        return await request.put(`${dataBaseEndpoint}/${id}`, createHeaders(), articleBody);
     },
 
     async delete(id) {
-        return await request.delete(`${dataBaseEndpoint}/${id}`, Object.assign(jsonHeaders, getUserHeaders()));
+        return await request.delete(`${dataBaseEndpoint}/${id}`, createHeaders());
     }
 }

@@ -36,8 +36,8 @@ router.post('/register',
                 });
 
 
-        } catch (errors) {
-            console.log(errors);
+        } catch (error) {
+            // console.log(error);
 
             let emailErrors = errors.filter(e => e.path === 'email').map(e => ({ message: e.msg }));
             let passwordErrors = errors.filter(e => e.path === 'password').map(e => ({ message: e.msg }));
@@ -45,7 +45,7 @@ router.post('/register',
 
             console.log('errors');
 
-            res.status(400).json({ emailErrors, passwordErrors, repeatPasswordErrors });
+            res.status(400).json(error);
         }
     });
 
@@ -68,8 +68,8 @@ router.post('/login',
                 })
                 .catch(err => { throw err });
         } catch (error) {
-            console.log(error);
-            res.status(error.status || 400).json({ error });
+            // console.log(error);
+            res.status(error.status || 400).json(error);
         }
     });
 

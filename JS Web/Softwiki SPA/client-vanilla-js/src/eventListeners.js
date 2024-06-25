@@ -1,6 +1,7 @@
 import authService from "./services/authService.js";
 import articleService from './services/articleService.js';
 import { router } from "./router.js";
+import { showNotification } from "./notification.js";
 
 export const onLoginSubmit = (e) => {
     e.preventDefault();
@@ -12,15 +13,13 @@ export const onLoginSubmit = (e) => {
     authService.login(email, password)
         .then(userData => {
             console.log('logged');
+            showNotification('Logged in!', 'success');
             console.log(userData);
 
             saveUserCredentials(userData['user-token'], userData.email, userData.objectId);
             router('/');
         })
-        .catch(err => {
-            // TODO
-            console.log(err);
-        });
+        .catch(err => handleError(err));
 };
 
 export const onRegisterSubmit = e => {
@@ -31,20 +30,15 @@ export const onRegisterSubmit = e => {
     let password = formdata.get('password');
     let rePassword = formdata.get('rep-pass');
 
-    // if (password !== rePassword) {
-    //     console.log('passwords must match!');
-    //     return;
-    // }
-
     authService.register(email, password, rePassword)
         .then(userData => {
             console.log(userData);
             console.log('registered');
+            showNotification('Registered!', 'success');
+
             router('/login');
         })
-        .catch(errors => {
-            console.log(errors);
-        });
+        .catch(err => handleError(err));
 };
 
 export const onLogout = e => {
@@ -52,6 +46,7 @@ export const onLogout = e => {
 
     localStorage.removeItem('auth');
     console.log('logged out');
+    showNotification('Logged out!', 'success');
     router('/login');
 };
 
@@ -70,12 +65,10 @@ export const onArticleCreateSubmit = e => {
         content
     })
         .then(article => {
-            console.log(article);
+            // console.log(article);
             router('/');
         })
-        .catch(err => {
-            handleInvalidTokenAction();
-        });
+        .catch(err => handleError(err));
 };
 
 export const onDeleteClick = e => {
@@ -84,11 +77,10 @@ export const onDeleteClick = e => {
     articleService.delete(id)
         .then(res => {
             console.log(res);
+            showNotification('Deleted!', 'success');
             router('/');
         })
-        .catch(err => {
-            handleInvalidTokenAction();
-        });
+        .catch(err => handleError(err));
 };
 
 export const onArticleEditSubmit = e => {
@@ -107,11 +99,10 @@ export const onArticleEditSubmit = e => {
     })
         .then(article => {
             console.log('edited');
+            showNotification('Edited!', 'success');
             router('/');
         })
-        .catch(err => {
-            handleInvalidTokenAction();
-        });
+        .catch(err => handleError(err));
 };
 
 export const onBackClick = (e) => {
@@ -135,4 +126,18 @@ const saveUserCredentials = (userToken, email, uid) => {
 const handleInvalidTokenAction = () => {
     onLogout();
     router('/login');
+}
+
+const handleError = e => {
+
+    if (e.status && e.status === 500) {
+    	router('/not-found');
+    // } else if (e.status && e.status === 400) {
+    // } else if (e.error.status && e.error.status === 401) {
+    //     handleInvalidTokenAction();
+    //     showNotification(e.error.map(e => e.message), 'error');
+    } else {
+        showNotification(e.error.map(e => e.msg), 'error');    // Sent from express-validator
+        // console.log(e.error);
+    }
 }

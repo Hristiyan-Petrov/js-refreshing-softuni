@@ -15,6 +15,7 @@ import articleDetails from './views/article-details.js';
 import articleEdit from './views/article-edit.js';
 
 import { onLoginSubmit, onLogout, onRegisterSubmit, onArticleCreateSubmit, onBackClick, onArticleEditSubmit, onDeleteClick } from './eventListeners.js';
+import { showNotification } from './notification.js';
 
 const routes = [
     {
@@ -106,8 +107,7 @@ export const router = (path) => {
                     })
                     .catch(err => {
                         // Invalid JWT 
-                        onLogout();
-                        route = routes.find(x => x.path.test('/login'));
+                        handleInvalidJWT(err, route);
                     });
 
                 break;
@@ -120,15 +120,13 @@ export const router = (path) => {
                     })
                     .catch(err => {
                         // Invalid JWT 
-                        onLogout();
-                        route = routes.find(x => x.path.test('/login'));
+                        handleInvalidJWT(err, route);
                     });
                 break;
 
             default:
                 break;
         }
-
     }
 
     render(layout(route.template, { navigationHandler, onLogout, ...userData, ...context, params }), document.getElementById('app')); // Not hard, just follow the arg pass flow. Functional programming
@@ -157,3 +155,9 @@ function navigationHandler(e) {
 window.onpopstate = () => {
     router(location.pathname);
 };
+
+function handleInvalidJWT(e, route) {
+    showNotification(e.error.message, 'error');
+    onLogout();
+    route = routes.find(x => x.path.test('/login'));
+}

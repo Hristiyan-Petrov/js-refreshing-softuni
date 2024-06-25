@@ -22,6 +22,7 @@
 
 .container-404 a {
     text-decoration: none;
+    line-height: 5;
     color: white;
     border: 2px solid white;
     border-radius: 2em;

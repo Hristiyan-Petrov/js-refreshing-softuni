@@ -19,7 +19,7 @@ const request = async (method, url, headers, body) => {
 
     let response = await fetch(url, options);
 
-    if (!response.ok) throw await response.json();
+    if (!response.ok) throw { error: await response.json(), status: response.status };
 
     return await response.json();
 }

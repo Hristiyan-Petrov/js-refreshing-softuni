@@ -17,7 +17,9 @@ router.get('/', (req, res) => {
 
 router.post('/',
     body('title').not().isEmpty().withMessage('Please enter title'),
-    body('content').isLength({ max: 150 }).withMessage('Content must be shorter'),
+    body('content')
+        .isLength({ max: 150 }).withMessage('Content must be shorter')
+        .isLength({min: 10}).withMessage('Please write longer content'),
     (req, res) => {
         const errors = validationResult(req).errors;
 
@@ -33,19 +35,18 @@ router.post('/',
                 });
         } catch (error) {
             console.log('from create article controller:');
-            console.log(errors);
+            console.log(error);
 
             let titleErrors = errors.filter(e => e.path === 'title').map(e => ({ message: e.msg }));
             let contentErrors = errors.filter(e => e.path === 'content').map(e => ({ message: e.msg }));
 
-            res.status(400).json({ titleErrors, contentErrors });
+            res.status(400).json(error);
         }
     });
 
 router.get('/:articleId', (req, res) => {
     articleService.getOneById(req.params.articleId)
         .then(article => {
-            console.log('article' + article);
             res.json(article)
         })
         .catch(err => {
