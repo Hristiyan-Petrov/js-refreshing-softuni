@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const saveCurrentAuthViewLocals = require('../middlewares/saveCurrentAuthViewLocals');
 const authService = require('../services/authService');
 
 router.get('/', (req, res) => {
@@ -9,17 +10,19 @@ router.get('/register', (req, res) => {
     res.render('auth/register');
 });
 
-router.post('/register', (req, res, next) => {
-    const { username, password, rePassword } = req.body;
+router.post('/register',
+    saveCurrentAuthViewLocals,
+    (req, res, next) => {
+        const { username, password, rePassword } = req.body;
 
-    authService.register(username, password, rePassword)
-        .then(createdUser => {
-            console.log('createdUser: ' + createdUser);
-            res.redirect('/auth/login');
-        })
-        .catch(next);
-    // .catch(err => next(err));    // Both syntaxes work
-});
+        authService.register(username, password, rePassword)
+            .then(createdUser => {
+                console.log('createdUser: ' + createdUser);
+                res.redirect('/auth/login');
+            })
+            .catch(next);
+        // .catch(err => next(err));    // Both syntaxes work
+    });
 
 router.get('/login', (req, res) => {
     res.render('auth/login');

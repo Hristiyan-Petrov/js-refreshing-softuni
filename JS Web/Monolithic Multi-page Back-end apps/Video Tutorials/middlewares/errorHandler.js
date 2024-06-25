@@ -12,6 +12,10 @@ module.exports = (err, req, res, next) => {
         errorMessages = [{ message: err.message }];
     }
 
-    console.log('err from global handler: ', err);
-    res.status(err.status).render('home', { error: errorMessages });
+    // console.log('err from global handler: ', err);
+
+    res.status(err.status).render(res.locals.view, {
+        error: errorMessages,
+        oldInput: req.body    // keep the valid form data on the corresponding field
+    });
 };
