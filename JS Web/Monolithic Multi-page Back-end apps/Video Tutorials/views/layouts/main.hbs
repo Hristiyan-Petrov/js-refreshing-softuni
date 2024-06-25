@@ -12,7 +12,9 @@
 
 <body>
     {{#if error}}
-    <p>{{error.message}}</p>
+    {{#each error}}
+    <p>{{this.message}}</p>
+    {{/each}}
     {{/if}}
 
     {{{body}}}

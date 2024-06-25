@@ -1,12 +1,18 @@
 const User = require('../models/User');
 
-const register = (username, password) => {
+const register = (username, password, rePassword) => {
     return User.create({
         username,
-        password
+        password,
+        rePassword
     });
 };
 
+const login = (username, password) => {
+
+};
+
 module.exports = {
-    register
+    register,
+    login
 }

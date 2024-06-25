@@ -10,16 +10,15 @@ router.get('/register', (req, res) => {
 });
 
 router.post('/register', (req, res, next) => {
-    const { username, password } = req.body;
+    const { username, password, rePassword } = req.body;
 
-    authService.register(username, password)
+    authService.register(username, password, rePassword)
         .then(createdUser => {
             console.log('createdUser: ' + createdUser);
             res.redirect('/auth/login');
         })
         .catch(next);
     // .catch(err => next(err));    // Both syntaxes work
-
 });
 
 router.get('/login', (req, res) => {
