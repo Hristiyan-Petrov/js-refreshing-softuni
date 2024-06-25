@@ -6,8 +6,6 @@ const jwt = require('jsonwebtoken');
 const register = ({ email, password }) => {
     return bcrypt.hash(password, config.SALT_ROUNDS)
         .then(hash => {
-            console.log('hash: ' + hash);
-            console.log('before creation');
             return User.create({ email: email, password: hash });
         })
         .catch(err => {

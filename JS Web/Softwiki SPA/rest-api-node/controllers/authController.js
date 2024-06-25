@@ -36,8 +36,8 @@ router.post('/register',
                 });
 
 
-        } catch (errors) {
-            console.log(errors);
+        } catch (error) {
+            // console.log(error);
 
             let emailErrors = errors.filter(e => e.path === 'email').map(e => ({ message: e.msg }));
             let passwordErrors = errors.filter(e => e.path === 'password').map(e => ({ message: e.msg }));
@@ -45,17 +45,16 @@ router.post('/register',
 
             console.log('errors');
 
-            res.status(400).json({ emailErrors, passwordErrors, repeatPasswordErrors });
+            res.status(400).json(error);
         }
     });
 
 router.post('/login',
     body('email')
-        .isEmail().withMessage('Email is not valid')
         .normalizeEmail()
         .custom(async (value, { req }) => {
             let existingUser = await User.findOne({ email: value });
-            let match = await bcrypt.compare(req.body.password, existingUser?.password);
+            let match = req.body.password ? await bcrypt.compare(req.body.password, existingUser?.password) : false;
             if (!existingUser || !match) throw new Error('Incorrect email or password.');
         }),
     (req, res) => {
@@ -66,13 +65,11 @@ router.post('/login',
             authService.login(req.body)
                 .then(userObject => {
                     res.status(200).json(userObject);
-                    console.log('logged from api');
                 })
                 .catch(err => { throw err });
         } catch (error) {
-            console.log(error);
-            res.status(err.status || 400).json({ error });
-            // TODO: Maybe redirect to error page if code is 500?
+            // console.log(error);
+            res.status(error.status || 400).json(error);
         }
     });
 

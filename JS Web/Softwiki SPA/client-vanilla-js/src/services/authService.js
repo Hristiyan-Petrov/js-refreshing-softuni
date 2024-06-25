@@ -52,6 +52,7 @@ export default {
             };
             // Handle case when user is not logged in, cause getData() is executed on every route 
         } catch (error) {
+            console.log('error from getData in authService: ' + error);
             return {
                 isAuthenticated: false,
                 email: '',

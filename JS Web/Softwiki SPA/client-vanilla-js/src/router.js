@@ -15,6 +15,7 @@ import articleDetails from './views/article-details.js';
 import articleEdit from './views/article-edit.js';
 
 import { onLoginSubmit, onLogout, onRegisterSubmit, onArticleCreateSubmit, onBackClick, onArticleEditSubmit, onDeleteClick } from './eventListeners.js';
+import { showNotification } from './notification.js';
 
 const routes = [
     {
@@ -33,6 +34,9 @@ const routes = [
             history.pushState({}, '', path);
 
             return template(props);
+        },
+        context: {
+            onLoginSubmit
         },
         getData: articleService.getAll    // For rendering all articles from db on homepage
     },
@@ -54,7 +58,8 @@ const routes = [
         path: /^\/create$/i,
         template: createArticle,
         context: {
-            onArticleCreateSubmit
+            onArticleCreateSubmit,
+            onLoginSubmit
         }
     },
     {
@@ -98,22 +103,30 @@ export const router = (path) => {
                 route.getData(params.id)
                     .then(article => {
                         // Double render
-                        render(layout(route.template, { navigationHandler, onLogout, onBackClick ,...userData, ...context, ...article, params }), document.getElementById('app'));
+                        render(layout(route.template, { navigationHandler, onLogout, onBackClick, ...userData, ...context, ...article, params }), document.getElementById('app'));
                     })
+                    .catch(err => {
+                        // Invalid JWT 
+                        handleInvalidJWT(err, route);
+                    });
+
                 break;
 
             case articleService.getAll:
                 route.getData()
                     .then(articles => {
                         // Double render
-                        render(layout(route.template, { navigationHandler, onLogout, ...userData, ...context, articles, params }), document.getElementById('app'));
+                        render(layout(route.template, { navigationHandler, onLogout, ...userData, articles, ...context }), document.getElementById('app'));
+                    })
+                    .catch(err => {
+                        // Invalid JWT 
+                        handleInvalidJWT(err, route);
                     });
                 break;
 
             default:
                 break;
         }
-
     }
 
     render(layout(route.template, { navigationHandler, onLogout, ...userData, ...context, params }), document.getElementById('app')); // Not hard, just follow the arg pass flow. Functional programming
@@ -142,3 +155,9 @@ function navigationHandler(e) {
 window.onpopstate = () => {
     router(location.pathname);
 };
+
+function handleInvalidJWT(e, route) {
+    showNotification(e.error.message, 'error');
+    onLogout();
+    route = routes.find(x => x.path.test('/login'));
+}

@@ -2,7 +2,8 @@
 import { html, render } from 'lit-html';
 
 export default ({
-    onLoginSubmit
+    onLoginSubmit,
+    navigationHandler
 }) => html`
     <div class="container auth">
         <form action="#" method="" @submit=${onLoginSubmit}>
@@ -21,7 +22,7 @@ export default ({
                     <button class="btn submit" type="submit">Log In</button>
                 </p>
                 <p class="field">
-                    <span>If you don't have profile click <a href="/register">here</a></span>
+                    <span>If you don't have profile click <a href="/register" @click=${navigationHandler}>here</a></span>
                 </p>
             </fieldset>
         </form>
