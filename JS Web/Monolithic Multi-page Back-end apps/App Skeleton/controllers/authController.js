@@ -44,4 +44,10 @@ router.post('/login',
             .catch(next);
     });
 
+
+router.get('/logout', (req, res) => {
+    res.clearCookie('token');
+    res.redirect('/');
+})
+
 module.exports = router;
