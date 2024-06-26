@@ -28,10 +28,20 @@ router.get('/login', (req, res) => {
     res.render('auth/login');
 });
 
-router.post('/login', (req, res) => {
-    console.log(req.body);
+router.post('/login',
+    saveCurrentAuthViewLocals,
+    (req, res, next) => {
+        const { username, password } = req.body;
 
-    res.redirect('/');
-});
+        authService.login(username, password)
+            .then(token => {
+                console.log('user logged');
+
+                res.cookie('token', token, { httpOnly: true });
+
+                res.redirect('/');
+            })
+            .catch(next);
+    });
 
 module.exports = router;

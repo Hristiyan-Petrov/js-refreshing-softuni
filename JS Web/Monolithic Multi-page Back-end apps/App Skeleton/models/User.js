@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-const { SECRET, SALT_ROUNDS } = require('../config');
+const { SALT_ROUNDS } = require('../config');
 
 const userSchema = new mongoose.Schema({
     username: {
@@ -20,15 +20,6 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         minLength: 5
-    },
-    rePassword: {
-        type: String,
-        validate: {
-            validator: function (value) {
-                return value === this.password;
-            },
-            message: 'Passwords do not match'
-        }
     }
 });
 
