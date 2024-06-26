@@ -1,13 +1,16 @@
 const router = require('express').Router();
-const saveCurrentAuthViewLocals = require('../middlewares/saveCurrentAuthViewLocals');
 const authService = require('../services/authService');
+const { AUTH_COOKIE_NAME } = require('../config');
+const isAuthorized = require('../middlewares/isAuthorized');
+const saveCurrentAuthViewLocals = require('../middlewares/saveCurrentAuthViewLocals');
+const attachFlashMessage = require('../middlewares/attachFlashMessage');
 
 router.get('/', (req, res) => {
     res.send('Hello Auth!');
 });
 
-router.get('/register', (req, res) => {
-    res.render('auth/register');
+router.get('/register', attachFlashMessage, (req, res) => {
+    res.render('auth/login');
 });
 
 router.post('/register',
@@ -24,7 +27,7 @@ router.post('/register',
         // .catch(err => next(err));    // Both syntaxes work
     });
 
-router.get('/login', (req, res) => {
+router.get('/login', attachFlashMessage, (req, res) => {
     res.render('auth/login');
 });
 
@@ -37,7 +40,7 @@ router.post('/login',
             .then(token => {
                 console.log('user logged');
 
-                res.cookie('token', token, { httpOnly: true });
+                res.cookie(AUTH_COOKIE_NAME, token, { httpOnly: true });
 
                 res.redirect('/');
             })
@@ -46,8 +49,16 @@ router.post('/login',
 
 
 router.get('/logout', (req, res) => {
-    res.clearCookie('token');
+    res.clearCookie(AUTH_COOKIE_NAME);
     res.redirect('/');
-})
+});
+
+
+router.get('/secret-action',
+    isAuthorized,
+    (req, res) => {
+        // do something
+        res.send('I am authorized');
+    });
 
 module.exports = router;

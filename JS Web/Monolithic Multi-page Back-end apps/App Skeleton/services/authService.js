@@ -1,8 +1,7 @@
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { SECRET } = require('../config');
-const { errors } = require('../config/constants');
+const { SECRET,errors } = require('../config');
 
 const register = (username, password, rePassword) => {
 
