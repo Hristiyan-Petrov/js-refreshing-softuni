@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const { mongooseValidationMessages } = require('../config/constants');
 const { SALT_ROUNDS } = require('../config');
 
 const userSchema = new mongoose.Schema({
@@ -13,7 +14,7 @@ const userSchema = new mongoose.Schema({
                 console.log(currentUser);
                 return !currentUser;
 
-            }, message: 'Username is taken'
+            }, message: mongooseValidationMessages.TAKEN_USERNAME
         }
     },
     password: {

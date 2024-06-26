@@ -2,10 +2,11 @@ const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { SECRET } = require('../config');
+const { errors } = require('../config/constants');
 
 const register = (username, password, rePassword) => {
 
-    if (password !== rePassword) return Promise.reject({ message: 'Passwords do not match', status: 400 });    // throw Equivalents return Promise.reject
+    if (password !== rePassword) return Promise.reject(errors.PASSWORDS_DO_NOT_MATCH);    // throw Equivalents return Promise.reject
 
     return User.create({
         username,
@@ -17,11 +18,11 @@ const register = (username, password, rePassword) => {
 const login = async (username, password) => {
     let user = await User.findOne({ username })
 
-    if (!user) throw ({ message: 'Invalid user or password', status: 404 });
+    if (!user) throw (errors.INVALID_USER_OR_PASSWORD);
 
     let match = await bcrypt.compare(password, user.password);
 
-    if (!match) throw ({ message: 'Invalid user or password', status: 404 });
+    if (!match) throw (errors.INVALID_USER_OR_PASSWORD);
 
     let token = jwt.sign(
         { _id: user._id, username: user.username },
