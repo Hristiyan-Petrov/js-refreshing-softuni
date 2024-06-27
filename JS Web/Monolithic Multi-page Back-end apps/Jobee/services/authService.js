@@ -3,19 +3,20 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { SECRET,errors } = require('../config');
 
-const register = (username, password, rePassword) => {
+const register = (email, password, rePassword, description) => {
 
     if (password !== rePassword) return Promise.reject(errors.PASSWORDS_DO_NOT_MATCH);    // throw Equivalents return Promise.reject
 
     return User.create({
-        username,
+        email,
         password,
-        rePassword
+        rePassword,
+        description
     });
 };
 
-const login = async (username, password) => {
-    let user = await User.findOne({ username })
+const login = async (email, password) => {
+    let user = await User.findOne({ email });
 
     if (!user) throw (errors.INVALID_USER_OR_PASSWORD);
 
@@ -24,7 +25,7 @@ const login = async (username, password) => {
     if (!match) throw (errors.INVALID_USER_OR_PASSWORD);
 
     let token = jwt.sign(
-        { _id: user._id, username: user.username },
+        { _id: user._id, email: user.email },
         SECRET,
         { expiresIn: '1h' }
     );

@@ -10,18 +10,18 @@ router.get('/', (req, res) => {
 });
 
 router.get('/register', attachFlashMessage, (req, res) => {
-    res.render('auth/login');
+    res.render('auth/register');
 });
 
 router.post('/register',
     saveCurrentAuthViewLocals,
     (req, res, next) => {
-        const { username, password, rePassword } = req.body;
+        const { email, password, rePassword, description } = req.body;
 
-        authService.register(username, password, rePassword)
+        authService.register(email, password, rePassword, description)
             .then(createdUser => {
                 console.log('createdUser: ' + createdUser);
-                res.redirect('/auth/register');
+                res.redirect('/auth/login');
             })
             .catch(next);
         // .catch(err => next(err));    // Both syntaxes work
@@ -34,9 +34,9 @@ router.get('/login', attachFlashMessage, (req, res) => {
 router.post('/login',
     saveCurrentAuthViewLocals,
     (req, res, next) => {
-        const { username, password } = req.body;
+        const { email, password } = req.body;
 
-        authService.login(username, password)
+        authService.login(email, password)
             .then(token => {
                 console.log('user logged');
 
