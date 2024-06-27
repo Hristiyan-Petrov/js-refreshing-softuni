@@ -1,0 +1,23 @@
+{{!-- express-handlebars searches for this file out of the box! --}}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NodeJS Multi-page App Skeleton</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+
+<body>
+    {{#if error}}
+    {{#each error}}
+    <p>{{this.message}}</p>
+    {{/each}}
+    {{/if}}
+
+    {{{body}}}
+</body>
+
+</html>
