@@ -6,5 +6,6 @@ const saveLastRoute = require('./middlewares/saveLastRoute');
 
 router.use('/', require('./controllers/homeController'));
 router.use('/auth', saveLastRoute, authController);
+router.use('/ads', require('./controllers/adController'));
 
 module.exports = router;
