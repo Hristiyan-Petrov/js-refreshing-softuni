@@ -2,11 +2,12 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const { SALT_ROUNDS, mongooseValidationMessages: { auth: messages } } = require('../config');
 
+const getRequiredMessage = field => `${messages.REQUIRED}${field}`;
 
 const userSchema = new mongoose.Schema({
     email: {
         type: String,
-        required: [true, messages.REQUIRED + 'email'],
+        required: [true, getRequiredMessage('email')],
         validate:
             [
                 // Check email format
@@ -31,7 +32,7 @@ const userSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: [true, messages.REQUIRED + 'password'],
+        required: [true,getRequiredMessage('password')],
         validate: {
             validator: function (value) {
                 // At least 8 characters
@@ -47,7 +48,7 @@ const userSchema = new mongoose.Schema({
     },
     description: {
         type: String,
-        required: [true, messages.REQUIRED + 'description'],
+        required: [true, getRequiredMessage('description')],
         minlength: [10, 'Description' + messages.MINLENGTH],
     },
     myAds: [

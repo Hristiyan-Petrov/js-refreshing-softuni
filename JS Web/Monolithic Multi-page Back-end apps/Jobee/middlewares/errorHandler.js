@@ -14,14 +14,16 @@ module.exports = (err, req, res, next) => {
             .split(', ')
             .map(mess => ({ message: mess.split(':')[1] }));
 
-        console.log(errorMessages);
+        const flashErrors = req.flash('error');
+
+        if (flashErrors.length) {
+            flashErrors.forEach(err => errorMessages.push(err));
+        }
+
     } else {
         err.message = err.message || err.msg || 'Something went wrong...';
         errorMessages = [{ message: err.message }];
     }
-
-    // console.log(res.locals?.view);
-    // console.log(res.locals.view?.substring(1));
 
     let viewPath = res.locals.view;
 

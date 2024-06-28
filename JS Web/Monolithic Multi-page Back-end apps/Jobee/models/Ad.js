@@ -1,26 +1,29 @@
 const mongoose = require('mongoose');
 const messages = require('../config').mongooseValidationMessages.ad;
 
+const getRequiredMessage = field => `${messages.REQUIRED}${field}`;
+const getMinLengthMessage = field => `${field.charAt(0).toUpperCase() + field.slice(1)}${messages.MINLENGTH}`;
+
 const adSchema = new mongoose.Schema({
     headline: {
         type: String,
-        required: [true, messages.REQUIRED + 'headline'],
-        minlength: [4, 'Headline' + messages.MINLENGTH]
+        required: [true, getRequiredMessage('headline')],
+        minlength: [4, getMinLengthMessage('Headline')]
     },
     location: {
         type: String,
-        required: [true, messages.REQUIRED + 'location'],
-        minlength: [8, 'Location' + messages.MINLENGTH]
+        required: [true, getRequiredMessage('location')],
+        minlength: [8, getMinLengthMessage('Location')]
     },
     companyName: {
         type: String,
-        required: [true, messages.REQUIRED + 'company'],
-        minlength: [3, 'Company name' + messages.MINLENGTH]
+        required: [true, getRequiredMessage('company')],
+        minlength: [3, getMinLengthMessage('Company name')]
     },
     companyDescription: {
         type: String,
-        required: [true, messages.REQUIRED + 'company description'],
-        minlength: [40, 'Company description' + messages.MINLENGTH]
+        required: [true, getRequiredMessage('company description')],
+        minlength: [40, getMinLengthMessage('Company description')]
     },
     author: {
         type: mongoose.Types.ObjectId,

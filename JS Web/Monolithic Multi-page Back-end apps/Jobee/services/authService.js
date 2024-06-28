@@ -1,16 +1,14 @@
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { SECRET,errors } = require('../config');
+const { SECRET, errors } = require('../config');
 
-const register = (email, password, rePassword, description) => {
-
-    if (password !== rePassword) return Promise.reject(errors.PASSWORDS_DO_NOT_MATCH);    // throw Equivalents return Promise.reject
+const register = async (email, password, rePassword, description) => {
+    // if (password !== rePassword) return Promise.reject(errors.PASSWORDS_DO_NOT_MATCH);    // throw Equivalents return Promise.reject
 
     return User.create({
         email,
         password,
-        rePassword,
         description
     });
 };

@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const authService = require('../services/authService');
-const { AUTH_COOKIE_NAME } = require('../config');
+const { AUTH_COOKIE_NAME, errors } = require('../config');
 const isAuthorized = require('../middlewares/isAuthorized');
 const saveCurrentAuthViewLocals = require('../middlewares/saveCurrentAuthViewLocals');
 const attachFlashMessage = require('../middlewares/attachFlashMessage');
@@ -17,6 +17,10 @@ router.post('/register',
     saveCurrentAuthViewLocals,
     (req, res, next) => {
         const { email, password, rePassword, description } = req.body;
+
+        if (password !== rePassword) {
+            req.flash('error', errors.PASSWORDS_DO_NOT_MATCH);
+        }
 
         authService.register(email, password, rePassword, description)
             .then(createdUser => {
