@@ -53,7 +53,13 @@ const userSchema = new mongoose.Schema({
     myAds: [
         {
             type: mongoose.Types.ObjectId,
-            ref: 'User'
+            ref: 'Ad'
+        }
+    ],
+    appliedToAds: [
+        {
+            type: mongoose.Types.ObjectId,
+            ref: 'Ad'
         }
     ]
 });

@@ -3,9 +3,27 @@ const adService = require('../services/adService');
 const saveCurrentAuthViewLocals = require('../middlewares/saveCurrentAuthViewLocals');
 
 router.get('/', (req, res, next) => {
-    adService.getAds()
+    adService.get(req.user?._id)
         .then(ads => {
             res.render('ads/all-ads', { ads });
+        })
+        .catch(next);
+});
+
+router.get('/applied', (req, res, next) => {
+    adService.getApplied(req.user._id)
+        .then(doc => {
+            console.log(doc);
+            res.render('ads/applied', { ads: doc.appliedToAds });
+        })
+        .catch(next);
+});
+
+router.get('/my-ads', (req, res, next) => {
+    adService.getOwn(req.user._id)
+        .then(doc => {
+            console.log(doc.myAds);
+            res.render('ads/my-ads', { ads: doc.myAds });
         })
         .catch(next);
 });
@@ -36,14 +54,17 @@ router.get('/edit', (req, res) => {
 router.get('/details/:adId', async (req, res, next) => {
     try {
         let ad = await adService.getOneById(req.params.adId);
-        let authorEmail = (await adService.getAuthorEmail(ad.author)).email;
+        let params = { ad };
 
-        res.render('ads/details', {
-            ad,
-            authorEmail,
-            isOwn: ad.author == req.user._id,
-            isApplied: ad.appliedUsers.some(x => x._id.equals(req.user._id))
-        });
+        if (req.user) {
+            let authorEmail = (await adService.getAuthorEmail(ad.author)).email;
+            Object.assign(params, {
+                authorEmail,
+                isOwn: ad.author == req.user?._id,
+                isApplied: ad.appliedUsers?.some(x => x._id.equals(req.user._id))
+            });
+        }
+        res.render('ads/details', params);
 
     } catch (error) {
         next(error)
@@ -51,13 +72,11 @@ router.get('/details/:adId', async (req, res, next) => {
 });
 
 router.get('/apply/:adId', (req, res, next) => {
-    console.log('req.user._id: ' + req.user._id);
     adService.applyUser(req.params.adId, req.user._id)
-        .then(response => {
-            console.log(response);
+        .then(() => {
             res.redirect(`/ads/details/${req.params.adId}`);
         })
-        .catch(err => next(err));
+        .catch(next);
 });
 
 module.exports = router;

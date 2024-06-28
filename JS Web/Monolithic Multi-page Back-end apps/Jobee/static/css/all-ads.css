@@ -100,6 +100,10 @@
     text-align: left;
 }
 
+#all-ads-page > article.all-ads-title > article {
+    padding: 1rem;
+}
+
 .all-ads-card-buttons {
     padding: 45px 0px;
     margin-left: 17px;

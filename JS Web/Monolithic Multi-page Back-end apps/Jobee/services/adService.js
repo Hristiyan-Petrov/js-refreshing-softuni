@@ -2,10 +2,40 @@ const Ad = require('../models/Ad');
 const User = require('../models/User');
 
 module.exports = {
-    getAds: number => Ad
+    get: async authorId => {
+        let query = {};
+    
+        if (authorId) {
+            let applied = (await User.findById(authorId).select('appliedToAds').lean()).appliedToAds;
+    
+            // Only find Ads where author is not the given user and user hasn't applied
+            query.author = { $ne: authorId };
+            query._id = { $nin: applied };
+        }
+    
+        return Ad
+            .find(query)
+            .sort({ _id: -1 })
+            .lean()
+    },
+    getLast3: () => Ad
         .find()
         .sort({ _id: -1 })
-        .limit(number)
+        .limit(3)
+        .lean(),
+    getOwn: _id => User
+        .findOne({ _id })
+        .populate({
+            path: 'myAds',
+            select: 'headline companyName location'
+        })
+        .lean(),
+    getApplied: _id => User
+        .findOne({ _id })
+        .populate({
+            path: 'appliedToAds',
+            select: 'headline companyName location'
+        })
         .lean(),
     getOneById: id => Ad.
         findById(id)
@@ -23,5 +53,12 @@ module.exports = {
         appliedUsers: []
     }),
     updateOwns: (userId, adId) => User.updateOne({ _id: userId }, { $push: { myAds: adId } }),
-    applyUser: (adId, userId) => Ad.updateOne({ _id: adId }, { $push: { appliedUsers: userId } }),
+    applyUser: async (adId, userId) => {
+        try {
+            let res = await Ad.updateOne({ _id: adId }, { $push: { appliedUsers: userId } });
+            let res1 = await User.updateOne({ _id: userId }, { $push: { appliedToAds: adId } });
+        } catch (error) {
+            throw error;
+        }
+    },
 }

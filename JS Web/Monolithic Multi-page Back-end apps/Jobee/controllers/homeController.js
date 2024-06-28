@@ -1,10 +1,9 @@
-const saveCurrentAuthViewLocals = require('../middlewares/saveCurrentAuthViewLocals');
 const adService = require('../services/adService');
 
 const router = require('express').Router();
 
 router.get('/', (req, res, next) => {
-    adService.getAds(3)
+    adService.getLast3()
         .then(ads => {
             res.render('home/index', { ads });
         })

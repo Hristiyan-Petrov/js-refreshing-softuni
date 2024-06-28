@@ -19,23 +19,31 @@
 
                 <article class="details-page-card-buttons">
 
-                    {{#if isOwn}}
-                    <!--only for registered users and author of the ad-->
-                    <a href="/ads/edit/{{ad._id}}" class="btn-edit">Edit</a>
-                    <a href="/ads/delete{{ad._id}}" class="btn-delete">Delete</a>
+                    {{#if isAuth}}
+                        {{#if isOwn}}
+                        <!--only for registered users and author of the ad-->
+                        <a href="/ads/edit/{{ad._id}}" class="btn-edit">Edit</a>
+                        <a href="/ads/delete{{ad._id}}" class="btn-delete">Delete</a>
+
+                        {{else}}
+
+                            {{#if isApplied}}
+                            <!--logged in user who has already applied for current ad-->
+                            <p class="already-applied">You have already applied!</p>
+
+                            {{else}}
+                            <!--logged in user who did not apply for current ad-->
+                            <a href="/ads/apply/{{ad._id}}" class="btn-apply">Apply now!</a>
+                            <p class="applied-people">Hurry up, {{ad.appliedUsers.length}} people have already applied.</p>
+                            {{/if}}
+                        {{/if}}
 
                     {{else}}
 
-                    {{#if isApplied}}
-                    <!--logged in user who has already applied for current ad-->
-                    <p class="already-applied">You have already applied!</p>
+                    <p class="applied-people">You need to login to be able to apply. <a href="/auth/login">Login now!</a></p>
 
-                    {{else}}
-                    <!--logged in user who did not apply for current ad-->
-                    <a href="/ads/apply/{{ad._id}}" class="btn-apply">Apply now!</a>
-                    <p class="applied-people">Hurry up, {{ad.appliedUsers.length}} people have already applied.</p>
                     {{/if}}
-                    {{/if}}
+
                 </article>
             </article>
 
@@ -57,15 +65,6 @@
 
         {{/each}}
 
-        {{!-- <article class="info-about-candidates-card">
-            <h2>Email: petar@abv.bg</h2>
-            <h3>Description of the candidate's skills: Experience with HTML 5, CSS 3, Node.js</h3>
-        </article>
-
-        <article class="info-about-candidates-card">
-            <h2>Email: ivan@abv.bg</h2>
-            <h3>Description of the candidate's skills: Experience with Node.js</h3>
-        </article> --}}
     </section>
     {{/if}}
 </main>
