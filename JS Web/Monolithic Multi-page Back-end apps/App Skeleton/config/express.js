@@ -3,8 +3,9 @@ const { engine } = require('express-handlebars');
 const mongoSanitize = require('express-mongo-sanitize');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
-const isAuthenticated = require('../middlewares/isAuthenticated');
 const flash = require('connect-flash');
+const saveLastRoute = require('../middlewares/saveLastRoute');
+const isAuthenticated = require('../middlewares/isAuthenticated');
 
 module.exports = app => {
 
@@ -38,6 +39,8 @@ module.exports = app => {
     }));
 
     app.use(flash());
+
+    app.use(saveLastRoute);
 
     app.use(isAuthenticated);
 }

@@ -8,7 +8,11 @@ module.exports = (err, req, res, next) => {
     let errorMessages = [];
     if (err.name === 'ValidationError') {
         // Splitting concatenated Mongoose error object messages
-        errorMessages = err.message.split(', ').map(message => ({ message }));
+        errorMessages = err.message
+            .slice('User validation failed: '.length)
+            .split(', ')
+            .map(mess => ({ message: mess.split(':')[1] }));
+        console.log(errorMessages);
     } else {
         err.message = err.message || err.msg || 'Something went wrong...';
         errorMessages = [{ message: err.message }];
@@ -25,7 +29,7 @@ module.exports = (err, req, res, next) => {
     // res.redirect(res.locals.view);
 
 
-    res.status(err.status).render(res.locals.view, {
+    res.status(err.status).render(res.locals.view.substring(1), {
         error: errorMessages,
         oldInput: req.body    // keep the valid form data on the corresponding field
     });
