@@ -234,32 +234,18 @@
 
 .info-about-candidates-card>h2,
 .info-about-candidates-card>h3 {
-    font-family: "Poppins", sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    margin-bottom: 0.8em;
-    width: 600px;
-    word-wrap: break-word;
-    color: rgb(44, 45, 65);
-    outline-style: none;
-}
-
-.info-about-candidates-card>a {
-    color: #fff;
     border: none;
-    padding: 7px;
-    outline: none;
-    margin-top: -0.2em;
-    margin-bottom: 0.5em;
-    font-size: 16px;
-    font-weight: 600;
-    width: 100px;
-    background-color: rgb(255, 111, 103);
-    border-radius: 12px;
-    text-decoration: none;
-    width: 100px;
+    color: white;
     text-align: center;
-    float: right;
+    text-decoration: none;
+    display: inline-block;
+    width: auto;
+    margin-top: 1em;
+    padding: 7px;
+    background: rgb(255, 132, 126);
+    font-weight: 500;
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
 }
 
 .info-about-candidates-card>a:hover {

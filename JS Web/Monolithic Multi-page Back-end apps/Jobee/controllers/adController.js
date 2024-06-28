@@ -79,4 +79,22 @@ router.get('/apply/:adId', (req, res, next) => {
         .catch(next);
 });
 
+router.get('/edit/:adId', (req, res, next) => {
+    adService.getOneById(req.params.adId)
+        .then(adData => res.render('ads/edit', adData))
+        .catch(next)
+});
+
+router.post('/edit/:adId', saveCurrentAuthViewLocals, (req, res, next) => {
+    adService.update(req.params.adId, req.body)
+        .then(updated => res.redirect(`/ads/details/${req.params.adId}`))
+        .catch(next);
+});
+
+router.get('/delete/:adId', (req, res, next) => {
+    adService.delete(req.params.adId)
+        .then(() => res.redirect('/ads/my-ads'))
+        .catch(next);
+});
+
 module.exports = router;

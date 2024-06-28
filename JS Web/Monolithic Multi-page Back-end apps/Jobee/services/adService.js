@@ -4,15 +4,15 @@ const User = require('../models/User');
 module.exports = {
     get: async authorId => {
         let query = {};
-    
+
         if (authorId) {
             let applied = (await User.findById(authorId).select('appliedToAds').lean()).appliedToAds;
-    
+
             // Only find Ads where author is not the given user and user hasn't applied
             query.author = { $ne: authorId };
             query._id = { $nin: applied };
         }
-    
+
         return Ad
             .find(query)
             .sort({ _id: -1 })
@@ -52,13 +52,24 @@ module.exports = {
         author,
         appliedUsers: []
     }),
+    update: async (id, { headline, location, companyName, companyDescription }) => {
+        const currentAd = await Ad.findById(id);
+
+        currentAd.headline = headline;
+        currentAd.location = location;
+        currentAd.companyName = companyName;
+        currentAd.companyDescription = companyDescription;
+
+        return currentAd.save();
+    },
     updateOwns: (userId, adId) => User.updateOne({ _id: userId }, { $push: { myAds: adId } }),
     applyUser: async (adId, userId) => {
         try {
-            let res = await Ad.updateOne({ _id: adId }, { $push: { appliedUsers: userId } });
-            let res1 = await User.updateOne({ _id: userId }, { $push: { appliedToAds: adId } });
+            await Ad.updateOne({ _id: adId }, { $push: { appliedUsers: userId } });
+            await User.updateOne({ _id: userId }, { $push: { appliedToAds: adId } });
         } catch (error) {
             throw error;
         }
     },
+    delete: _id => Ad.deleteOne({ _id })
 }

@@ -2,7 +2,7 @@
 
 module.exports = (err, req, res, next) => {
     console.log('HERE');
-    console.log(err);
+    // console.log(err);
 
     err.status = err.status || 500;
 
@@ -23,7 +23,15 @@ module.exports = (err, req, res, next) => {
     // console.log(res.locals?.view);
     // console.log(res.locals.view?.substring(1));
 
-    res.status(err.status).render(res.locals.view?.substring(1) || 'error/404', {
+    let viewPath = res.locals.view;
+
+    if (viewPath?.includes('edit')) {
+        viewPath = 'ads/edit';
+    } else {
+        viewPath = res.locals.view?.substring(1);
+    }
+
+    res.status(err.status).render(viewPath || 'error/404', {
         error: errorMessages,
         oldInput: req.body    // keep the valid form data on the corresponding field
     });

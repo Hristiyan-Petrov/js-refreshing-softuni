@@ -10,7 +10,12 @@ const isAuthenticated = require('../middlewares/isAuthenticated');
 module.exports = app => {
 
   const hbs = engine({
-    extname: '.hbs'
+    extname: '.hbs',
+    helpers: {
+      either: function (value, defaultValue) {
+        return value || defaultValue;
+      }
+    }
   });
 
   app.engine('.hbs', hbs);

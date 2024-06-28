@@ -15,7 +15,9 @@ module.exports = {
         auth: {
             INVALID_EMAIL_FORMAT: 'Invalid email format. Expected format: name@domain.extension',
             TAKEN_USERNAME: 'Username is taken',
-            STRONG_PASSWORD: 'Password should have at least 8 characters, one lowercase character, one uppercase character, and one digit.'
+            STRONG_PASSWORD: 'Password should have at least 8 characters, one lowercase character, one uppercase character, and one digit.',
+            REQUIRED: 'Please enter ',
+            MINLENGTH: ' must be longer than that.'
         },
         ad: {
             REQUIRED: 'Please enter ',
