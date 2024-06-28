@@ -34,4 +34,13 @@ const adSchema = new mongoose.Schema({
     ]
 });
 
+// Capitalize first letters
+adSchema.pre('save', function (next) {
+    this.headline = this.headline.charAt(0).toUpperCase() + this.headline.slice(1);
+    this.location = this.location.charAt(0).toUpperCase() + this.location.slice(1);
+    this.companyName = this.companyName.charAt(0).toUpperCase() + this.companyName.slice(1);
+    this.companyDescription = this.companyDescription.charAt(0).toUpperCase() + this.companyDescription.slice(1);
+    next();
+});
+
 module.exports = mongoose.model('Ad', adSchema);

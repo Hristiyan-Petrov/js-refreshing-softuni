@@ -2,8 +2,13 @@ const router = require('express').Router();
 const adService = require('../services/adService');
 const saveCurrentAuthViewLocals = require('../middlewares/saveCurrentAuthViewLocals');
 
-router.get('/', (req, res) => {
-    res.render('ads/all-ads');
+router.get('/', (req, res, next) => {
+    adService.getAll()
+        .then(ads => {
+            console.log(ads);
+            res.render('ads/all-ads', { ads });
+        })
+        .catch(next);
 });
 
 router.get('/create', (req, res) => {
