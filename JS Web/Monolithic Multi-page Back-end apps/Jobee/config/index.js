@@ -12,8 +12,14 @@ module.exports = {
         AUTHORIZATION: { message: 'You do not have the rigths for this page', status: 401 },
     },
     mongooseValidationMessages: {
-        INVALID_EMAIL_FORMAT: 'Invalid email format. Expected format: name@domain.extension',
-        TAKEN_USERNAME: 'Username is taken',
-        STRONG_PASSWORD: 'Password should have at least 8 characters, one lowercase character, one uppercase character, and one digit.'
+        auth: {
+            INVALID_EMAIL_FORMAT: 'Invalid email format. Expected format: name@domain.extension',
+            TAKEN_USERNAME: 'Username is taken',
+            STRONG_PASSWORD: 'Password should have at least 8 characters, one lowercase character, one uppercase character, and one digit.'
+        },
+        ad: {
+            REQUIRED: 'Please enter ',
+            MINLENGTH: ' must be longer than that.'
+        }
     },
 };

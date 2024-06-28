@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-const { SALT_ROUNDS, mongooseValidationMessages } = require('../config');
+const { SALT_ROUNDS, mongooseValidationMessages: { auth: messages } } = require('../config');
+
 
 const userSchema = new mongoose.Schema({
     email: {
         type: String,
-        required: true,
-        minLength: 5,
+        required: [true, messages.REQUIRED + 'email'],
         validate:
             [
                 // Check email format
@@ -15,7 +15,7 @@ const userSchema = new mongoose.Schema({
                         const emailRegex = /^[a-zA-Z0-9_.±]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/;
                         return emailRegex.test(value);
                     },
-                    message: mongooseValidationMessages.INVALID_EMAIL_FORMAT
+                    message: messages.INVALID_EMAIL_FORMAT
                 },
                 // Check if the email is already taken
                 {
@@ -25,14 +25,13 @@ const userSchema = new mongoose.Schema({
                         return !currentUser;
 
                     },
-                    message: mongooseValidationMessages.TAKEN_USERNAME
+                    message: messages.TAKEN_USERNAME
                 }
             ]
     },
     password: {
         type: String,
-        required: true,
-        minLength: 5,
+        required: [true, messages.REQUIRED + 'password'],
         validate: {
             validator: function (value) {
                 // At least 8 characters
@@ -43,14 +42,20 @@ const userSchema = new mongoose.Schema({
 
                 return passwordRegex.test(value);
             },
-            message: mongooseValidationMessages.STRONG_PASSWORD
+            message: messages.STRONG_PASSWORD
         }
     },
     description: {
         type: String,
-        required: true,
-        minLength: 40
-    }
+        required: [true, messages.REQUIRED + 'description'],
+        minlength: [10, 'Description' + messages.MINLENGTH],
+    },
+    myAds: [
+        {
+            type: mongoose.Types.ObjectId,
+            ref: 'User'
+        }
+    ]
 });
 
 userSchema.pre('save', function (next) {

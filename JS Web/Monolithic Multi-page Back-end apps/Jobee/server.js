@@ -7,7 +7,6 @@ const app = express();
 require('./config/mongoose');
 require('./config/express')(app);
 
-// app.use(saveLastRoute);
 app.use(routes);
 app.use(errorHandler);
 
