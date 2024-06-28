@@ -1,6 +1,6 @@
 <header class="header">
     <article class="header-logo">
-        <img src="../static/img/logo.png">
+        <img src="/static/img/logo.png">
     </article>
 
     {{#if isAuth}}
@@ -11,12 +11,18 @@
             <li class="header-nav-list-item active">
                 <a href="/" class="header-nav-list-item-link active">Home Page</a>
             </li>
-            <li class="header-nav-list-item">
-                <a href="/ads" class="header-nav-list-item-link">All ads</a>
-            </li>
 
             {{#if isAuth}}
             <!-- Logged users -->
+            <li class="header-nav-list-item">
+                <a href="/ads" class="header-nav-list-item-link">Apply to ads</a>
+            </li>
+            <li class="header-nav-list-item">
+                <a href="/ads/my-ads" class="header-nav-list-item-link">My ads</a>
+            </li>
+            <li class="header-nav-list-item">
+                <a href="/ads/applied" class="header-nav-list-item-link">Applied Ads</a>
+            </li>
             <li class="header-nav-list-item">
                 <a href="/ads/create" class="header-nav-list-item-link">Create Ad</a>
             </li>
@@ -29,6 +35,9 @@
 
             {{else}}
             <!-- Guest users -->
+            <li class="header-nav-list-item">
+                <a href="/ads" class="header-nav-list-item-link">See ads</a>
+            </li>
             <li class="header-nav-list-item">
                 <a href="/auth/register" class="header-nav-list-item-link">Register</a>
             </li>

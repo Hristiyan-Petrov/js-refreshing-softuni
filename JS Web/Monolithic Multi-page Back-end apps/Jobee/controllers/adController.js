@@ -3,9 +3,8 @@ const adService = require('../services/adService');
 const saveCurrentAuthViewLocals = require('../middlewares/saveCurrentAuthViewLocals');
 
 router.get('/', (req, res, next) => {
-    adService.getAll()
+    adService.getAds()
         .then(ads => {
-            console.log(ads);
             res.render('ads/all-ads', { ads });
         })
         .catch(next);
@@ -34,8 +33,31 @@ router.get('/edit', (req, res) => {
     res.render('ads/edit');
 });
 
-router.get('/details', (req, res) => {
-    res.render('ads/details');
-})
+router.get('/details/:adId', async (req, res, next) => {
+    try {
+        let ad = await adService.getOneById(req.params.adId);
+        let authorEmail = (await adService.getAuthorEmail(ad.author)).email;
+
+        res.render('ads/details', {
+            ad,
+            authorEmail,
+            isOwn: ad.author == req.user._id,
+            isApplied: ad.appliedUsers.some(x => x._id.equals(req.user._id))
+        });
+
+    } catch (error) {
+        next(error)
+    }
+});
+
+router.get('/apply/:adId', (req, res, next) => {
+    console.log('req.user._id: ' + req.user._id);
+    adService.applyUser(req.params.adId, req.user._id)
+        .then(response => {
+            console.log(response);
+            res.redirect(`/ads/details/${req.params.adId}`);
+        })
+        .catch(err => next(err));
+});
 
 module.exports = router;

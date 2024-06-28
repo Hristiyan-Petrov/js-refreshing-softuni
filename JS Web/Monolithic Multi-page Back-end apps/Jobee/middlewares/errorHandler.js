@@ -20,10 +20,10 @@ module.exports = (err, req, res, next) => {
         errorMessages = [{ message: err.message }];
     }
 
-    console.log(res.locals?.view);
-    console.log(res.locals.view?.substring(1));
+    // console.log(res.locals?.view);
+    // console.log(res.locals.view?.substring(1));
 
-    res.status(err.status).render(res.locals.view?.substring(1) || '404', {
+    res.status(err.status).render(res.locals.view?.substring(1) || 'error/404', {
         error: errorMessages,
         oldInput: req.body    // keep the valid form data on the corresponding field
     });
