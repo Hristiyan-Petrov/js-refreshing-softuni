@@ -1,13 +1,14 @@
 const router = require('express').Router();
 const authController = require('../controllers/authController');
-const attachFlashMessage = require('../middlewares/attachFlashMessage');
-const saveCurrentAuthViewLocals = require('../middlewares/saveCurrentAuthViewLocals');
-const isAuthorized = require('../middlewares/isAuthorized');
+const saveCurrentViewLocals = require('../middlewares/saveCurrentViewLocals');
+const authGuards = require('../middlewares/authGuards');
 
-router.get('/register', attachFlashMessage, authController.showRegister);
-router.post('/register', saveCurrentAuthViewLocals, authController.register);
-router.get('/login', attachFlashMessage, authController.showLogin);
-router.post('/login', saveCurrentAuthViewLocals, authController.login);
-router.get('/logout', authController.logout);
+router.get('/logout', authGuards.isAuthorized, authController.logout);
+
+router.use(authGuards.isGuest);
+router.get('/register', authController.showRegister);
+router.post('/register', saveCurrentViewLocals, authController.register);
+router.get('/login', authController.showLogin);
+router.post('/login', saveCurrentViewLocals, authController.login);
 
 module.exports = router;

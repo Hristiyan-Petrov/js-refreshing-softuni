@@ -9,7 +9,8 @@ module.exports = {
     errors: {
         PASSWORDS_DO_NOT_MATCH: { message: 'Passwords do not match', status: 400 },
         INVALID_USER_OR_PASSWORD: { message: 'Invalid user or password', status: 404 },
-        AUTHORIZATION: { message: 'You do not have the rigths for this page', status: 401 },
+        IS_AUTHORIZED: { message: 'Please login to access this page', status: 401 },
+        IS_GUEST: { message: 'You do not have the rigths for this action', status: 401 },
     },
     mongooseValidationMessages: {
         auth: {
