@@ -115,7 +115,7 @@
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    width: 100px;
+    width: auto;
     margin-top: 1em;
     padding: 7px;
     background: rgb(252, 83, 74);

@@ -21,12 +21,11 @@ const userSchema = new mongoose.Schema({
                 // Check if the email is already taken
                 {
                     validator: async function (value) {
-                        let currentUser = await User.findOne({ username: value });
-                        console.log(currentUser);
+                        let currentUser = await User.findOne({ email: value });
                         return !currentUser;
 
                     },
-                    message: messages.TAKEN_USERNAME
+                    message: messages.TAKEN_EMAIL
                 }
             ]
     },

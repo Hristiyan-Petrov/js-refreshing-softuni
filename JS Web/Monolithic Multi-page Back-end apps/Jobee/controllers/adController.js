@@ -10,7 +10,7 @@ router.get('/', (req, res, next) => {
         .catch(next);
 });
 
-router.get('/applied', (req, res, next) => {
+router.get('/user/:userId/applied', (req, res, next) => {
     adService.getApplied(req.user._id)
         .then(doc => {
             console.log(doc);
@@ -19,16 +19,16 @@ router.get('/applied', (req, res, next) => {
         .catch(next);
 });
 
-router.get('/my-ads', (req, res, next) => {
+router.get('/user/:userId/my-ads', (req, res, next) => {
     adService.getOwn(req.user._id)
         .then(doc => {
-            console.log(doc.myAds);
+            // console.log(doc.myAds);
             res.render('ads/my-ads', { ads: doc.myAds });
         })
         .catch(next);
 });
 
-router.get('/create', (req, res) => {
+router.get('/new', (req, res) => {
     res.render('ads/create');
 });
 
@@ -38,7 +38,7 @@ router.post('/create', saveCurrentAuthViewLocals, (req, res, next) => {
             return adService.updateOwns(req.user._id, newAd._id);
         })
         .then(updated => {
-            res.redirect('/ads');
+            res.redirect(`/ads/user/${req.user._id}/my-ads`);
         })
         .catch(next);
 });
@@ -47,11 +47,8 @@ router.get('/search', (req, res) => {
     res.render('ads/search');
 });
 
-router.get('/edit', (req, res) => {
-    res.render('ads/edit');
-});
-
-router.get('/details/:adId', async (req, res, next) => {
+// Details page
+router.get('/:adId', async (req, res, next) => {
     try {
         let ad = await adService.getOneById(req.params.adId);
         let params = { ad };
@@ -67,33 +64,33 @@ router.get('/details/:adId', async (req, res, next) => {
         res.render('ads/details', params);
 
     } catch (error) {
-        next(error)
+        next(error);
     }
 });
 
-router.get('/apply/:adId', (req, res, next) => {
+router.get('/:adId/apply', (req, res, next) => {
     adService.applyUser(req.params.adId, req.user._id)
         .then(() => {
-            res.redirect(`/ads/details/${req.params.adId}`);
+            res.redirect(`/ads/${req.params.adId}`);
         })
         .catch(next);
 });
 
-router.get('/edit/:adId', (req, res, next) => {
+router.get('/:adId/edit', (req, res, next) => {
     adService.getOneById(req.params.adId)
         .then(adData => res.render('ads/edit', adData))
         .catch(next)
 });
 
-router.post('/edit/:adId', saveCurrentAuthViewLocals, (req, res, next) => {
+router.post('/:adId/edit', saveCurrentAuthViewLocals, (req, res, next) => {
     adService.update(req.params.adId, req.body)
-        .then(updated => res.redirect(`/ads/details/${req.params.adId}`))
+        .then(updated => res.redirect(`/ads/${req.params.adId}`))
         .catch(next);
 });
 
-router.get('/delete/:adId', (req, res, next) => {
+router.get('/:adId/delete', (req, res, next) => {
     adService.delete(req.params.adId)
-        .then(() => res.redirect('/ads/my-ads'))
+        .then(() => res.redirect(`/ads/user/${req.user._id}/my-ads`))
         .catch(next);
 });
 
