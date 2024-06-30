@@ -71,5 +71,21 @@ module.exports = {
             throw error;
         }
     },
-    delete: _id => Ad.deleteOne({ _id })
+    delete: async _id => {
+        try {
+            let ad = await Ad.findOne({ _id });
+            console.log('found ad: ' + ad);
+
+            let userIdsToUpdate = [...ad.appliedUsers, ad.author];
+
+            await User.updateMany(
+                { _id: { $in: userIdsToUpdate } },
+                { $pull: { myAds: ad._id, appliedToAds: ad._id } }
+            );
+
+            return Ad.deleteOne({ _id });
+        } catch (error) {
+            throw error;
+        }
+    }
 }
