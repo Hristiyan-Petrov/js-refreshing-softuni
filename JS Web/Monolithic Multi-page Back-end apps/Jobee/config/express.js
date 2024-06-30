@@ -23,7 +23,7 @@ module.exports = app => {
   app.set('view engine', 'hbs');
   app.set('views', './views');
 
-  app.use('/static', express.static('static'));
+  app.use('/public', express.static('public'));
 
   app.use(express.urlencoded({ extended: true }));    // Parse form bodies from client
 
