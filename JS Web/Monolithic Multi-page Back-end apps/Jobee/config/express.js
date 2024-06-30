@@ -6,6 +6,7 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const saveLastRoute = require('../middlewares/saveLastRoute');
 const isAuthenticated = require('../middlewares/isAuthenticated');
+const { SECRET, onMongoSanitize } = require('../config');
 
 module.exports = app => {
 
@@ -29,7 +30,7 @@ module.exports = app => {
   app.use(
     mongoSanitize({
       onSanitize: ({ req, key }) => {
-        console.warn(`This request[${key}] is sanitized`, req);
+        console.warn(onMongoSanitize(key, req));
       },
     }),
   );
@@ -37,7 +38,7 @@ module.exports = app => {
   app.use(cookieParser());
 
   app.use(session({
-    secret: 'your-secret', // replace 'your-secret' with your own secret
+    secret: SECRET, // replace 'your-secret' with your own secret
     resave: false,
     saveUninitialized: true,
     cookie: { secure: false } // secure: true for HTTPS

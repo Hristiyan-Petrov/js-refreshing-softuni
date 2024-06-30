@@ -254,3 +254,26 @@
     color: white;
     width: 105px;
 }
+
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.info-about-candidates-card>.button-container>a {
+    color: #fff;
+    text-align: center;
+    margin: 15px 0;
+    padding: 7px;
+    font-size: 16px;
+    font-weight: 600;
+    width: 130px;
+    border-radius: 12px;
+    -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    -webkit-transition: 300ms ease-in-out;
+    -o-transition: 200ms ease-in-out;
+    transition: 200ms ease-in-out;
+    background-color: #8058b6;
+    cursor: pointer;
+}
