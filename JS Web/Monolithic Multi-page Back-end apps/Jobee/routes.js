@@ -8,4 +8,8 @@ router.use('/', require('./controllers/homeController'));
 router.use('/auth', authController);
 router.use('/ads', adController);
 
+router.use('*', (req, res) => {
+    res.status(404).render('error/404');
+});
+
 module.exports = router;
