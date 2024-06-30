@@ -2,13 +2,13 @@ const Ad = require('../models/Ad');
 const User = require('../models/User');
 
 module.exports = {
-    get: async authorId => {
+    getAll: async authorId => {
         let query = {};
 
         if (authorId) {
             let applied = (await User.findById(authorId).select('appliedToAds').lean()).appliedToAds;
 
-            // Only find Ads where author is not the given user and user hasn't applied
+            // Only show Ads where author is not the given user and user hasn't applied
             query.author = { $ne: authorId };
             query._id = { $nin: applied };
         }
@@ -23,22 +23,16 @@ module.exports = {
         .sort({ _id: -1 })
         .limit(3)
         .lean(),
-    getOwn: _id => User
-        .findOne({ _id })
+    getUserData: (_id, path) => User
+        // .findOne({ _id })
+        .findOne({ _id }, { [path]: 1, email: 1, description: 1 })      // projection
         .populate({
-            path: 'myAds',
+            path,
             select: 'headline companyName location'
         })
         .lean(),
-    getApplied: _id => User
-        .findOne({ _id })
-        .populate({
-            path: 'appliedToAds',
-            select: 'headline companyName location'
-        })
-        .lean(),
-    getOneById: id => Ad.
-        findById(id)
+    getOneById: _id => Ad
+        .findById(_id)
         .populate('appliedUsers', 'email description') // specify fields to populate (retrieve their values from db)
         .lean(),
     getAuthorEmail: authorId => User

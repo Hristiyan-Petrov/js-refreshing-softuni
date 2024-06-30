@@ -1,7 +1,7 @@
 const adService = require('../services/adService');
 
 exports.getAll = (req, res, next) => {
-    adService.get(req.user?._id)
+    adService.getAll(req.user?._id)
         .then(ads => {
             res.render('ads/all-ads', { ads });
         })
@@ -9,7 +9,7 @@ exports.getAll = (req, res, next) => {
 };
 
 exports.getApplied = (req, res, next) => {
-    adService.getApplied(req.user._id)
+    adService.getUserData(req.user._id, 'appliedToAds')
         .then(doc => {
             res.render('ads/applied', { ads: doc.appliedToAds });
         })
@@ -17,7 +17,7 @@ exports.getApplied = (req, res, next) => {
 };
 
 exports.getOwn = (req, res, next) => {
-    adService.getOwn(req.user._id)
+    adService.getUserData(req.user._id, 'myAds')
         .then(doc => {
             res.render('ads/my-ads', { ads: doc.myAds });
         })
