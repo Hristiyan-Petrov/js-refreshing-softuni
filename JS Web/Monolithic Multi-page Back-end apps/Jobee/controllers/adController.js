@@ -1,8 +1,9 @@
 const adService = require('../services/adService');
 
 exports.getAll = (req, res, next) => {
-    adService.getAll(req.user?._id)
+    adService.getAll(req.user?._id, req?.query)
         .then(ads => {
+            if (req.query.hasOwnProperty('search') && ads.length < 1) res.locals.noSearchResult = true;
             res.render('ads/all-ads', { ads });
         })
         .catch(next);

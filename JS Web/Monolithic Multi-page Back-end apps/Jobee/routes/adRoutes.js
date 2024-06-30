@@ -4,6 +4,7 @@ const { isAuthorized } = require('../middlewares/authGuards');
 const saveCurrentViewLocals = require('../middlewares/saveCurrentViewLocals');
 
 router.get('/', adController.getAll);
+router.get('/search', adController.getAll);
 
 router.get('/user/:userId/applied', isAuthorized, adController.getApplied);
 router.get('/user/:userId/my-ads', isAuthorized, adController.getOwn);

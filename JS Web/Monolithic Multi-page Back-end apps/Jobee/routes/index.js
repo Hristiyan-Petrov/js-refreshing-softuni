@@ -2,8 +2,6 @@ const router = require('express').Router();
 
 const authRoutes = require('../routes/authRoutes');
 const adRoutes = require('../routes/adRoutes');
-// const adRoutesUnprotected = require('../routes/adRoutesUnprotected');
-// const adRoutesAuthorized = require('../routes/adRoutesAuthorized');
 const attachFlashMessage = require('../middlewares/attachFlashMessage');
 
 router.use(attachFlashMessage);

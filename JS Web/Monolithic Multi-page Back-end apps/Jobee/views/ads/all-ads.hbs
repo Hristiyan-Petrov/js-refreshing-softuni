@@ -5,16 +5,31 @@
             <h1>All ads</h1>
         </article>
 
+        {{#if ads}}
+        {{>search-form}}
+
         {{#each ads}}
         {{>ad-item}}
+        {{/each}}
+
         {{else}}
 
+        {{#if noSearchResult}}
+        <article class="not-available-ads">
+            <h1>No results are found based on your search.</h1>
+            <h2>Try again.</h2>
+
+            {{>search-form}}
+
+            <h1>Or go back to all job ads. <a href="/ads">GO!</a></h1>
+        </article>
+        {{else}}
         <article class="not-available-ads">
             <h1>No job offers created yet. Or maybe you have applied to all available.</h1>
             <h2>Wait until your perfect emplyee posts a job offer.</h2>
         </article>
+        {{/if}}
 
-        {{/each}}
-
+        {{/if}}
     </section>
 </main>

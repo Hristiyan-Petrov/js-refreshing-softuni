@@ -2,7 +2,8 @@ const Ad = require('../models/Ad');
 const User = require('../models/User');
 
 module.exports = {
-    getAll: async authorId => {
+    getAll: async (authorId, { search }) => {
+
         let query = {};
 
         if (authorId) {
@@ -11,6 +12,15 @@ module.exports = {
             // Only show Ads where author is not the given user and user hasn't applied
             query.author = { $ne: authorId };
             query._id = { $nin: applied };
+        }
+
+        if (search) {
+            query.$or = [
+                { headline: { $regex: new RegExp(search, "i") } },
+                { companyName: { $regex: new RegExp(search, "i") } },
+                { location: { $regex: new RegExp(search, "i") } },
+                { companyDescription: { $regex: new RegExp(search, "i") } }
+            ]
         }
 
         return Ad
@@ -68,8 +78,6 @@ module.exports = {
     delete: async _id => {
         try {
             let ad = await Ad.findOne({ _id });
-            console.log('found ad: ' + ad);
-
             let userIdsToUpdate = [...ad.appliedUsers, ad.author];
 
             await User.updateMany(
