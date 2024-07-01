@@ -10,7 +10,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/register', attachFlashMessage, (req, res) => {
-    res.render('auth/login');
+    res.render('auth/register');
 });
 
 router.post('/register',

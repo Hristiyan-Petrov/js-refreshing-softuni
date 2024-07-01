@@ -2,10 +2,12 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const { SALT_ROUNDS, mongooseValidationMessages: { auth: messages } } = require('../config');
 
+const getRequiredMessage = field => `${messages.REQUIRED}${field}`;
+
 const userSchema = new mongoose.Schema({
     email: {
         type: String,
-        required: true,
+        required: [true, getRequiredMessage('email')],
         validate:
             [
                 // Check email format
@@ -19,19 +21,17 @@ const userSchema = new mongoose.Schema({
                 // Check if the email is already taken
                 {
                     validator: async function (value) {
-                        let currentUser = await User.findOne({ username: value });
-                        console.log(currentUser);
+                        let currentUser = await User.findOne({ email: value });
                         return !currentUser;
 
                     },
-                    message: messages.TAKEN_USERNAME
+                    message: messages.TAKEN_EMAIL
                 }
             ]
     },
     password: {
         type: String,
-        required: true,
-        minLength: 5,
+        required: [true,getRequiredMessage('password')],
         validate: {
             validator: function (value) {
                 // At least 8 characters
@@ -44,7 +44,24 @@ const userSchema = new mongoose.Schema({
             },
             message: messages.STRONG_PASSWORD
         }
-    }
+    },
+    description: {
+        type: String,
+        required: [true, getRequiredMessage('description')],
+        minlength: [10, 'Description' + messages.MINLENGTH],
+    },
+    myAds: [
+        {
+            type: mongoose.Types.ObjectId,
+            ref: 'Ad'
+        }
+    ],
+    appliedToAds: [
+        {
+            type: mongoose.Types.ObjectId,
+            ref: 'Ad'
+        }
+    ]
 });
 
 userSchema.pre('save', function (next) {
@@ -56,6 +73,7 @@ userSchema.pre('save', function (next) {
         })
         .catch(next);
 });
+
 
 const User = mongoose.model('User', userSchema);
 

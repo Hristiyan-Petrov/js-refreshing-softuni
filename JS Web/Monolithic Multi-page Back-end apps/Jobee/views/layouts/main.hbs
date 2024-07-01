@@ -1,0 +1,31 @@
+{{!-- express-handlebars searches for this file out of the box! --}}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jobee</title>
+    <link rel="stylesheet" href="/public/css/style.css">
+<body>
+    <div class="box">
+
+        {{#if error}}
+        <div class="error-box">
+            {{#each error}}
+            <p>{{this.message}}</p>
+            {{/each}}
+        </div>
+        {{/if}}
+
+        {{>header}}
+
+        {{{body}}}
+
+        {{>footer}}
+
+    </div>
+</body>
+
+</html>
