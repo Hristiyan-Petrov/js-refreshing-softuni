@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Mukta&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+
 body {
     font-family: Georgia, 'Times New Roman', Times, serif;
     margin: 0;
@@ -124,16 +125,16 @@ footer {
     border-radius: 10px;
 }
 
- ::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
     background: rgba(255, 255, 255, 0.01);
 }
 
- ::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
     background: #4d6d72;
     border-radius: 10px;
 }
 
- ::-webkit-scrollbar-thumb:hover {
+::-webkit-scrollbar-thumb:hover {
     background: #4d6d72;
 }
 
@@ -150,7 +151,7 @@ footer {
     height: auto;
     width: 340px;
     font-style: italic;
-    background-color: #3c2064;
+    background-color: #FFC300;
     box-shadow: 0px 0px 8px 7px white;
 }
 
@@ -172,6 +173,31 @@ footer {
     animation: cssAnimation 0s ease-in 10s forwards;
     -webkit-animation-fill-mode: forwards;
     animation-fill-mode: forwards;
+}
+
+.notification-box {
+    position: fixed;
+    display: block;
+    z-index: 11111;
+    left: 2%;
+    top: 15%;
+    margin-top: 1em;
+    text-align: center;
+    border-radius: 0.5rem;
+    color: white;
+    height: auto;
+    width: 340px;
+    font-style: italic;
+    background-color: rgb(175, 225, 175);
+    box-shadow: 0px 0px 8px 7px white;
+}
+
+.notification-box>p {
+    font-size: 24px;
+    font-weight: bold;
+    font-family: 'Barlow', sans-serif;
+    padding: 14px;
+    height: auto;
 }
 
 @keyframes cssAnimation {

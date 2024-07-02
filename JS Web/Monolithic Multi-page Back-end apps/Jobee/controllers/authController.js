@@ -1,5 +1,5 @@
 const authService = require('../services/authService');
-const { AUTH_COOKIE_NAME, errors } = require('../config');
+const { AUTH_COOKIE_NAME, errors, notifications } = require('../config');
 
 exports.showRegister = (req, res) => {
     res.render('auth/register');
@@ -14,6 +14,7 @@ exports.register = (req, res, next) => {
 
     authService.register(email, password, rePassword, description)
         .then(createdUser => {
+            req.flash('notification', notifications.auth.REGISTERED);
             res.redirect('/auth/login');
         })
         .catch(next);
@@ -29,8 +30,8 @@ exports.login = (req, res, next) => {
 
     authService.login(email, password)
         .then(token => {
-            console.log('user logged');
             res.cookie(AUTH_COOKIE_NAME, token, { httpOnly: true });
+            req.flash('notification', notifications.auth.LOGGED_IN);
             res.redirect('/');
         })
         .catch(next);
@@ -38,7 +39,8 @@ exports.login = (req, res, next) => {
 
 exports.logout = (req, res) => {
     res.clearCookie(AUTH_COOKIE_NAME);
-    res.redirect('/auth/login');
+    req.flash('notification', notifications.auth.LOGGED_OUT);
+    res.redirect('/');
 };
 
 // exports.get('/secret-action',

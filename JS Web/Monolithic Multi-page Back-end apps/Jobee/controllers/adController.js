@@ -1,4 +1,6 @@
 const adService = require('../services/adService');
+const { notifications } = require('../config');
+
 
 exports.getAll = (req, res, next) => {
     adService.getAll(req.user?._id, req?.query)
@@ -35,6 +37,7 @@ exports.create = (req, res, next) => {
             return adService.updateOwns(req.user._id, newAd._id);
         })
         .then(updated => {
+            req.flash('notification', notifications.ad.CREATED);
             res.redirect(`/ads/user/${req.user._id}/my-ads`);
         })
         .catch(next);
@@ -68,6 +71,7 @@ exports.showAdDetails = async (req, res, next) => {
 exports.applyToAd = (req, res, next) => {
     adService.applyUser(req.params.adId, req.user._id)
         .then(() => {
+            req.flash('notification', notifications.ad.APPLIED);
             res.redirect(`/ads/${req.params.adId}`);
         })
         .catch(next);
@@ -81,12 +85,18 @@ exports.showEditForm = (req, res, next) => {
 
 exports.update = (req, res, next) => {
     adService.update(req.params.adId, req.body)
-        .then(updated => res.redirect(`/ads/${req.params.adId}`))
+        .then(updated => {
+            req.flash('notification', notifications.ad.EDITED);
+            res.redirect(`/ads/${req.params.adId}`)
+        })
         .catch(next);
 };
 
 exports.delete = (req, res, next) => {
     adService.delete(req.params.adId)
-        .then(() => res.redirect(`/ads/user/${req.user._id}/my-ads`))
+        .then(() => {
+            req.flash('notification', notifications.ad.DELETED);
+            res.redirect(`/ads/user/${req.user._id}/my-ads`)
+        })
         .catch(next);
 };
