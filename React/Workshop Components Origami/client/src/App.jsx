@@ -1,16 +1,22 @@
-import Header from './components/Header/Header';
 import style from './App.module.css';
+import Header from './components/Header/Header';
+import AsideMenu from './components/AsideMenu/AsideMenu';
+import Main from './components/Main/Main';
+
 
 function App() {
-  return (
-    <div className={style.app}>
-      <div className={style.container}>
-        <h1>Hello World</h1>
+    return (
+        <div className={style.app}>
+            {/* <h1 className={style.heading}>Hello World</h1> */}
 
-        <Header />
-      </div>
-    </div>
-  )
+            <Header />
+
+            <div className={style.container}>
+                <AsideMenu />
+                <Main />
+            </div>
+        </div>
+    )
 }
 
 export default App
