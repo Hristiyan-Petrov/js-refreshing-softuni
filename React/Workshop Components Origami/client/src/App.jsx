@@ -1,24 +1,14 @@
+import Header from './components/Header/Header';
 import style from './App.module.css';
 
 function App() {
   return (
     <div className={style.app}>
-      <h1>Hello World</h1>
+      <div className={style.container}>
+        <h1>Hello World</h1>
 
-      <nav className={style.navigation}>
-        <ul>
-          <li className="listItem"><img src="../public/white-origami-bird.png" alt="white-origami-bird" /></li>
-          <li className="listItem"><a href="#">Going to 1</a></li>
-          <li className="listItem"><a href="#">Going to 2</a></li>
-          <li className="listItem"><a href="#">Going to 3</a></li>
-          <li className="listItem"><a href="#">Going to 4</a></li>
-          <li className="listItem"><a href="#">Going to 5</a></li>
-          <li className="listItem"><a href="#">Going to 6</a></li>
-          <li className="listItem"><a href="#">Going to 7</a></li>
-          <li className="listItem"><a href="#">Going to 8</a></li>
-          <li className="listItem"><a href="#">Going to 9</a></li>
-        </ul>
-      </nav>
+        <Header />
+      </div>
     </div>
   )
 }
