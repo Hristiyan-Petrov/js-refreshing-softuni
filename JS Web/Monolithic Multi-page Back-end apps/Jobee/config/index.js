@@ -26,7 +26,18 @@ module.exports = {
             MINLENGTH: ' must be longer than that.'
         }
     },
-    messages: {
+    notifications: {
         onMongoSanitize: (key, req) => `This request[${key}] is sanitized. \n Request: ${req}`,
+        auth: {
+            REGISTERED: 'Successfuly registered! \n Now please login.',
+            LOGGED_IN: 'Successfuly logged in!',
+            LOGGED_OUT: 'Successfuly logged out!',
+        },
+        ad: {
+            CREATED: 'Ad succesfully created!',
+            APPLIED: 'Succesfully applied to ad!',
+            EDITED: 'Ad was succesfully edited!',
+            DELETED: 'Ad was succesfully deleted!',
+        }
     }
 };
