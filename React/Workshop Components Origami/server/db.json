@@ -1,0 +1,19 @@
+{
+    "posts": [
+        {
+            "id": 1,
+            "content": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab delectus perspiciatis sequi harum quasi libero eaque dolorum dolores architecto. Cum.",
+            "author": "Hrisko"
+        },
+        {
+            "id": 2,
+            "content": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis, facere. Consequatur laborum rerum, maiores nemo esse pariatur reiciendis doloribus voluptatibus enim similique earum molestias corrupti sint, unde asperiores quam perspiciatis.",
+            "author": "Hrisko2"
+        },
+        {
+            "id": 3,
+            "content": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem excepturi dolorum et itaque, voluptate esse aliquid ad maiores aperiam, similique ipsum pariatur, ab sint aut quo quia quas. Saepe dolore ad quam sapiente recusandae odio quis rem aperiam, illo esse nisi. Illo impedit quasi suscipit magnam numquam sapiente maiores ab quae sequi, dignissimos recusandae dolor! Et expedita consectetur sapiente enim.",
+            "author": "Hrisko2"
+        }
+    ]
+}
