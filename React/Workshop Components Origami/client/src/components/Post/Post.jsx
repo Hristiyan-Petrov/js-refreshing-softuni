@@ -1,4 +1,4 @@
-import './Post.css';
+import './Post.scss';
 
 const Post = ({
     id,
@@ -6,7 +6,7 @@ const Post = ({
     author
 }) => {
     return (
-        <div key={id} className='post-conatainer'>
+        <div key={id} className='post-container'>
             <img src="blue-origami-bird.png" alt="blue-origami-bird" />
             <p className="post-description">
                 {content}

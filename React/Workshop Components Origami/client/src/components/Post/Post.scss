@@ -1,0 +1,99 @@
+// Variables
+$border-color: #234465;
+$border-radius: 4px;
+$spacing-small: 0.5%;
+$spacing-medium: 1%;
+$spacing-large: 3%;
+
+// Mixins
+@mixin border($width: 1px, $style: solid, $color: $border-color) {
+    border: $width $style $color;
+}
+
+@mixin inline-block {
+    display: inline-block;
+    vertical-align: top;
+}
+
+// Placeholder selector
+%text-right {
+    text-align: right;
+}
+
+// Styles
+.post {
+    &-container {
+        width: 100%;
+        height: auto;
+        @include border;
+        margin-bottom: $spacing-large;
+        border-radius: $border-radius;
+
+        div {
+            height: auto;
+            @extend %text-right;
+            margin-bottom: $spacing-small;
+
+            span {
+                text-decoration: underline;
+                padding-right: $spacing-medium;
+            }
+        }
+
+        img {
+            width: 32px;
+            height: 32px;
+        }
+    }
+
+    &-description {
+        word-wrap: break-word;
+        padding: $spacing-small;
+        font-style: italic;
+        margin-bottom: $spacing-small;
+        width: 95%;
+        @include inline-block;
+    }
+}
+
+
+/* post Styles */
+
+// .post-conatainer {
+//     width: 100%;
+//     height: auto;
+//     border: $post-border;
+//     margin-bottom: 3%;
+//     border-radius: $post-border-radius;
+
+//     div {
+//         /* border:1px solid red; */
+//         height: auto;
+//         text-align: right;
+//         margin-bottom: $percent05;
+
+//         span {
+//             text-decoration: underline;
+//             text-align: right;
+//             /* border:1px solid green; */
+//             padding-right: 1%;
+//         }
+//     }
+
+//     img {
+//         width: $post-width;
+//         height: $post-height;
+//     }
+// }
+
+// .post-description {
+//     word-wrap: break-word;
+//     padding: $percent05;
+//     font-style: italic;
+//     /* border:1px solid blue; */
+//     margin-bottom: $percent05;
+//     width: $post-width;
+//     display: inline-block;
+//     vertical-align: top;
+//     ;
+// }

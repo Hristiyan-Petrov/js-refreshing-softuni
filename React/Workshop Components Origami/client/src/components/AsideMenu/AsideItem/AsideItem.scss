@@ -1,0 +1,48 @@
+// Variables
+$border-color: #234465;
+$menu-item-height: 5vh;
+$menu-item-width: 98%;
+$margin-bottom-large: 11%;
+$padding-top: 5%;
+$link-color: $border-color;
+$hover-color: #ffa000;
+$border-width: 2px;
+
+// Mixin
+@mixin border($width: $border-width, $style: solid, $color: $border-color) {
+    border: $width $style $color;
+}
+
+// Extend
+%center-align {
+    text-align: center;
+}
+
+.menu-item {
+    display: block;
+    width: $menu-item-width;
+    @include border($border-width, solid, $border-color);
+    border-top: none;
+    border-bottom: none;
+    margin-bottom: $margin-bottom-large;
+    height: $menu-item-height;
+    @extend %center-align;
+  
+    a {
+        color: $link-color;
+        @extend %center-align;
+        text-decoration: none;
+        padding-top: $padding-top;
+        height: 60%;
+        display: block;
+    }
+  
+    &:hover {
+        border-left: none;
+        border-right: none;
+        font-weight: bold;
+        border-top: $border-width solid $border-color;
+        border-bottom: $border-width solid $border-color;
+        color: $hover-color;
+    }
+}

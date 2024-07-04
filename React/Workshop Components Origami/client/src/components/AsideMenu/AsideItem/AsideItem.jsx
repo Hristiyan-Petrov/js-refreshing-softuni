@@ -1,4 +1,4 @@
-import './AsideItem.css'
+import './AsideItem.scss'
 
 const AsideItem = ({
     children
