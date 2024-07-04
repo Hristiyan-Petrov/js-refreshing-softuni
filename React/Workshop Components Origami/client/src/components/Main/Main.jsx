@@ -4,7 +4,7 @@ import './Main.scss';
 const Main = ({
     posts
 }) => {
-    // console.log(posts);
+    console.log(posts);
 
     return (
         <main className='main-container'>
@@ -16,7 +16,7 @@ const Main = ({
                         key={x.id}
                         content={x.content}
                         author={x.author}
-                    // post={x}         // Delegate all props to be handled down the chain
+                    // post={x}         // Is equivalent. Delegate all props to be handled down the chain
                     />
                 )}
             </div >

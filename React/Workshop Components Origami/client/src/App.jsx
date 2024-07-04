@@ -12,19 +12,29 @@ class App extends Component {
     constructor(props) {
         super(props);
 
+        // Set initial state
         this.state = {
-            posts: []
-        };  // Set initial state
-    }
+            posts: [],
+            selectedPost: null
+        }
+    };
 
     componentDidMount() {
         postService.getAll()
             .then(posts => {
-                console.log('posts: ' + posts);
                 this.setState({ posts })
             })
             .catch(err => console.log('Error from componentDidMount APP: ' + err));
+    }
 
+    onAsideItemClick(id) {
+        this.setState({ selectedPost: id });
+    }
+
+    getPosts() {
+        return !this.state.selectedPost
+            ? this.state.posts
+            : [this.state.posts.find(x => x.id == this.state.selectedPost)];
     }
 
     render() {
@@ -35,9 +45,13 @@ class App extends Component {
                 <Header />
 
                 <div className={style.container}>
-                    <AsideMenu />
+                    <AsideMenu
+                        onAsideItemClick={this.onAsideItemClick.bind(this)}   // Bind because of calss component
+                    />
 
-                    <Main posts={this.state.posts}/>
+                    <Main
+                        posts={this.getPosts()}
+                    />
                 </div>
             </div>
         )

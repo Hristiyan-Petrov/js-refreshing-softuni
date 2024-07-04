@@ -1,18 +1,33 @@
 import './AsideMenu.css'
 import AsideItem from './AsideItem/AsideItem'
+import { useState } from 'react';
 
-const AsideMenu = () => (
-    <aside className="aside-menu">
-        <AsideItem>Going to 1</AsideItem>
-        <AsideItem>Going to 2</AsideItem>
-        <AsideItem>Going to 3</AsideItem>
-        <AsideItem>Going to 4</AsideItem>
-        <AsideItem>Going to 5</AsideItem>
-        <AsideItem>Going to 6</AsideItem>
-        <AsideItem>Going to 7</AsideItem>
-        <AsideItem>Going to 8</AsideItem>
-        <AsideItem>Going to 9</AsideItem>
-    </aside>
-);
+import { MENU_ITEMS } from './AsideMenuConstants';
+
+const AsideMenu = ({
+    onAsideItemClick
+}) => {
+
+    const [currItem, setCurrItem] = useState();
+    
+    const asideMenuClickHandler = (id) => {
+        setCurrItem(id);
+        onAsideItemClick(id);
+    }
+
+    return (
+        <aside className="aside-menu">
+            {MENU_ITEMS.map(x =>
+                <AsideItem key={x.id}
+                    id={x.id}
+                    isSelected={x.id == currItem}
+                    onClick={asideMenuClickHandler}
+                >
+                    {x.text}
+                </AsideItem>
+            )}
+        </aside>
+    );
+};
 
 export default AsideMenu;

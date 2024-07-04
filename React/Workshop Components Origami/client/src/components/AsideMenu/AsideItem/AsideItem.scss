@@ -45,4 +45,8 @@ $border-width: 2px;
         border-bottom: $border-width solid $border-color;
         color: $hover-color;
     }
+
+    &-selected {
+        background-color:darksalmon;
+    }
 }
